@@ -3,10 +3,6 @@
 
 Shisei sekai is a unofficial JoJo's Bizare Adventures fan made role-based forum. 
 
-  - Type some Markdown on the left
-  - See HTML in the right
-  - Magic
-
 # Features
 
   - Roles, multiple per user, select one to display
