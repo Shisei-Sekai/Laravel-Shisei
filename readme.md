@@ -28,6 +28,7 @@ And, how could i forgot the inspirational phrase:
 * Nginx (recommended, don't use built-in server in production)
 * NPM
 * Database engine (pref, PostgreSQL)
+* Composer
 
 
 ### Installation
@@ -37,6 +38,7 @@ Just clone the repository,
 $ git clone "this-repository.git"
 $ cd this-repository
 $ npm install
+$ composer install
 ```
 
 ### TODO
