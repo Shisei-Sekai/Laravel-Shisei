@@ -64,7 +64,9 @@
         let url = window.location.href.split('/');
         let channelId = url[url.length-1]? url[url.length-1]:url[url.length-2];
         $('#newThreadButton').click(function(){
-            window.location.href = "http://localhost:8000/thread?channelId="+channelId;
+            let cleanUrl = url.splice(-1,1);
+            cleanUrl = cleanUrl.join();
+            window.location.href = cleanUrl + "/thread?channelId="+channelId;
         });
     </script>
 @endsection
