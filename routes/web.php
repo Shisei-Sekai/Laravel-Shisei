@@ -29,6 +29,7 @@ Route::middleware('isAdmin')->prefix('admin')->group(function (){
     Route::post('roles','UpdateElementController@createRole'); //Create role
     Route::get('roles','GetController@getRoles'); //Get all roles
     Route::put('roles','UpdateElementController@updateRole'); //Edit role
+    Route::delete('roles','CleanController@deleteRole'); //Delete role
 
     Route::get('roles/user',"GetController@getUserRoles"); //Get user roles (used)
     Route::delete('roles/user',"CleanController@deleteRoleFromUser"); //Delete role from user
@@ -58,12 +59,13 @@ Route::middleware('isAdmin')->prefix('admin')->group(function (){
 });
 
 Route::get('/','GetController@createMainPage')->name('home');
+Route::get('/home','GetController@createMainPage');
 Route::get('/thread','GetController@createThreadPage');
-Route::post('/threads/{channelId}',"ThreadController@createThread");
+Route::post('/threads/{channelId}',"ThreadController@createThread")->where('channelId','[0-9]+');
 Route::get('/user/{userName}','GetController@getUserPage');
 Route::post('/user/{userName}','UpdateElementController@updateUserAvatar');
-Route::get('/{channelId}','GetController@createChannelPage');
-Route::get('/{channelId}/{threadId}','GetController@renderThreadPage');
-Route::post('/{channelId}/{threadId}','ThreadController@createPost');
+Route::get('/{channelId}','GetController@createChannelPage')->where('channelId','[0-9]+');
+Route::get('/{channelId}/{threadId}','GetController@renderThreadPage')->where(['channelId'=>'[0-9]+','threadId'=>'[0-9]+']);
+Route::post('/{channelId}/{threadId}','ThreadController@createPost')->where(['channelId'=>'[0-9]+','threadId'=>'[0-9]+']);
 
 

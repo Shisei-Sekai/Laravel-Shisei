@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Channel;
 use App\Post;
+use App\Role;
 use App\Thread;
 use App\UserRoles;
 use App\User;
@@ -123,6 +124,16 @@ class CleanController extends Controller {
         $userId = $r->input('id');
         $user = User::find($userId);
         $user->delete();
+        return response()->json(["success"=>true]);
+    }
+
+    public function deleteRole(Request $r){
+        if(!$r->isMethod('DELETE')){
+            return response()->json(['success'=>false,'error'=>"invalid method"]);
+        }
+        $roleId = $r->input('id');
+        $role = Role::find($roleId);
+        $role->delete();
         return response()->json(["success"=>true]);
     }
 }

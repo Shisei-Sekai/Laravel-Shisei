@@ -45,7 +45,7 @@
 <div class="container">
     <div class="row">
         <!-- Selecting type panel -->
-        <div class="col-md-2 col-2 col-sm-2">
+        <div class="col-md-2 col-6 col-sm-4">
             <div class="card card-dark bg-dark text-white panel-card">
                 <div class="card-header text-center">
                     Menu
@@ -63,7 +63,7 @@
             </div>
         </div>
         <!-- Content info -->
-        <div class="col-md-10 col-10 col-sm-10">
+        <div class="col-md-10 col-6 col-sm-8">
             <div class="card card-dark bg-dark text-white">
                 <div class="card-header text-center bg-dark">
                     Contenido
