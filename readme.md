@@ -3,10 +3,6 @@
 
 Shisei sekai is a unofficial JoJo's Bizare Adventures fan made role-based forum. 
 
-  - Type some Markdown on the left
-  - See HTML in the right
-  - Magic
-
 # Features
 
   - Roles, multiple per user, select one to display
@@ -32,6 +28,7 @@ And, how could i forgot the inspirational phrase:
 * Nginx (recommended, don't use built-in server in production)
 * NPM
 * Database engine (pref, PostgreSQL)
+* Composer
 
 
 ### Installation
@@ -41,6 +38,7 @@ Just clone the repository,
 $ git clone "this-repository.git"
 $ cd this-repository
 $ npm install
+$ composer install
 ```
 
 ### TODO
