@@ -71,7 +71,7 @@ class GetController extends Controller
         }
         return $data;
     }
-
+    
     /**
      * Get all threads of desired channel in chunks of 15
      * @param $channelId

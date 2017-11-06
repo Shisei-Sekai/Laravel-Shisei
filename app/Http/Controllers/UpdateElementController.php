@@ -111,18 +111,17 @@ class UpdateElementController extends Controller
         );
         $path = $dir.'/storage/app/'.$path;
 
-        echo env('POMF_CLIENT_TOKEN').'<br>';
-        echo env('POMF_SECRET_TOKEN').'<br>';
-        $res = $client->request('POST','https://pomf.rindou.moe/upload',[
+        $res = $client->request('POST',env('POMF_URL'),[
            'multipart'=>[
                 [
-                    'name'=>'files[]',
+                    'name'=>'file',
                     'contents'=>fopen($path,'r'),
                 ]
            ]
         ]);
 
         $res = json_decode($res->getBody());
+
         $user = User::where('name','=',$userName)->first();
         $user->avatar = $res->files[0]->url;
         $user->save();
