@@ -171,7 +171,7 @@ return [
         /*
          * Application Service Providers...
          */
-        'Golonka\BBCode\BBCodeParserServiceProvider',
+        Golonka\BBCode\BBCodeParserServiceProvider::class,
         \Genert\BBCode\BBCodeServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
@@ -228,8 +228,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        //'BBCode' => Golonka\BBCode\Facades\BBCodeParser::class,
-        'BBCode' => \Genert\BBCode\Facades\BBCode::class,
+        'BBCode' => Golonka\BBCode\Facades\BBCodeParser::class,
+        //'BBCode' => \Genert\BBCode\Facades\BBCode::class,
 
     ],
 

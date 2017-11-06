@@ -10,7 +10,8 @@ use App\Thread;
 use App\User;
 use App\UserRoles;
 
-use Genert\BBCode\BBCode;
+//use Genert\BBCode\BBCode;
+use Golonka\BBCode\BBCodeParser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -71,7 +72,7 @@ class GetController extends Controller
         }
         return $data;
     }
-    
+
     /**
      * Get all threads of desired channel in chunks of 15
      * @param $channelId
@@ -109,7 +110,8 @@ class GetController extends Controller
             'posts' => array(),
             'users' => array(),
         );
-        $parser = new BBCode();
+        //$parser = new BBCode();
+        $parser = new BBCodeParser();
         $posts = Post::where('thread_id','=',$threadId)->offset(($page-1)*15)->limit(15)->get();
         //For each post, find all users participating and get post text
         foreach ($posts as $p){
@@ -137,7 +139,8 @@ class GetController extends Controller
             $text = str_replace('<','&lt;',$text);
             $text = str_replace('>','&gt;',$text);
             //BBcode parser
-            $text = $parser->convertToHtml($text);
+            //$text = $parser->convertToHtml($text);
+            $text = $parser->parse($text);
             //Push to array
             array_push($data['posts'],array(
                 'userId'=> $p->user_id,
