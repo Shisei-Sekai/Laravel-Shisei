@@ -32,7 +32,7 @@
                 <div class="card-body">
                     <div class="row text-center">
                         <div class="col-md-6 col-6 col-sm-6">
-                            <img class="user-avatar circular-image" src="{{$user['avatar']}}"><br>
+                            <div class="user-avatar" "><img class="user-avatar circular-image" src="{{$user['avatar']}}"><br></div>
                             <span>{{$user['name']}}</span><br>
                             <span style="color:{{$user['role']['color']}}">{{$user['role']['name']}}</span>
                         </div>

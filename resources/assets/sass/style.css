@@ -140,6 +140,7 @@ html { height: 100%;}
     padding-top: 10px;
 
 }
+
 @media(min-device-width: 768px) {
     .user-avatar{
         width: 150px;
@@ -148,10 +149,10 @@ html { height: 100%;}
         margin-right: 4px;
         margin-top: 5px;
         margin-bottom: 7px;
-        
-
+        object-fit: cover;
     }
 }
+
 /* Phone device */
 @media(max-device-width: 576px){
     .user-avatar{
@@ -161,6 +162,7 @@ html { height: 100%;}
         margin-right: 4px;
         margin-top: 5px;
         margin-bottom: 7px;
+        object-fit: cover;
 
     }
 
@@ -174,12 +176,15 @@ html { height: 100%;}
         margin-right: 4px;
         margin-top: 5px;
         margin-bottom: 7px;
+        object-fit: cover;
     }
 }
+/*
 .avatar-div.user-avatar{
     min-width: 100%;
-    /*
-*/
+}*/
+div img{
+    min-width: 100%;
 }
 
 /*-------------------------------*/

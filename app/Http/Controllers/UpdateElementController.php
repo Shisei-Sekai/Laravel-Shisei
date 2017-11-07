@@ -125,7 +125,7 @@ class UpdateElementController extends Controller
         $user = User::where('name','=',$userName)->first();
         $user->avatar = $res->files[0]->url;
         $user->save();
-        Storage::delete($path);
+        unlink($path);
         return redirect('/');
     }
 
