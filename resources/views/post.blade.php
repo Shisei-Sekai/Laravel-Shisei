@@ -168,7 +168,7 @@
                     }
                 });
             });
-            hljs.configure({useBR: true});
+            hljs.configure({useBR: false});
             $('code').each(function(i, block) {
                 hljs.highlightBlock(block);
             });
