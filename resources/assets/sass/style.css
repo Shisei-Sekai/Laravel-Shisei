@@ -18,7 +18,7 @@ html { height: 100%;}
 
 code{
     display: block;
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 /*-------------------------------*/
