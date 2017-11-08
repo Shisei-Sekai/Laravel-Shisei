@@ -58,6 +58,7 @@
             </div>
         </div><br><br>
 
+        <!-- EDIT POST MODAL -->
         <div class="modal fade" id="modalEditPost" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg bg-dark" role="document">
                 <div class="modal-content bg-dark text-white">
@@ -85,9 +86,24 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <script>
         //Hide all userinfo by default
         $(document).ready(function(){
+            //Enable tabs in textareas
+            var textareas = document.getElementsByTagName('textarea');
+            var count = textareas.length;
+            for(var i=0;i<count;i++){
+                textareas[i].onkeydown = function(e){
+                    if(e.keyCode==9 || e.which==9){
+                        e.preventDefault();
+                        var s = this.selectionStart;
+                        this.value = this.value.substring(0,this.selectionStart) + "    " + this.value.substring(this.selectionEnd);
+                        this.selectionEnd = s+'    '.length;
+                    }
+                }
+            }
+
             let numberPattern = /\d+/g;
             let postId = 0;
             $('.user-info').hide();
@@ -100,10 +116,9 @@
                 //Show or hide the message author info
                 $('#userinfoMessage'+infoId).toggle();
             });
+            //Create post
             $('#newPostButton').click(function(){
-
                 let text = $('#quickReplyInfo').val();
-                console.log(text);
                 let numbers = window.location.href.match(numberPattern);
                 let channelId = numbers[numbers.length-2];
                 let threadId = numbers[numbers.length-1];
@@ -122,6 +137,7 @@
                     }
                 });
             });
+            //Edit post
             $('.card-header').on('click','.edit-button',function(){
                 postId = this.id.match(numberPattern);
                 let text;
@@ -134,6 +150,7 @@
                 });
                 $('#modalEditPost').modal('show');
             });
+            //Submit edit post
             $('#editPost').click(function(){
                 let text = $('#postText').val();
                 $.ajax({
@@ -150,6 +167,10 @@
                         console.log(msg);
                     }
                 });
+            });
+            hljs.configure({useBR: false});
+            $('code').each(function(i, block) {
+                hljs.highlightBlock(block);
             });
         });
     </script>

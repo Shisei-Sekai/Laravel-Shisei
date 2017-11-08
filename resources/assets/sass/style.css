@@ -16,6 +16,11 @@ html { height: 100%;}
     color: #a7a7a7;
 }
 
+code{
+    display: block;
+    white-space: pre;
+}
+
 /*-------------------------------*/
 /*           Create Post         */
 /*-------------------------------*/
