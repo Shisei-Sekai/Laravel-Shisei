@@ -255,7 +255,8 @@ class GetController extends Controller
         if(!$r->isMethod('GET')){
             return redirect('/');
         }
-        $posts = $this->getPosts($channelId,$threadId,1);
+        $page = $r->has('page') ? $r->input('page') : 1;
+        $posts = $this->getPosts($channelId,$threadId,$page);
         $thread = Thread::find($threadId);
         return view("post",['posts'=>$posts['posts'],'users'=>$posts['users'],'threadName'=>$thread->title]);
     }
@@ -303,5 +304,13 @@ class GetController extends Controller
             return view('unauthorized');
         }
 
+    }
+
+    public function getPostText(Request $r){
+        if(!$r->ajax()){
+            return redirect('/');
+        }
+        $post = Post::find($r->input('postId'));
+        return response()->json(['success'=>true,'content'=>$post->text]);
     }
 }

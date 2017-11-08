@@ -28,7 +28,7 @@
                         <h8><a href="">{{$threadName}}</a></h8>
                         <button type="button" class="fa fa-bolt float-right message-options"></button>
                         <button type="button" class="fa fa-trash float-right message-options"></button>
-                        <button type="button" class="fa fa-pencil float-right message-options"></button>
+                        <button type="button" class="fa fa-pencil float-right message-options edit-button" id="editPost{{$post['id']}}"></button>
                     </div>
                     <div class="card-body">
                         <div class="message-body" id="message{{$index+1}}">
@@ -58,6 +58,29 @@
             </div>
         </div><br><br>
 
+        <div class="modal fade" id="modalEditPost" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg bg-dark" role="document">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar post</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Texto:</label>
+                            <textarea type="text" class="form-control" id="postText"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="editPost" data-dismiss="modal">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -66,6 +89,7 @@
         //Hide all userinfo by default
         $(document).ready(function(){
             let numberPattern = /\d+/g;
+            let postId = 0;
             $('.user-info').hide();
             //If someone wants to know the message author info
             $('.userdrop').click(function(){
@@ -95,6 +119,35 @@
                     },
                     error:function(msg){
                        console.log(msg);
+                    }
+                });
+            });
+            $('.card-header').on('click','.edit-button',function(){
+                postId = this.id.match(numberPattern);
+                let text;
+                $.ajax({
+                    url:'/post?postId='+postId,
+                    type:'get',
+                    success:function(msg){
+                        $('#postText').val(msg.content);
+                    }
+                });
+                $('#modalEditPost').modal('show');
+            });
+            $('#editPost').click(function(){
+                let text = $('#postText').val();
+                $.ajax({
+                    url:'/post',
+                    type:'PUT',
+                    headers:{
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{'text':text,'postId':postId},
+                    success:function(msg){
+                        location.reload();
+                    },
+                    error:function(msg){
+                        console.log(msg);
                     }
                 });
             });

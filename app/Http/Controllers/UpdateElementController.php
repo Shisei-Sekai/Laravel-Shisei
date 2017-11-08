@@ -6,6 +6,7 @@ use App\User;
 use App\Category;
 use App\Role;
 use App\UserRoles;
+use App\Post;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
@@ -69,16 +70,16 @@ class UpdateElementController extends Controller
      */
     public function editPost(Request $r){
         $postId = $r->input('postId');
-        $userId = Auth::user()? Auth::user()['id'] : false;
-        $postAuthor = Post::find($postId)['author_id'];
-        if(!$r->isMethod('PUT') || $userId != $postAuthor || !Auth::user()->rolesPermissions['edit post']){
-            return false;
+        $userId = Auth::user()? Auth::user()['id'] : 0;
+        $post = Post::where('id','=',$postId)->first();
+        $postAuthor = $post['user_id'];
+        if(!Auth::user() || !$r->isMethod('PUT') || ($userId != $postAuthor && !Auth::user()->rolesPermissions['edit post'])){
+            return response()->json(['success'=>false,'reason'=>'you can\'t edit that post']);
         }
         //Find the post with that id, replace the text and save it again
-        $post = Post::find($postId);
         $post->text = $r->input('text');
         $post->save();
-        return true;
+        return response()->json(['success'=>true]);
     }
 
     public function updateUserAvatar(Request $r,$userName){
@@ -122,10 +123,11 @@ class UpdateElementController extends Controller
 
         $res = json_decode($res->getBody());
 
+        //Update user avatar
         $user = User::where('name','=',$userName)->first();
         $user->avatar = $res->files[0]->url;
         $user->save();
-        unlink($path);
+        unlink($path); //Delete user image from local server
         return redirect('/');
     }
 
