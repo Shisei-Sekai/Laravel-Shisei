@@ -65,7 +65,9 @@
                             @endforeach
                         </ul>
                     </div>
+                    @auth
                     <button type="button" class="btn post-button" id="newThreadButton">Nuevo tema</button>
+                    @endauth
                 </div>
             </div>
         </div><br><br>

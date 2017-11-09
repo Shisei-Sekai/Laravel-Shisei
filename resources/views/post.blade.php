@@ -52,7 +52,7 @@
                 </li>-->
             </ul>
         </nav>
-
+        @auth
         <div class="row justify-content-center">
             <div class="col-md-10 col-8 col-sm-8 quickReplySection">
                 <div class="card sub-section">
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div><br><br>
-
+        @endauth
         <!-- EDIT POST MODAL -->
         <div class="modal fade" id="modalEditPost" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg bg-dark" role="document">
