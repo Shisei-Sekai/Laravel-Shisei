@@ -112,7 +112,7 @@ class GetController extends Controller
         );
         //$parser = new BBCode();
         $parser = new BBCodeParser();
-        $posts = Post::where('thread_id','=',$threadId)->offset(($page-1)*15)->limit(15)->get();
+        $posts = Post::where('thread_id','=',$threadId)->orderBy('id','asc')->offset(($page-1)*15)->limit(15)->get();
         //For each post, find all users participating and get post text
         foreach ($posts as $p){
             //No repeat users in the array
