@@ -112,7 +112,7 @@ class GetController extends Controller
         );
         //$parser = new BBCode();
         $parser = new BBCodeParser();
-        $posts = Post::where('thread_id','=',$threadId)->orderBy('id','asc')->offset(($page-1)*15)->limit(15)->get();
+        $posts = Post::where('thread_id','=',$threadId)->orderBy('id','asc')->offset(($page-1)*20)->limit(20)->get();
         //For each post, find all users participating and get post text
         foreach ($posts as $p){
             //No repeat users in the array
@@ -258,7 +258,8 @@ class GetController extends Controller
         $page = $r->has('page') ? $r->input('page') : 1;
         $posts = $this->getPosts($channelId,$threadId,$page);
         $thread = Thread::find($threadId);
-        return view("post",['posts'=>$posts['posts'],'users'=>$posts['users'],'threadName'=>$thread->title]);
+        $count = Post::where('thread_id','=',$threadId)->count();
+        return view("post",['posts'=>$posts['posts'],'users'=>$posts['users'],'threadName'=>$thread->title,'quantity'=>$count]);
     }
 
     public function createMainPage(Request $r){
@@ -281,7 +282,7 @@ class GetController extends Controller
         $channel = Channel::find($channelId);
         $page = $r->has('page')? $r->input('page'):1;
         $threads = $this->getThreads($channelId,$page);
-        return view('channel',['threads'=>$threads,'total'=>$total,"channelName"=>$channel->name,"channelId"=>$channelId]);
+        return view('channel',['threads'=>$threads,'quantity'=>$total,"channelName"=>$channel->name,"channelId"=>$channelId]);
         //return response()->json(["success"=>true]);
     }
 

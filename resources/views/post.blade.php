@@ -40,6 +40,19 @@
         </div><br>
         @endforeach
 
+        <!-- Pagination -->
+        <nav aria-label="">
+            <ul class="pagination justify-content-end" id="pages">
+                <!--
+                <li class="page-item bg-dark" id="prev">
+                    <a class="page-link bg-dark" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item" id="next">
+                    <a class="page-link bg-dark" href="#" tabindex="+1">Next</a>
+                </li>-->
+            </ul>
+        </nav>
+
         <div class="row justify-content-center">
             <div class="col-md-10 col-8 col-sm-8 quickReplySection">
                 <div class="card sub-section">
@@ -91,8 +104,10 @@
         //Hide all userinfo by default
         $(document).ready(function(){
             //Enable tabs in textareas
-            var textareas = document.getElementsByTagName('textarea');
-            var count = textareas.length;
+            let postQuantity = {{$quantity}};
+            console.log(postQuantity);
+            let textareas = document.getElementsByTagName('textarea');
+            let count = textareas.length;
             for(var i=0;i<count;i++){
                 textareas[i].onkeydown = function(e){
                     if(e.keyCode==9 || e.which==9){
@@ -102,6 +117,13 @@
                         this.selectionEnd = s+'    '.length;
                     }
                 }
+            }/*
+            for(let i=Math.floor(postQuantity /20)+1;i>0;i--){
+                $('#pages').after('<li class="page-item"><a class="page-link bg-dark number" href="?page='+i+'">'+(i)+'</a></li>');
+            }*/
+            let limit = postQuantity%20? Math.floor(postQuantity/20)+1 : Math.floor(postQuantity/20);
+            for(let i=1;i<=limit;i++){
+                $('#pages').append('<li class="page-item"><a class="page-link bg-dark number" href="?page='+i+'">'+(i)+'</a></li>');
             }
 
             let numberPattern = /\d+/g;
@@ -119,7 +141,7 @@
             //Create post
             $('#newPostButton').click(function(){
                 let text = $('#quickReplyInfo').val();
-                let numbers = window.location.href.match(numberPattern);
+                let numbers = window.location.href.split('?page')[0].match(numberPattern);
                 let channelId = numbers[numbers.length-2];
                 let threadId = numbers[numbers.length-1];
                 $.ajax({
@@ -146,9 +168,9 @@
                     type:'get',
                     success:function(msg){
                         $('#postText').val(msg.content);
+                        $('#modalEditPost').modal('show');
                     }
                 });
-                $('#modalEditPost').modal('show');
             });
             //Submit edit post
             $('#editPost').click(function(){

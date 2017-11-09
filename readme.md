@@ -13,20 +13,13 @@ Shisei sekai is a unofficial JoJo's Bizare Adventures fan made role-based forum.
 
 ### Why do this?
 
-As a great philosoph said once:
-> DOITSU NO KAGAKU WA SEKAI ICHI
-
-Inspired by the great pillar men, who said
-> AWAKEN, MY MASTERS!
-
-And, how could i forgot the inspirational phrase:
-> WRYYYYYYYYY
+Why not?
 
 
 ### Requirements
 * PHP >= 7.0
-* Nginx (recommended, don't use built-in server in production)
-* NPM
+* nginx (recommended, don't use built-in server in production)
+* npm
 * Database engine (pref, PostgreSQL)
 * Composer
 
@@ -35,8 +28,8 @@ And, how could i forgot the inspirational phrase:
 Just clone the repository, 
 
 ```sh
-$ git clone "this-repository.git"
-$ cd this-repository
+$ git clone https://github.com/Shisei-Sekai/Laravel-Shisei
+$ cd Laravel-Shisei
 $ npm install
 $ composer install
 ```
