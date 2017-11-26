@@ -96,7 +96,7 @@
             </li>
 
             <li class="right"><a href="#contact" style="color:white">Contacto</a></li>
-            <li class="right"><a href="http://github.com/Shisei-sekai" style="color:white">Github</a></li>
+            <li class="right"><a href="http://github.com/Shisei-sekai/Laravel-Shisei" style="color:white">Github</a></li>
         </ul>
 
     </div>
