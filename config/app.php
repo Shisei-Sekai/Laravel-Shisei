@@ -141,6 +141,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Jenssegers\Agent\AgentServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -230,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'BBCode' => Golonka\BBCode\Facades\BBCodeParser::class,
         //'BBCode' => \Genert\BBCode\Facades\BBCode::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
 
     ],
 

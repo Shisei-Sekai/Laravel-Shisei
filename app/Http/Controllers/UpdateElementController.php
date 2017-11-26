@@ -36,6 +36,9 @@ class UpdateElementController extends Controller
     public function updateCategory(Request $r){
         $category = Category::find($r->input("category_id"));
         $category->name = $r->input('name');
+        $category->description = $r->input('description');
+        $category->color = $r->input('color');
+        $category->image = $r->input('image');
         $category->save();
         return response()->json(['success'=>true]);
     }

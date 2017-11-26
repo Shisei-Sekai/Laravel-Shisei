@@ -48,6 +48,9 @@ class GetController extends Controller
             $data["info"][$d->id] = array(
                 "id" => $d->id,
                 "name"=>$d->name,
+                "color"=>$d->color,
+                "description"=>$d->description,
+                "image"=>$d->image,
             );
         }
         return response()->json($data);
@@ -133,6 +136,9 @@ class GetController extends Controller
                     ),
                 );
             }
+            //Edit post permission
+            $userId = Auth::user()? Auth::user()['id'] : 0;
+            $canEdit = Auth::user() && ($userId == $p->user_id || Auth::user()->rolesPermissions['edit post']);
             //Get text
             $text = $p->text;
             //No script execute thx
@@ -146,6 +152,7 @@ class GetController extends Controller
                 'userId'=> $p->user_id,
                 'id' => $p->id,
                 'text' => $text,
+                'canEdit'=>$canEdit,
             ));
         }
         return $data;
@@ -241,6 +248,7 @@ class GetController extends Controller
     }
 
     //Get request
+    /*
     public function createThreadPage(Request $r){
         $permission = Auth::user()? Auth::user()->rolesPermissions()['create thread'] : false;
         if(!$r->isMethod('GET') || !$permission){
@@ -249,7 +257,7 @@ class GetController extends Controller
         $channelId = $r->input('channelId');
         $channel = Channel::find($channelId);
         return view('create_thread',['channelId'=>$channel->id,"channelName"=>$channel->name]);
-    }
+    }*/
 
     public function renderThreadPage(Request $r,$channelId,$threadId){
         if(!$r->isMethod('GET')){
@@ -270,8 +278,10 @@ class GetController extends Controller
                 "id" => $category->id,
                 "name" => $category->name,
                 "channels"=> $this->getCategoryChannels($category->id),
+                "image"=>$category->image,
+                "description"=>$category->description,
+                "color"=>$category->color,
             ));
-
         }
         return view('index',["categories"=>$data]);
     }

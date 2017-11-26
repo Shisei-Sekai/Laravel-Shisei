@@ -220,15 +220,34 @@
                     <div class="form-inline my-2 my-lg-0 justify-content-center">
                         <label for="recipient-name" class="col-form-label mr-sm-1">Nombre:</label>
                         <input type="text" class="form-control mr-sm-2" id="categoryEditName">
-                        <button type="button" class="fa fa-pencil float-right section-button" id="editCategoryName"></button>
                     </div>
                     <br>
+                    <div class="form-inline my-2 my-lg-0 justify-content-center">
+                        <label for="recipient-name" class="col-form-label mr-sm-1">Descripcion</label>
+                        <input type="text" class="form-control mr-sm-2" id="categoryEditDescription">
+                    </div>
+                    <br>
+                    <div class="form-inline my-2 my-lg-0 justify-content-center">
+                        <label for="recipient-name" class="col-form-label mr-sm-1">Imagen</label>
+                        <input type="text" class="form-control mr-sm-2" id="categoryEditImage">
+                    </div>
+                    <br>
+                    <div class="form-inline my-2 my-lg-0 justify-content-center">
+                        <label for="editCategoryColorValue" class="col-form-label">Color</label>
+                        <div id="editCategoryColor" class="input-group colorpicker-component CategoryColor">
+                            <input type="text" id="editCategoryColorValue" value="red" class="form-control" />
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary bg-dark float-right" id="editCategoryInfo" data-dismiss="modal">Editar</button>
+                    <br><br>
                     <ul class="nav justify-content-center" style="background: #908c90">
                         <li class="nav-item">
                             <span class="nav-link active">Crear channel</span>
                         </li>
                     </ul>
                     <br>
+
                     <!-- Create a channel div -->
                     <div>
                         <form class="form-inline my-2 my-lg-0">
@@ -341,7 +360,7 @@
                     //Append elements
                     $.each(msg.info,function(index,element){
                         /*$('#dbInfo').append('<li class="list-group-item bg-dark element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'"id="'+id+element.id+'"><span>'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>');*/
-                        $('#dbInfo').append('<li class="list-group-item bg-dark dbElement"><span class="element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'"color-info="'+element.color+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>');
+                        $('#dbInfo').append('<li class="list-group-item bg-dark dbElement"><span class="element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'"color-info="'+element.color+'" description="'+element.description+'" image="'+element.image+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>');
 
                     });
                     //Generate pagination
@@ -389,6 +408,9 @@
             }
             else if($('.current').attr('id') === "categories"){
                 $('#categoryEditName').val($(this).text());
+                $('#editCategoryColor').colorpicker('setValue',$(this).attr('color-info'));
+                $('#categoryEditImage').val($(this).attr('image'));
+                $('#categoryEditDescription').val($(this).attr('description'));
                 $('.categoryChannel').remove();
                 $.ajax({
                     url:'/admin/channels',
@@ -426,9 +448,13 @@
             makeAjax('/admin/categories',{name:name},'post');
         });
         //Edit category (change name)
-        $('#editCategory').click(function(){
+        $('#editCategoryInfo').click(function(){
             let name = $('#categoryEditName').val();
-            makeAjax('/admin/categories',{name:name,category_id:elementId},'put');
+            let color = $('#editCategoryColorValue').val();
+            let description = $('#categoryEditDescription').val();
+            let image = $('#categoryEditImage').val();
+            console.log(color);
+            makeAjax('/admin/categories',{name:name,category_id:elementId,color:color,description:description,image:image},'put');
         });
 
         //Delete role from user

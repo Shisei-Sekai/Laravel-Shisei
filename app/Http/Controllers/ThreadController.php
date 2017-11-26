@@ -33,13 +33,15 @@ class ThreadController extends Controller{
         //The relation is:
         //10 gold per post and 5 exp per every 100 characters of text (floor)
         //Probably will change this to use environment variables
-        $total = strlen($text)/100;
+        $legitText = preg_replace("/[^A-Za-z]/","",$text); //Only counting characters, neither specials nor newlines
+        $total = strlen($legitText)/100;
         $user['money'] += 10;
         $user['exp'] += floor($total)*5;
         //$user['exp'] += round($total)*5; //Or maybe round up (?)
         $user->save();
 
-        return response()->json(array('success'=>true));
+        //return response()->json(array('success'=>true));
+        return redirect()->back();
     }
 
     //Create a thread in a channel

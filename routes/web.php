@@ -61,9 +61,10 @@ Route::middleware('isAdmin')->prefix('admin')->group(function (){
 //Main page
 Route::get('/','GetController@createMainPage')->name('home');
 Route::get('/home','GetController@createMainPage');
+
 //Thread section
 Route::get('/thread','GetController@createThreadPage');
-Route::post('/threads/{channelId}',"ThreadController@createThread")->where('channelId','[0-9]+');
+Route::post('/{channelId}',"ThreadController@createThread")->where('channelId','[0-9]+');
 
 //User things (get page/update avatar)
 Route::get('/user/{userName}','GetController@getUserPage');

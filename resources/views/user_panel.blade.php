@@ -1,75 +1,42 @@
-@extends('layouts.base')
-
+@extends('layouts.base_materialized')
 @section('content')
-<div class="container">
-
-    <div class="row">
-        <div class="col-md-12 col-10 col-sm-11">
-            <div class="card sub-section">
-                <div class="card-header" style="text-align: center"><h6 class="card-title">User name</h6></div>
-                <!-- navigation -->
-                <ul class="nav justify-content-center sub-section">
-                    <li class="nav-item">
-                        <span class="nav-link" href="#">Información</span>
-                    </li>
-                    <li class="nav-item">
-                        <span class="nav-link" href="#">Ficha de personaje</span>
-                    </li>
-                    <!-- Privado -->
-                    <li class="nav-item">
-                        <span class="nav-link" href="#">Ficha de combate</span>
-                    </li>
-                    <li class="nav-item">
-                        <span class="nav-link" href="#">Medallas</span>
-                    </li>
-                    <li class="nav-item">
-                        <span class="nav-link" href="#">Inventario</span>
-                    </li>
-                    <!-- fin de lo privado -->
-
-                </ul>
-                <!-- content -->
-                <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-md-6 col-6 col-sm-6">
-                            <div class="user-avatar" "><img class="user-avatar circular-image" src="{{$user['avatar']}}"><br></div>
-                            <span>{{$user['name']}}</span><br>
-                            <span style="color:{{$user['role']['color']}}">{{$user['role']['name']}}</span>
-                        </div>
+    <div class="section row-full blue-grey darken-1">
+        <div class="row">
+            <div class="col s12 m12">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title center">{{$user['name']}}</span>
+                        <img src="{{$user['avatar']}}" class="circle" style="width:150px;height:150px;object-fit: cover">
+                    </div>
+                    <div class="card-action">
                         @if($user['owner'])
-                            <form id="user" method="post" enctype="multipart/form-data">
+                            <form method="POST" enctype="multipart/form-data">
                                 {{csrf_field()}}
-                                <div class="form-group">
-                                    <label for="uploadUserAvatar">Cambiar avatar</label>
-                                    <input type="file" name="userAvatar" id="uploadUserAvatar" class="form-control-file"><br>
-                                    <button class="btn btn-dark" type="submit">submit</button>
+                                <div class="row">
+                                    <div class="col s6 m6">
+                                        <div class="file-field input-field">
+                                            <div class="btn">
+                                                <span>Cambiar avatar</span>
+                                                <input type="file" name="userAvatar" id="uploadUserAvatar" placeholder="Cambiar avatar">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col m6 s6">
+                                        <button class="btn left z-depth-0" type="submit" style="border: none;background: transparent;margin-top: 40px">Cambiar</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+
                                 </div>
 
                             </form>
                         @endif
-                        <!--
-                        <div class="col-md-6 col-6 col-sm-6">
-                            <br><br>
-                            <span>Badges</span><br>
-                            <span>b1</span>
-                            <span>b1</span>
-                            <span>b1</span>
-                            <span>b1</span>
-                            <span>b1</span>
-                            <br><br>
-                            <span>Items</span><br>
-                            <span>I1</span>
-                            <span>I2</span>
-                            <span>I3</span>
-                            <span>I4</span>
-                            <span>I5</span>
-                            <br>
-                        </div>
-                        -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div><br>
 @endsection

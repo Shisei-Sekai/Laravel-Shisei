@@ -1,0 +1,157 @@
+.row-full{
+
+  width: 100vw;
+  position: relative;
+  margin-left: -50vw;
+  left: 50%;
+
+}
+.default-event-icon{
+  font-size: 100px;
+}
+
+body{
+  overflow-x: hidden;
+}
+code{
+  display: block;
+  white-space: pre-wrap;
+}
+strong{
+  font-weight: bold;
+}
+.message-body{
+  font-family: 'Quicksand', sans-serif;
+}
+a:link {
+  color: #6c9fff;
+}
+a:hover{
+  color: #1d5cff;
+}
+a:visited{
+  color: #6c9fff;
+}
+#categories{
+  background: #ffff url("../img/slider-backgrou-new.jpg");
+  background-position: center center;
+  /*background-attachment: fixed;*/
+  background-repeat: repeat;
+}
+#events{
+  /*background: #ffff url("../images/cool_background.jpeg");*/
+  background: linear-gradient(to bottom right,white, #a4e4ff, #a4e4ff, white);
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+.nav-fixed{
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.nav-fixed {
+  top: 0;
+}
+.transparent{
+  background: rgba(255, 255, 255, 0.0);
+}
+.header-image{
+  /*background: url("images/header1.jpg");*/
+  background: url("../images/header1.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  /*background-size: cover;*/
+  object-fit: cover;
+  height: 500px;
+  width: 100%;
+}
+/* Hide scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+@media(min-device-width: 768px){
+  .category-image{
+    width:320px;
+    object-fit: cover;
+  }
+}
+@media(min-device-width: 576px) and (max-device-width: 768px) {
+  .category-image{
+    width:320px;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+@media(max-device-width: 576px){
+  .category-image{
+    width:150px;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+
+.sub-section {
+  border: none;
+  background-color: #4a4a4a;
+  color: #f3eefe;
+}
+.main-info{
+  border-radius: 5px;
+  background-color: teal;
+}
+.arrowdown:hover,
+.arrowdown:active,
+.arrowdown:focus,
+.userdrop:hover,
+.userdrop:active,
+.userdrop:focus,
+.postDrop:hover,
+.postDrop:active,
+.postDrop:focus,
+.message-options:hover,
+.message-options:active,
+.message-options:focus,
+.section-button:hover,
+.section-button:active,
+.section-button:focus{
+  background: transparent;
+  outline: none;
+}
+
+.userdrop,
+.arrowdown,
+.postDrop,
+.message-options{
+  height: 0px;
+  color: white;
+  display: block;
+  border: none;
+  background: transparent;
+  opacity: 1;
+}
+.user-info{
+  text-align: right;
+  font: fantasy;
+  font-size: 12px;
+  transition: 5s;
+}
+.userdrop{
+  margin-top: -20px;
+  padding: 0;
+}
+
+.user-name{
+  font: "Calibri Light";
+  font-size: 15px;
+}
+
+.user-details{
+  text-align: left;
+  margin-left: 5px;
+  font-size: 12px;
+  padding-bottom: 5px;
+}
