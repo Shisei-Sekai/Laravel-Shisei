@@ -83,7 +83,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2017 Aztic. MIT Licence
+            © 2017 Aztic. MIT License
         </div>
     </div>
 </footer>
