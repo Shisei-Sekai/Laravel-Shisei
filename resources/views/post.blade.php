@@ -8,7 +8,8 @@
                 <div id="info{{$index+1}}" class="col m2 center-align">
                     <img src="{{$users[$post['userId']]['avatar']}}" class="circle" style="width:150px;height:150px;object-fit: cover">
                     <div class="main-info sub-section">
-                        <div class="user-name center">{{$users[$post['userId']]['name']}}</div><button type="button" class="userdrop right"  id="buttonMessage{{$index+1}}"><i class="material-icons arrowdown">keyboard_arrow_down</i></button>
+                        <button type="button" class="userdrop right"  id="buttonMessage{{$index+1}}"><i class="material-icons arrowdown">keyboard_arrow_down</i></button>
+                        <div class="user-name center">{{$users[$post['userId']]['name']}}</div>
                         <div class="user-info" id="userinfoMessage{{$index+1}}">
                             <!-- User role -->
                             <div class="user-details" style="text-align: center;color: red">{{$users[$post['userId']]['role']['name']}}</div>
@@ -112,7 +113,7 @@
         </div>
     </div>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script>
+    <script language="javascript" type="text/javascript">
         //Hide all userinfo by default
         $(document).ready(function(){
             let params = new URLSearchParams(window.location.search); //URL params
@@ -147,13 +148,21 @@
             $('.user-info').hide();
             //If someone wants to know the message author info
             $('.userdrop').click(function(){
-                //Get the message id
-                //let numberPattern = /\d+/g;
+                console.log('clicked');
                 let messageId = $(this).attr('id');
                 let infoId = messageId.match(numberPattern);
                 //Show or hide the message author info
                 $('#userinfoMessage'+infoId).toggle();
-            });
+            });/*
+            $('.main-info').on("click",'.userdrop',function(){
+                //Get the message id
+                //let numberPattern = /\d+/g;
+                console.log('clicked');
+                let messageId = $(this).attr('id');
+                let infoId = messageId.match(numberPattern);
+                //Show or hide the message author info
+                $('#userinfoMessage'+infoId).toggle();
+            });*/
             //Edit post
 
             $('.edit-button').click(function () {

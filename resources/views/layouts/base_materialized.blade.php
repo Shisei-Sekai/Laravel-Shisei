@@ -109,9 +109,5 @@
 
 @yield('content')
 </body>
-<script>
-    $(document).ready(function () {
-        $(".dropdown-button").dropdown({ hover: false, belowOrigin: true, constrain_width: false, alignment: 'right' });
-    });
-</script>
+
 </html>
