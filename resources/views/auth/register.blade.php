@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="input-field col s12 m12 l12 xl12">
                                 <label for="name">Nombre</label>
-                                <input id="name" type="text" value="{{ old('name') }}" required autofocus>
+                                <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>
                                 @if ($errors->has('name'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('name') }}</strong>
@@ -50,12 +50,7 @@
 
                         </div>
                         <div class="row">
-                            <div class="col s6 m6 l6 xl6">
-                                <p>
-                                    <input type="checkbox" name="remember" id="rememberme" {{ old('remember') ? 'checked' : '' }}/>
-                                    <label for="rememberme">Remember me</label>
-                                </p>
-                            </div>
+
                             <div class="col s6 m6 l6 xl6">
                                 <button class="btn left z-depth-0" type="submit" style="border: none;background: transparent">Register
                                     <i class="material-icons right">send</i>
