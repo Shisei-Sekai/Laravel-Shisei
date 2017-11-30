@@ -88,6 +88,9 @@ class UpdateElementController extends Controller
     public function updateUserAvatar(Request $r,$userName){
         $user = Auth::user();
         $permission = $user && $user->name == $userName;
+        $r->validate([
+           'userAvatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024',
+        ]);
         if(!$permission || !$r->isMethod('POST')){
             return redirect('/');
         }
