@@ -26,17 +26,22 @@
             <div class="col m10">
                 <div class="card-panel grey lighten-2 hoverable" style="border-radius:5px">
 
-                    <a class="card-title activator grey-text text-darken-4 dropdown-button" data-activates="options-dropdown{{$index+1}}"><i class="material-icons right">more_vert</i></a>
-                    <ul id="options-dropdown{{$index+1}}" class="dropdown-content left">
-                        @if($post['canEdit'])
-                        <li><a href="#" id="editButton{{$post['id']}}" class="edit-button">Editar</a></li>
-                        <li><a href="#">Borrar</a></li>
-                        <li class="divider"></li>
-                        @endif
-                        <li><a href="#">Reportar</a></li>
-                    </ul>
-                    <div class="message-body" id="message{{$index+1}}">
-                        {!! $post['text'] !!}
+                    <div class="card-content">
+                        <a class="card-title activator grey-text text-darken-4 dropdown-button" data-activates="options-dropdown{{$index+1}}"><i class="material-icons right">more_vert</i></a>
+                        <ul id="options-dropdown{{$index+1}}" class="dropdown-content left">
+                            @if($post['canEdit'])
+                                <li><a href="#" id="editButton{{$post['id']}}" class="edit-button">Editar</a></li>
+                                <li><a href="#">Borrar</a></li>
+                                <li class="divider"></li>
+                            @endif
+                            <li><a href="#">Reportar</a></li>
+                        </ul>
+                        <div class="message-body" id="message{{$index+1}}">
+                            {!! $post['text'] !!}
+                        </div>
+                    </div>
+                    <div class="card-action hide-on-med-and-up">
+                        <img src="{{$users[$post['userId']]['avatar']}}" class="circle" style="width:40px;height:40px;object-fit: cover;margin-top: 50px"><div class="user-name">{{$users[$post['userId']]['name']}}</div>
                     </div>
 
                 </div>
@@ -56,10 +61,10 @@
                             @endif
                             <li><a href="#">Reportar</a></li>
                         </ul>
-
                         <div class="message-body mobile-message" id="messageMobile{{$index+1}}">
                             {!! $post['text'] !!}
                         </div>
+
 
                     </div>
 
