@@ -28,10 +28,6 @@
                                         <button class="btn left z-depth-0" type="submit" style="border: none;background: transparent;margin-top: 40px">Cambiar</button>
                                     </div>
                                 </div>
-                                <div class="row">
-
-                                </div>
-
                             </form>
                             @if($errors->any())
                                 @foreach ($errors->all() as $error)

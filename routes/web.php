@@ -51,6 +51,19 @@ Route::middleware('isAdmin')->prefix('admin')->group(function (){
     Route::delete('channels','CleanController@deleteChannel'); //Delete category from channel
 
 
+    //Items stuff
+    Route::get('items','ItemController@getItems');
+
+    Route::get('items/all','ItemController@getAllItems');
+
+    Route::get('items/user','ItemController@getUserItems');
+    Route::post('items/user','ItemController@itemToUser');
+    Route::delete('items/user','ItemController@takeItemFromUser');
+
+    Route::put('items','ItemController@editItem');
+    Route::post('items','ItemController@createItem');
+    Route::delete('items','ItemController@deleteItem');
+
     //Affiliates stuff
     Route::get('affiliates',function(){
         echo "affiliates";

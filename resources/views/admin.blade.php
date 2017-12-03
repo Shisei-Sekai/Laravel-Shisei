@@ -21,10 +21,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Forum<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="https://shisei-sekai.jojo.com.ve">Forum<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a  class="nav-link" href="{{ route('logout') }}"
@@ -56,6 +53,7 @@
                         <li class="list-group-item bg-dark"><button id="roles" class="section-button selector">Roles</button></li>
                         <li class="list-group-item bg-dark"><button id="categories" class="section-button selector">Categorias</button></li>
                         <li class="list-group-item bg-dark"><button id="affiliates" class="section-button selector">Afiliados</button></li>
+                        <li class="list-group-item bg-dark"><button id="items" class="section-button selector">Items</button></li>
                         <li class="list-group-item bg-dark"><button id="character_cards" class="section-button selector">Fichas de personaje</button></li>
                         <li class="list-group-item bg-dark"><button id="combat_cards" class="section-button selector">Fichas de combate</button></li>
                     </ul>
@@ -264,7 +262,7 @@
                     <ul class="nav justify-content-center" style="background: #908c90">
                         <br>
                         <li class="nav-item" id="editCategorySection">
-                            <a class="nav-link" href="#">Channels</a>
+                            <a class="nav-link">Channels</a>
                         </li>
                     </ul><br>
                     <!-- List all category channels -->
@@ -282,7 +280,7 @@
         </div>
     </div>
 
-    <!-- UPDATE USER MODAL (name and assign roles) -->
+    <!-- UPDATE USER MODAL (name and assign roles/items) -->
     <div class="modal fade" id="modalEditusers" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog bg-dark" role="document">
             <div class="modal-content bg-dark text-white">
@@ -301,7 +299,7 @@
                     </form><br>
                     <ul class="nav justify-content-center" style="background: #908c90">
                         <li class="nav-item">
-                            <span class="nav-link" href="#">Añadir rol</span>
+                            <span class="nav-link">Añadir rol</span>
                         </li>
                     </ul><br>
                     <!-- list all possible roles -->
@@ -324,9 +322,116 @@
                     <ul class="list-group list-group-flush text-white bg-dark" id="userRoles">
 
                     </ul>
+
+                    <ul class="nav justify-content-center" style="background: #908c90">
+                        <li class="nav-item">
+                            <span class="nav-link">Añadir Item</span>
+                        </li>
+                    </ul><br>
+
+                    <!-- list all possible items -->
+                    <div class="row">
+                        <!-- Here will be all possible roles loaded from db -->
+                        <div class="col">
+                            <select class="form-control mr-sm-2" id="avaliableItems">
+
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-dark float-right" data-dismiss="modal" id="addItemToUser">Añadir</button>
+                    </div>
+                    <br>
+                    <!-- List all user Items -->
+                    <ul class="nav justify-content-center" style="background: #908c90">
+                        <li class="nav-item">
+                            <span class="nav-link" href="#">Items</span>
+                        </li>
+                    </ul><br>
+                    <ul class="list-group list-group-flush text-white bg-dark" id="userItems">
+
+                    </ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATE ITEM MODAL -->
+    <div class="modal fade" id="modalitems" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog bg-dark" role="document">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crear categoria</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="itemCreationName">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Descripción:</label>
+                        <input type="text" class="form-control" id="itemCreationDescription">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Valor de compra:</label>
+                        <input type="number" min="1" class="form-control" id="itemCreationBuyValue">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Valor de venta:</label>
+                        <input type="number" min="1" class="form-control" id="itemCreationSellValue">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Icono:</label>
+                        <input type="text" class="form-control" id="itemCreationIcon">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="createItem" data-dismiss="modal">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT ITEM MODAL -->
+    <div class="modal fade" id="modalEdititems" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog bg-dark" role="document">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crear categoria</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="itemEditName">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Descripción:</label>
+                        <input type="text" class="form-control" id="itemEditDescription">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Valor de compra:</label>
+                        <input type="number" min="1" class="form-control" id="itemEditBuyValue">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Valor de venta:</label>
+                        <input type="number" min="1" class="form-control" id="itemEditSellValue">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Icono:</label>
+                        <input type="text" class="form-control" id="itemEditIcon">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="editItem" data-dismiss="modal">Editar</button>
                 </div>
             </div>
         </div>
@@ -359,8 +464,22 @@
                 success:function(msg){
                     //Append elements
                     $.each(msg.info,function(index,element){
+                        let content = "";
+                        if(prev === "items"){
+                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'" description="'+element.description+'" icon="'+element.icon+'" buy-value="'+ element.buyValue +'" sell-value="'+ element.sellValue +'" type="'+ element.type +'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
+                        }
+                        else if(prev === "categories"){
+                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'"color-info="'+element.color+'" description="'+element.description+'" image="'+element.image+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
+                        }
+                        else if(prev === "roles"){
+                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'"color-info="'+element.color+'" >'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
+                        }
+                        else if(prev === "users"){
+                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
+                        }
                         /*$('#dbInfo').append('<li class="list-group-item bg-dark element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'"id="'+id+element.id+'"><span>'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>');*/
-                        $('#dbInfo').append('<li class="list-group-item bg-dark dbElement"><span class="element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'"color-info="'+element.color+'" description="'+element.description+'" image="'+element.image+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>');
+                        /*$('#dbInfo').append('<li class="list-group-item bg-dark dbElement"><span class="element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'"color-info="'+element.color+'" description="'+element.description+'" image="'+element.image+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>');*/
+                        $('#dbInfo').append(content);
 
                     });
                     //Generate pagination
@@ -400,6 +519,8 @@
                 //Remove roles from previous users, if any
                 $('.userFreeRole').remove();
                 $('.userRole').remove();
+                $('.userItem').remove();
+                $('.itemAvaliable').remove();
                 //Set user name for edit/show
                 $('#userName').val($(this).text());
                 //Get user roles
@@ -426,6 +547,13 @@
                         console.log(msg);
                     }
                 });
+            }
+            else if($('.current').attr('id') === "items"){
+                $('#itemEditName').val($(this).text());
+                $('#itemEditDescription').val($(this).attr('description'));
+                $('#itemEditBuyValue').val($(this).attr('buy-value'));
+                $('#itemEditSellValue').val($(this).attr('sell-value'));
+                $('#itemEditIcon').val($(this).attr('icon'));
             }
         });
 
@@ -463,6 +591,11 @@
             makeAjax('/admin/roles/user',{roleId:roleId,userId:elementId},'DELETE');
         });
 
+        $('#userItems').on('click','.deleteUserItem',function(){
+            let itemId = $(this).attr('id');
+            makeAjax('/admin/items/user',{itemId:itemId,userId:elementId},'DELETE');
+        });
+
         //Edit user name
         $('#editUserName').click(function(){
             let newName = $('#userName').val();
@@ -475,6 +608,12 @@
         $('#addRoleToUser').click(function(){
            let roleId= $('#roleToAdd option:selected').attr('id');
            makeAjax('/admin/roles/user',{roleId:roleId,userId:elementId},'POST')
+        });
+
+        //Add item to user
+        $('#addItemToUser').click(function(){
+           let itemId = $('#avaliableItems option:selected').attr('id');
+           makeAjax('/admin/items/user',{userId:elementId,itemId:itemId},'POST');
         });
 
 
@@ -517,6 +656,24 @@
            makeAjax('/admin/channels',{id:channelId},'DELETE');
         });
 
+        //Create item
+        $('#createItem').click(function(){
+            let name = $('#itemCreationName').val();
+            let description = $('#itemCreationDescription').val();
+            let buyValue = $('#itemCreationBuyValue').val();
+            let sellValue = $('#itemCreationSellValue').val();
+            let icon = $('#itemCreationIcon').val();
+            makeAjax('/admin/items',{name:name,description:description,buyValue:buyValue,sellValue:sellValue,icon:icon},'POST');
+        });
+
+        $('#editItem').click(function(){
+            let name = $('#itemEditName').val();
+            let description = $('#itemEditDescription').val();
+            let buyValue = $('#itemEditBuyValue').val();
+            let sellValue = $('#itemEditSellValue').val();
+            let icon = $('#itemEditIcon').val();
+            makeAjax('/admin/items',{id:elementId,name:name,description:description,buyValue:buyValue,sellValue:sellValue,icon:icon},'PUT');
+        });
         //Make an ajax (duh)
         function makeAjax(url,data,type){
             $.ajax({
@@ -542,10 +699,10 @@
                 type:"GET",
                 data:{'id':elementId},
                 success:function(msg){
-                    console.log(msg);
+                    //console.log(msg);
                     //Travel all roles
                     $.each(msg,function(index,element){
-                        console.log(element);
+                        //console.log(element);
                         $('#userRoles').append('<li class="list-group-item bg-dark userRole"><span>'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteUserRole" id="'+element.id+'"></button></li>');
                     });
                 },
@@ -559,10 +716,10 @@
                 type:"GET",
                 data:{'id':elementId},
                 success:function(msg){
-                    console.log(msg);
+                    //console.log(msg);
                     //Travel all roles
                     $.each(msg,function(index,element){
-                        console.log(element);
+                        //console.log(element);
                         $('#roleToAdd').append('<option id="'+element.id+'" class="userFreeRole">'+element.name+'</option>');
                     });
                 },
@@ -570,6 +727,28 @@
                     console.log(msg);
                 }
             });
+            //Get all items
+            $.ajax({
+                url:'/admin/items/all',
+                type:'GET',
+                success:function(msg){
+                    $.each(msg,function(index,element){
+                       $('#avaliableItems').append('<option id="'+ element.id +'" class="itemAvaliable">'+element.name+'</option>');
+                    });
+                }
+            });
+            //Get user items
+            $.ajax({
+                url:'/admin/items/user',
+                type:'GET',
+                data:{id:elementId},
+                success:function(msg){
+                    //Something
+                    $.each(msg,function(index,element){
+                       $('#userItems').append('<li class="list-group-item bg-dark userItem"><span>'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteUserItem" id="'+element.id+'"></button></li>') ;
+                    });
+                }
+            })
         }
     });
 </script>

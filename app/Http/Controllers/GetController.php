@@ -247,18 +247,6 @@ class GetController extends Controller
         return response()->json($data);
     }
 
-    //Get request
-    /*
-    public function createThreadPage(Request $r){
-        $permission = Auth::user()? Auth::user()->rolesPermissions()['create thread'] : false;
-        if(!$r->isMethod('GET') || !$permission){
-            return redirect('/');
-        }
-        $channelId = $r->input('channelId');
-        $channel = Channel::find($channelId);
-        return view('create_thread',['channelId'=>$channel->id,"channelName"=>$channel->name]);
-    }*/
-
     public function renderThreadPage(Request $r,$channelId,$threadId){
         if(!$r->isMethod('GET')){
             return redirect('/');
