@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\UserItem;
 use App\Vendor;
 use App\Shop;
 use App\ShopItem;
@@ -191,6 +192,7 @@ class ShopController extends Controller
         foreach($shopItems as $shopItem){
             $item = Item::find($shopItem->item_id);
             array_push($items,[
+                'id'=>$item->id,
                 'name'=>$item->name,
                 'buyValue'=>$item->buy_value,
                 'sellValue'=>$item->sell_value,
@@ -199,5 +201,23 @@ class ShopController extends Controller
             ]);
         }
         return view('shop_inside',['items'=>$items,'info'=>$info]);
+    }
+
+    public function buyItem(Request $r){
+        if(!Auth::user())
+            return response()->json("At least, log in y'know",518);
+        $item = Item::find($r->input('itemId'))->first();
+        $user = Auth::user();
+
+        if($item->buy_value > $user->money)
+            return response()->json("Not enough money, pal",518);
+
+        $userItem = new UserItem();
+        $userItem->user_id = $user->id;
+        $userItem->item_id = $item->id;
+        $userItem->save();
+        $user->money -= $item->buy_value;
+        $user->save();
+        return response()->json(['success'=>true]);
     }
 }

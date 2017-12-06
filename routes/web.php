@@ -114,5 +114,6 @@ Route::get('/post','GetController@getPostText');
 //Shop management
 Route::get('/shop','ShopController@shopMenu');
 Route::get('/shop/{shopId}','ShopController@shopInside')->where('shopId','[0-9]+');
+Route::post('/shop','ShopController@buyItem');
 
 
