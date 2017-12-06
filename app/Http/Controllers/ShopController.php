@@ -210,7 +210,7 @@ class ShopController extends Controller
         $user = Auth::user();
 
         if($item->buy_value > $user->money)
-            return response()->json("Not enough money, pal",518);
+            return response("Not enough money, pal",518);
 
         $userItem = new UserItem();
         $userItem->user_id = $user->id;
