@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
+
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\UserRoles;
 use App\Role;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -64,6 +68,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $code = str_random(40);
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -71,12 +76,43 @@ class RegisterController extends Controller
             'avatar' => 'https://i.pinimg.com/originals/56/de/52/56de52932d542ed611e8daa147dbf8f8.jpg',
             'signature' => '',
             'money' => 0,
+            'confirmation_code'=> $code,
         ]);
+        $user->confirmation_code = $code;
+        $user->save();
         //Assign the "user" role to that user
         $role = new UserRoles();
         $role->user_id = $user->id;
         $role->role_id = Role::all()->where('name','=','user')->first()['id'];
         $role->save();
+
+        Mail::send('email.verify',['name'=>$data['name'],'confirmationCode'=>$code],function ($m) use($data){
+            $m->from('contact@jojo.com.ve','Shisei Sekai Contact');
+
+            $m->to($data['email'],$data['name'])->subject('Email Confirm');
+        });
         return $user;
+    }
+
+    public function confirm($confirmationCode){
+        if(!$confirmationCode){
+            return redirect('home');
+        }
+        $user = User::where('confirmation_code','=',$confirmationCode)->get()->first();
+        $user->confirmed = true;
+        $user->confirmation_code = null;
+        $user->save();
+        return view('confirmed');
+    }
+
+    public function register(Request $request){
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        //$this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
     }
 }

@@ -95,6 +95,9 @@ Route::middleware('isAdmin')->prefix('admin')->group(function (){
 Route::get('/','GetController@createMainPage')->name('home');
 Route::get('/home','GetController@createMainPage');
 
+//User confirmation
+Route::get('/confirm/{confirmationCode}','Auth\RegisterController@confirm');
+
 //Thread section
 Route::get('/thread','GetController@createThreadPage');
 Route::post('/{channelId}',"ThreadController@createThread")->where('channelId','[0-9]+');
@@ -115,5 +118,7 @@ Route::get('/post','GetController@getPostText');
 Route::get('/shop','ShopController@shopMenu');
 Route::get('/shop/{shopId}','ShopController@shopInside')->where('shopId','[0-9]+');
 Route::post('/shop','ShopController@buyItem');
+
+
 
 

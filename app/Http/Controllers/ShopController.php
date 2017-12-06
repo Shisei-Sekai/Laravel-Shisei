@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
+
 class ShopController extends Controller
 {
     /**
@@ -218,6 +219,7 @@ class ShopController extends Controller
         $userItem->save();
         $user->money -= $item->buy_value;
         $user->save();
+
         return response()->json(['success'=>true]);
     }
 }
