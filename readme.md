@@ -1,5 +1,5 @@
 # Shisei-Sekai forum
-0.0.1
+0.5
 
 Shisei sekai is a unofficial JoJo's Bizare Adventures fan made role-based forum. 
 
@@ -9,6 +9,8 @@ Shisei sekai is a unofficial JoJo's Bizare Adventures fan made role-based forum.
   - Admin panel, to manage most of the contents
   - User panel, to display user "record card". Combat card is private, only staff can see it. Also, you can see it by clicking in user avatar in any post
   - Admin verification of user cards.
+  - Shop, buy ~~useless~~ items.
+  - Decide which ~~useless~~ items display to other users from your user panel. 
  
 
 ### Why do this?
@@ -34,13 +36,22 @@ $ npm install
 $ composer install
 ```
 
+You'll also need to configure the `.env` file. In this repository, there's a example.
+For user avatar upload, set up this variables.
+```
+POMF_URL
+POMF_CLIENT_TOKEN (optional)
+POMF_CLIENT_SECRET (optional)
+```
+With the config of your pomf server (or not)
+
 ### TODO
 
 - Messenger
 - Events
 - Badges
-- Store
-- Vendors
+- ~~Store~~
+- ~~Vendors~~
 
 
 ### Advice
