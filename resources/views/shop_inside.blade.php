@@ -49,10 +49,10 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success:function(msg){
-                        Materialize.toast('Item comprado!', 3000)
+                        Materialize.toast('Item comprado!', 3000);
                     },
                     error:function(msg){
-                        alert(msg.responseText);
+                        Materialize.toast(msg.responseText, 3000);
                     }
                 });
             });
