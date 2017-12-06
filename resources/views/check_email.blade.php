@@ -5,8 +5,9 @@
             <div class="col s12 m6">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
-                        <span class="card-title">Confirmación exitosa</span>
-                        <p>Tu cuenta ha sido verificada. GL HF</p>
+                        <span class="card-title">Registro exitoso</span>
+                        <p>¡Gracias por registrarte en Shisei Sekai!<br>
+                            Hemos enviado un email a tu correo con un link de confirmación.</p>
                     </div>
                 </div>
             </div>
