@@ -24,6 +24,7 @@
             <span class="brand-logo">Shisei</span>
             <ul id="nav-mobile">
                 <li class="left"><a href="/">home</a></li>
+
                 <li class="right"><a class="dropdown-button" href="#" data-activates="dropdownMobile">
                         @auth
                             {{Auth::user()->name}}
@@ -53,6 +54,9 @@
                         @endauth
                     </ul>
                 </li>
+                @auth
+                    <li class="left"><a href="shop">Tienda</a></li>
+                @endauth
             </ul>
         </div>
     </nav>
@@ -83,6 +87,9 @@
         <span class="brand-logo center">Shisei Sekai</span>
         <ul id="nav" class="">
             <li><a href="/" style="color:white">Home</a></li>
+            @auth
+                <li class=""><a href="/shop">Tienda</a></li>
+            @endauth
             <li><a href="#"><a class="dropdown-button" href="#" data-activates="dropdown2" style="color:white">
                         @auth
                             {{Auth::user()->name}}

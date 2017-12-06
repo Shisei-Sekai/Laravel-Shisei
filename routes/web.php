@@ -52,17 +52,37 @@ Route::middleware('isAdmin')->prefix('admin')->group(function (){
 
 
     //Items stuff
-    Route::get('items','ItemController@getItems');
+    Route::get('items','ItemController@getItems'); //Get items (in page)
 
-    Route::get('items/all','ItemController@getAllItems');
+    Route::get('items/all','ItemController@getAllItems'); //Get all items
 
-    Route::get('items/user','ItemController@getUserItems');
-    Route::post('items/user','ItemController@itemToUser');
-    Route::delete('items/user','ItemController@takeItemFromUser');
+    Route::get('items/user','ItemController@getUserItems'); //Get items of a user
+    Route::post('items/user','ItemController@itemToUser'); //Give item to user
+    Route::delete('items/user','ItemController@takeItemFromUser'); //Delete item from user
 
-    Route::put('items','ItemController@editItem');
-    Route::post('items','ItemController@createItem');
-    Route::delete('items','ItemController@deleteItem');
+    Route::put('items','ItemController@editItem'); //Edit item
+    Route::post('items','ItemController@createItem'); //Create item
+    Route::delete('items','ItemController@deleteItem'); //Delete item
+
+
+    //Vendors stuff
+    Route::get('vendors','VendorController@getVendors'); //Get vendors (in pages)
+    Route::get('vendors/all','VendorController@getPossibleVendors');
+    Route::post('vendors','VendorController@createVendor'); //Create a vendor
+    Route::put('vendors','VendorController@editVendor'); //Edit a vendor
+    Route::delete('vendors','VendorController@deleteVendor'); //Delete a vendor
+
+
+    //Shops stuff
+    Route::get('shops','ShopController@getShops');
+    Route::get('shops/info','ShopController@shopInfo');
+    Route::post('shops','ShopController@createShop');
+    Route::post('shops/item','ShopController@addItemToShop');
+    Route::put('shops','ShopController@editShop');
+    Route::put('shops/vendor','ShopController@editShopVendor');
+    Route::delete('shops','ShopController@deleteShop');
+    Route::delete('shops/item','ShopController@deleteItemFromShop');
+
 
     //Affiliates stuff
     Route::get('affiliates',function(){
@@ -89,5 +109,10 @@ Route::get('/{channelId}/{threadId}','GetController@renderThreadPage')->where(['
 Route::post('/{channelId}/{threadId}','ThreadController@createPost')->where(['channelId'=>'[0-9]+','threadId'=>'[0-9]+']);
 Route::put('/post','UpdateElementController@editPost');
 Route::get('/post','GetController@getPostText');
+
+
+//Shop management
+Route::get('/shop','ShopController@shopMenu');
+Route::get('/shop/{shopId}','ShopController@shopInside')->where('shopId','[0-9]+');
 
 

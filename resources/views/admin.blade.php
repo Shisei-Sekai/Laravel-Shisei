@@ -21,7 +21,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="https://shisei-sekai.jojo.com.ve">Forum<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{route('home')}}">Forum<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a  class="nav-link" href="{{ route('logout') }}"
@@ -54,6 +54,8 @@
                         <li class="list-group-item bg-dark"><button id="categories" class="section-button selector">Categorias</button></li>
                         <li class="list-group-item bg-dark"><button id="affiliates" class="section-button selector">Afiliados</button></li>
                         <li class="list-group-item bg-dark"><button id="items" class="section-button selector">Items</button></li>
+                        <li class="list-group-item bg-dark"><button id="vendors" class="section-button selector">Vendedores</button></li>
+                        <li class="list-group-item bg-dark"><button id="shops" class="section-button selector">Tiendas</button></li>
                         <li class="list-group-item bg-dark"><button id="character_cards" class="section-button selector">Fichas de personaje</button></li>
                         <li class="list-group-item bg-dark"><button id="combat_cards" class="section-button selector">Fichas de combate</button></li>
                     </ul>
@@ -362,7 +364,7 @@
         <div class="modal-dialog bg-dark" role="document">
             <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
-                    <h5 class="modal-title">Crear categoria</h5>
+                    <h5 class="modal-title">Crear Item</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -402,7 +404,7 @@
         <div class="modal-dialog bg-dark" role="document">
             <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
-                    <h5 class="modal-title">Crear categoria</h5>
+                    <h5 class="modal-title">Editar item</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -436,6 +438,190 @@
             </div>
         </div>
     </div>
+
+    <!-- CREATE VENDOR MODAL -->
+    <div class="modal fade" id="modalvendors" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog bg-dark" role="document">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crear vendedor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="vendorCreationName">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Descripción:</label>
+                        <input type="text" class="form-control" id="vendorCreationDescription">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Imagen:</label>
+                        <input type="text" class="form-control" id="vendorCreationImage">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="createVendor" data-dismiss="modal">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT VENDOR MODAL -->
+    <div class="modal fade" id="modalEditvendors" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog bg-dark" role="document">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar vendedor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="vendorEditName">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Descripción:</label>
+                        <input type="text" class="form-control" id="vendorEditDescription">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Imagen:</label>
+                        <input type="text" class="form-control" id="vendorEditImage">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="editVendor" data-dismiss="modal">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATE SHOP MODAL -->
+        <div class="modal fade" id="modalshops" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog bg-dark" role="document">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Crear tienda</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Shop Name and description-->
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="shopCreationName">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Descripción:</label>
+                            <input type="text" class="form-control" id="shopCreationDescription">
+                        <div class="form-check" style="margin-top: 15px">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" id="shopCreationIsActive">
+                                Activa
+                            </label>
+                        </div>
+                        <!-- Vendors -->
+                        <div class="row">
+                            <!-- Here will be all possible roles loaded from db -->
+                            <div class="col">
+                                <label for="shopCreationVendorSelect" class="col-form-label">Vendedor</label>
+                                <select class="form-control mr-sm-2 vendorSelect" id="shopCreationVendorSelect">
+
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="createShop" data-dismiss="modal">Crear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- UPDATE SHOP MODAL (name and assign roles/items) -->
+    <div class="modal fade" id="modalEditshops" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog bg-dark" role="document">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar tienda</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- User name edit -->
+                    <form class="form-inline my-2 my-lg-0 justify-content-center">
+                        <label for="recipient-name" class="col-form-label mr-sm-1">Nombre:</label>
+                        <input type="text" class="form-control mr-sm-2" id="shopEditName">
+                    </form><br>
+                    <form class="form-inline my-2 my-lg-0 justify-content-center">
+                        <label for="recipient-name" class="col-form-label mr-sm-1">Descripción:</label>
+                        <input type="text" class="form-control mr-sm-2" id="shopEditDescription">
+                    </form><br>
+                    <ul class="nav justify-content-center" style="background: #908c90">
+                        <li class="nav-item">
+                            <span class="nav-link">Cambiar dueño</span>
+                        </li>
+                    </ul><br>
+                    <!-- Show current vendor and possible ones -->
+                    <span class="col-form-label mr-sm-1">Vendedor:  <span id="currentOwner"></span></span><br>
+                    <div class="row">
+
+                        <!-- Here will be all possible vendors loaded from db -->
+                        <div class="col">
+                            <select class="form-control mr-sm-2 vendorSelect" id="shopEditVendorSelect">
+
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-dark float-right" data-dismiss="modal" id="changeShopVendor">cambiar</button>
+                    </div>
+                    <br>
+                    <ul class="nav justify-content-center" style="background: #908c90">
+                        <li class="nav-item">
+                            <span class="nav-link">Añadir Item</span>
+                        </li>
+                    </ul><br>
+
+                    <!-- list all possible items -->
+                    <div class="row">
+                        <!-- Here will be all possible roles loaded from db -->
+                        <div class="col">
+                            <select class="form-control mr-sm-2" id="shopPossibleItems">
+
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-dark float-right" data-dismiss="modal" id="addItemToShop">Añadir</button>
+                    </div>
+                    <br>
+                    <!-- List all shop Items -->
+                    <ul class="nav justify-content-center" style="background: #908c90">
+                        <li class="nav-item">
+                            <span class="nav-link" href="#">Items</span>
+                        </li>
+                    </ul><br>
+                    <ul class="list-group list-group-flush text-white bg-dark" id="shopItems">
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
@@ -477,6 +663,12 @@
                         else if(prev === "users"){
                             content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
                         }
+                        else if(prev === "vendors"){
+                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'" description="'+element.description+'" image="'+element.image+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
+                        }
+                        else if(prev === "shops"){
+                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
+                        }
                         /*$('#dbInfo').append('<li class="list-group-item bg-dark element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'"id="'+id+element.id+'"><span>'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>');*/
                         /*$('#dbInfo').append('<li class="list-group-item bg-dark dbElement"><span class="element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'"color-info="'+element.color+'" description="'+element.description+'" image="'+element.image+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>');*/
                         $('#dbInfo').append(content);
@@ -498,8 +690,24 @@
             $('#createButton').attr('data-target','#modal'+prev);
             $(this).toggleClass('current');
             displayElements(this.id,1);
+            if(prev === "shops"){
+                $('.possible-vendor').remove(); //Delete previous
+                loadPossibleVendors();
+            }
         });
 
+        function loadPossibleVendors() {
+            $.ajax({
+                url:'/admin/vendors/all',
+                type:'GET',
+                success:function(msg){
+                    $.each(msg,function(index,element){
+                        //console.log(element);
+                        $('.vendorSelect').append('<option id="'+element.id+'" class="possible-vendor">'+element.name+'</option>');
+                    });
+                }
+            });
+        }
         //Click inside element loaded from db
         $('#dbInfo').on('click','.element',function(){
            //alert($(this).text());
@@ -555,6 +763,16 @@
                 $('#itemEditSellValue').val($(this).attr('sell-value'));
                 $('#itemEditIcon').val($(this).attr('icon'));
             }
+            else if($('.current').attr('id') === "vendors"){
+                $('#vendorEditName').val($(this).text());
+                $('#vendorEditImage').val($(this).attr('image'));
+                $('#vendorEditDescription').val($(this).attr('description'));
+            }
+            else if($('.current').attr('id') === "shops"){
+                $('.itemAvaliable').remove();
+                $('.shopItem').remove();
+                updateShopInfo();
+            }
         });
 
         $('#dbInfo').on('click','.deleteElement',function(){
@@ -591,6 +809,7 @@
             makeAjax('/admin/roles/user',{roleId:roleId,userId:elementId},'DELETE');
         });
 
+        //Delete item from user
         $('#userItems').on('click','.deleteUserItem',function(){
             let itemId = $(this).attr('id');
             makeAjax('/admin/items/user',{itemId:itemId,userId:elementId},'DELETE');
@@ -599,8 +818,6 @@
         //Edit user name
         $('#editUserName').click(function(){
             let newName = $('#userName').val();
-            console.log(newName);
-            console.log(elementId);
             makeAjax('/admin/users',{id:elementId,name:newName},'PUT');
 
         });
@@ -674,6 +891,44 @@
             let icon = $('#itemEditIcon').val();
             makeAjax('/admin/items',{id:elementId,name:name,description:description,buyValue:buyValue,sellValue:sellValue,icon:icon},'PUT');
         });
+
+        $('#createVendor').click(function(){
+           let name = $('#vendorCreationName').val();
+           let description = $('#vendorCreationDescription').val();
+           let image = $('#vendorCreationImage').val();
+           makeAjax('/admin/vendors',{name:name,description:description,image:image},'POST');
+        });
+
+        $('#editVendor').click(function(){
+            let name = $('#vendorEditName').val();
+            let description = $('#vendorEditDescription').val();
+            let image = $('#vendorEditImage').val();
+            makeAjax('/admin/vendors',{id:elementId,name:name,description:description,image:image},'PUT');
+        });
+
+        $('#createShop').click(function(){
+           let name = $('#shopCreationName').val();
+           let description = $('#shopCreationDescription').val();
+           let active = $('#shopCreationIsActive').is(':checked');
+           let vendorId = $('#shopCreationVendorSelect option:selected').attr('id');
+           makeAjax('/admin/shops',{name:name,description:description,active:active,vendorId:vendorId},'POST');
+        });
+
+        $('#addItemToShop').click(function(){
+            let itemId = $('#shopPossibleItems option:selected').attr('id');
+            makeAjax('/admin/shops/item',{shopId:elementId,itemId:itemId},'POST');
+        });
+
+        $('#changeShopVendor').click(function(){
+            let vendorId = $('#shopeditvendorselect option:selected').attr('id');
+            makeAjax('/admin/shops/vendor',{shopId:elementId,vendorId:vendorId},'PUT');
+        });
+
+        $('#shopItems').on('click','.deleteShopItem',function(){
+            let itemId = $(this).attr('id');
+            makeAjax('/admin/shops/item',{shopId:elementId,itemId:itemId},'DELETE');
+        });
+
         //Make an ajax (duh)
         function makeAjax(url,data,type){
             $.ajax({
@@ -690,9 +945,9 @@
             });
         }
 
-        //This will make 2 ajax request.
+        //This will make 4 ajax request.
         //One for update user modal with possible assignable roles to users
-        //
+        //The other two, for items of the user
         function updateUserInfo(){
             $.ajax({
                 url:'/admin/roles/user',
@@ -749,6 +1004,38 @@
                     });
                 }
             })
+        }
+
+        function updateShopInfo(){
+            //Get shop info
+            $.ajax({
+                url:'/admin/shops/info',
+                type:'GET',
+                data:{id:elementId},
+                success:function(msg){
+                    let info = msg.info;
+                    $('#shopEditName').val(info.name);
+                    $('#shopEditDescription').val(info.description);
+                    $('#currentOwner').text(info.vendor);
+                    let items = msg.items;
+                    console.log(items);
+                    $.each(items,function(index,element){
+                        console.log("in");
+                        $('#shopItems').append('<li class="list-group-item bg-dark shopItem"><span>'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteShopItem" id="'+element.id+'"></button></li>') ;
+                    });
+
+                }
+            });
+            //Get all items
+            $.ajax({
+                url:'/admin/items/all',
+                type:'GET',
+                success:function(msg){
+                    $.each(msg,function(index,element){
+                        $('#shopPossibleItems').append('<option id="'+ element.id +'" class="itemAvaliable">'+element.name+'</option>');
+                    });
+                }
+            });
         }
     });
 </script>
