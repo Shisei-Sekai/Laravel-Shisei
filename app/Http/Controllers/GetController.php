@@ -248,14 +248,12 @@ class GetController extends Controller
     }
 
     public function renderThreadPage(Request $r,$channelId,$threadId){
-        if(!$r->isMethod('GET')){
-            return redirect('/');
-        }
         $page = $r->has('page') ? $r->input('page') : 1;
         $posts = $this->getPosts($channelId,$threadId,$page);
         $thread = Thread::find($threadId);
+        $canClose = Auth::user() ? Auth::user()->rolesPermissions()['admin'] : false;
         $count = Post::where('thread_id','=',$threadId)->count();
-        return view("post",['posts'=>$posts['posts'],'users'=>$posts['users'],'threadName'=>$thread->title,'quantity'=>$count]);
+        return view("post",['posts'=>$posts['posts'],'users'=>$posts['users'],'threadName'=>$thread->title,'quantity'=>$count,'isClosed'=>$thread->is_closed,"canClose"=>$canClose]);
     }
 
     public function createMainPage(Request $r){
@@ -275,12 +273,12 @@ class GetController extends Controller
     }
 
     public function createChannelPage(Request $r,$channelId){
-
         $total = Thread::where("channel_id",'=',$channelId)->count();
+        $canClose = Auth::user() ? Auth::user()->rolesPermissions()['admin'] : false;
         $channel = Channel::find($channelId);
         $page = $r->has('page')? $r->input('page'):1;
         $threads = $this->getThreads($channelId,$page);
-        return view('channel',['threads'=>$threads,'quantity'=>$total,"channelName"=>$channel->name,"channelId"=>$channelId]);
+        return view('channel',['threads'=>$threads,'quantity'=>$total,"channelName"=>$channel->name,"channelId"=>$channelId,"isClosed"=>$channel->is_closed,"canClose"=>$canClose]);
         //return response()->json(["success"=>true]);
     }
 

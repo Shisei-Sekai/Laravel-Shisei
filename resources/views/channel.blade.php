@@ -3,9 +3,20 @@
     <div class="section">
         <div class="container">
             <ul class="collection">
+                @auth
                 <li class="collection-item">
-                    <a class="waves-effect waves-light btn modal-trigger" href="#createPostModal" style="color: white">Crear post</a>
+                    @if(!$isClosed)
+                        @if($canClose)
+                        <a id="change-status" class="waves-effect waves-light btn modal-trigger" style="color: white">Cerrar</a>
+                        @endif
+                    @else
+                        <a class="waves-effect waves-light btn modal-trigger disabled" href="#createPostModal" style="color: white">Cerrado</a>
+                        @if($canClose)
+                        <a id="change-status" class="waves-effect waves-light btn modal-trigger" style="color: white">Abrir</a>
+                        @endif
+                    @endif
                 </li>
+                @endauth
                 <!-- Every <li> is a post -->
                 @foreach($threads as $thread)
                 <li class="collection-item avatar hoverable">
@@ -115,6 +126,27 @@
                 });
                 console.log(channelId);
             });
+
+            @if($canClose)
+            $('#change-status').click(function(){
+                var href = location.href;
+                let threadId = href.match(/([^\/]*)\/*$/)[1];
+                $.ajax({
+                    type:'PUT',
+                    url:'/channel/alter',
+                    data:{id:threadId},
+                    headers:{
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success:function(){
+                        location.reload();
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                })
+            });
+            @endif
         });
     </script>
 

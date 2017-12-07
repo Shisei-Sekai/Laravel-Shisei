@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Channel;
 use App\User;
 use App\Category;
 use App\Role;
 use App\UserRoles;
 use App\Post;
+use App\Thread;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
@@ -137,6 +139,25 @@ class UpdateElementController extends Controller
         return redirect('/');
     }
 
+    public function alterThreadStatus(Request $r){
+        $permission = Auth::user() ? Auth::user()->rolesPermissions()['admin'] : false;
+        if(!$permission)
+            return response('Not allowed to do that',401);
+        $thread = Thread::find($r->input('id'));
+        $thread->is_closed = !$thread->is_closed;
+        $thread->save();
+        return response()->json(['success'=>true]);
+    }
+
+    public function alterChannelStatus(Request $r){
+        $permission = Auth::user() ? Auth::user()->rolesPermissions()['admin'] : false;
+        if(!$permission)
+            return response('Not allowed to do that',401);
+        $channel = Channel::find($r->input('id'));
+        $channel->is_closed = !$channel->is_closed;
+        $channel->save();
+        return response()->json(['success'=>true]);
+    }
 
 
 }

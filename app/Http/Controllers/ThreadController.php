@@ -14,7 +14,8 @@ class ThreadController extends Controller{
     public function createPost(Request $r,$channelId,$threadId){
         //If there's no user or it's not a post request, return invalid
         $permission = Auth::user() && Auth::user()->rolesPermissions()['create post'];
-        if(!$r->isMethod('post') || !$permission){
+        $thread = Thread::find($threadId);
+        if(!$r->isMethod('post') || !$permission || $thread->is_closed){
             //BE GONE
             return response()->json((array('success'=>false)));
         }
@@ -47,7 +48,8 @@ class ThreadController extends Controller{
     //Create a thread in a channel
     public function createThread(Request $r,$channelId){
         $permission = Auth::user() && Auth::user()->rolesPermissions()['create thread'];
-        if(!$r->isMethod('post') || !$permission){
+        $channel = Channel::find($channelId);
+        if(!$r->isMethod('post') || !$permission || $channel->is_closed){
             //BE GONE THOT
             return response()->json((array('success'=>false)));
         }

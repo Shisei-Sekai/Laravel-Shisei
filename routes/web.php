@@ -102,6 +102,7 @@ Route::get('/confirm/{confirmationCode}','Auth\RegisterController@confirm');
 Route::get('/thread','GetController@createThreadPage');
 Route::post('/{channelId}',"ThreadController@createThread")->where('channelId','[0-9]+');
 
+
 //User things (get page/update avatar)
 Route::get('/user/{userName}','GetController@getUserPage');
 Route::post('/user/{userName}','UpdateElementController@updateUserAvatar');
@@ -121,4 +122,6 @@ Route::post('/shop','ShopController@buyItem');
 
 
 
-
+/** Close/open threads and channles **/
+Route::put('/thread/alter','UpdateElementController@alterThreadStatus');
+Route::put('/channel/alter','UpdateElementController@alterChannelStatus');
