@@ -6,6 +6,7 @@
                 @auth
                 <li class="collection-item">
                     @if(!$isClosed)
+                        <a class="waves-effect waves-light btn modal-trigger" href="#createPostModal" style="color: white">Crear post</a>
                         @if($canClose)
                         <a id="change-status" class="waves-effect waves-light btn modal-trigger" style="color: white">Cerrar</a>
                         @endif

@@ -138,7 +138,7 @@ class GetController extends Controller
             }
             //Edit post permission
             $userId = Auth::user()? Auth::user()['id'] : 0;
-            $canEdit = Auth::user() && ($userId == $p->user_id || Auth::user()->rolesPermissions['edit post']);
+            $canEdit = Auth::user() && ($userId == $p->user_id || Auth::user()->rolesPermissions()['edit post']);
             //Get text
             $text = $p->text;
             //No script execute thx
@@ -253,7 +253,7 @@ class GetController extends Controller
         $thread = Thread::find($threadId);
         $canClose = Auth::user() ? Auth::user()->rolesPermissions()['admin'] : false;
         $count = Post::where('thread_id','=',$threadId)->count();
-        return view("post",['posts'=>$posts['posts'],'users'=>$posts['users'],'threadName'=>$thread->title,'quantity'=>$count,'isClosed'=>$thread->is_closed,"canClose"=>$canClose]);
+        return view("post",['posts'=>$posts['posts'],'users'=>$posts['users'],'threadName'=>$thread->title,'quantity'=>$count,'isClosed'=>$thread->is_closed,'canClose'=>$canClose]);
     }
 
     public function createMainPage(Request $r){

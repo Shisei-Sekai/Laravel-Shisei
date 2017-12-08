@@ -79,46 +79,45 @@
 
     <ul class="pagination center" id="pages">
     </ul>
-
     @auth
-    <!-- Only authenticated people can see this -->
-    <div class="section row-full teal white-text">
-        <div class="row center">
-            @if(!$isClosed)
-            <form class="col s10 center" method="post">
-                {{csrf_field()}}
-                <div class="row center">
-                    <div class="input-field col s10 offset-s3">
-                        <textarea id="quickReplyInfo" name="postText" class="materialize-textarea"></textarea>
-                        <label for="quickReplyInfo" class="white-text">Respuesta</label>
-                    </div>
-                </div>
-                <button class="btn left z-depth-0" type="submit" style="border: none;background: transparent">Enviar
-                    <i class="material-icons right">send</i>
-                </button>
-                @if($canClose)
-                    <button type="button" class="btn z-depth-0 right" id="change-status" style="border: none;background: transparent">cerrar
-                        <i class="material-icons right">clear</i>
-                    </button>
-                @endif
-            </form>
-            @else
-                <form class="col s10 center" method="post">
-                    <div class="row center">
-                        <div class="input-field col s10 offset-s3">
-                            <textarea id="quickReplyInfo" name="postText" class="materialize-textarea" disabled></textarea>
-                            <label for="quickReplyInfo" class="white-text">Tema cerrado</label>
+        <!-- Only authenticated people can see this -->
+        <div class="section row-full teal white-text">
+            <div class="row center">
+                @if(!$isClosed)
+                    <form class="col s10 center" method="post">
+                        {{csrf_field()}}
+                        <div class="row center">
+                            <div class="input-field col s10 offset-s3">
+                                <textarea id="quickReplyInfo" name="postText" class="materialize-textarea"></textarea>
+                                <label for="quickReplyInfo" class="white-text">Respuesta</label>
+                            </div>
                         </div>
-                    </div>
-                    @if($canClose)
-                        <button type="button" class="btn z-depth-0 right" id="change-status" style="border: none;background: transparent">Abrir
-                            <i class="material-icons right">done</i>
+                        <button class="btn left z-depth-0" type="submit" style="border: none;background: transparent">Enviar
+                            <i class="material-icons right">send</i>
                         </button>
-                    @endif
-                </form>
-            @endif
+                        @if($canClose)
+                            <button type="button" class="btn z-depth-0 right" id="change-status" style="border: none;background: transparent">cerrar
+                                <i class="material-icons right">clear</i>
+                            </button>
+                        @endif
+                    </form>
+                @else
+                    <form class="col s10 center" method="post">
+                        <div class="row center">
+                            <div class="input-field col s10 offset-s3">
+                                <textarea id="quickReplyInfo" name="postText" class="materialize-textarea" disabled></textarea>
+                                <label for="quickReplyInfo" class="white-text">Tema cerrado</label>
+                            </div>
+                        </div>
+                        @if($canClose)
+                            <button type="button" class="btn z-depth-0 right" id="change-status" style="border: none;background: transparent">Abrir
+                                <i class="material-icons right">done</i>
+                            </button>
+                        @endif
+                    </form>
+                @endif
+            </div>
         </div>
-    </div>
     @endauth
 
     <div id="editPostModal" class="modal modal-fixed-footer white">
@@ -245,7 +244,7 @@
                     error:function(msg){
                         console.log(msg);
                     }
-                })
+                });
             });
             @endif
 

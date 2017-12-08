@@ -47,7 +47,6 @@ class User extends Authenticatable
             'create thread'=>false,
             'admin'=>false,
         );
-
         foreach ($values as $v){
             foreach ($v as $key=>$value){
                 $per[$key] = $per[$key] || $value;
