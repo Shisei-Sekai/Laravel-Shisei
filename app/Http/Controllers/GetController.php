@@ -121,7 +121,7 @@ class GetController extends Controller
             //No repeat users in the array
             if(!array_key_exists($p->user_id,$data['users'])){
                 $user = User::find($p->user_id);
-                $role = Role::find($user->id);
+                $role = Role::find($user->main_role);
                 $data['users'][$p->user_id] = array(
                     "id" => $user->id,
                     "avatar" => $user->avatar,
