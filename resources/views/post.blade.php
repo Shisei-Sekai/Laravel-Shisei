@@ -12,7 +12,7 @@
                         <div class="user-name center">{{$users[$post['userId']]['name']}}</div>
                         <div class="user-info" id="userinfoMessage{{$index+1}}">
                             <!-- User role -->
-                            <div class="user-details" style="text-align: center;color: red">{{$users[$post['userId']]['role']['name']}}</div>
+                            <div class="user-details" style="text-align: center;color: {{$users[$post['userId']]['role']['color']}}">{{$users[$post['userId']]['role']['name']}}</div>
                             <!-- Messages ammount -->
                             <div class="user-details">Mensajes: <span class="ammout">{{$users[$post['userId']]['messages']}}</span></div>
                             <!-- Items -->
