@@ -60,6 +60,9 @@ With the config of your pomf server (or not)
 ### Advice
 This is an alpha release, still need to clean some things and reorganize them. Feel free to reorganize them yourself.
 
+Also, since my main language is spanish, and it's also the main language of the "population" of the forum (or, at least, our targeted population), the templates are in that language.
+If you want them translated to english, feel free to ask me o do it by yourself.
+
 ### Final Advice
 > ORA!
 
