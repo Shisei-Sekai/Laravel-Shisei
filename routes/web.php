@@ -125,3 +125,5 @@ Route::post('/shop','ShopController@buyItem');
 /** Close/open threads and channles **/
 Route::put('/thread/alter','UpdateElementController@alterThreadStatus');
 Route::put('/channel/alter','UpdateElementController@alterChannelStatus');
+
+Route::post('/chatmessage','chatController@sendMessage');

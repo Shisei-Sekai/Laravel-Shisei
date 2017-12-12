@@ -62,7 +62,88 @@
     <h4 class="center">Por ahora, no hay afiliados, puedes ver los requisitos para serlo <a href="#">aquí</a></h4>
 </div>
 @endif
+@auth
+<div class="section row-full blue-grey darken-1" id="chat-box">
 
+    <!--<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <style type="text/css">
+        #messages{
+            border: none;
+            height: 300px;
+            margin-bottom: 8px;
+            padding: 5px;
+        }
+    </style>
+    <div class="container">
+        <div class="row-full">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="card blue-grey darken-1 z-depth-0" style="border: none">
+                    <div class="card-content white-text">
+                        <span class="card-title center white-text">Le chat</span>
+                        <div class="row">
+                            <div>
+                                <div id="messages" style="overflow: auto"></div>
+                            </div>
+                            <div>
+                                <form  method="POST">
+                                    <input type="hidden" name="user" value="{{Auth::user()->name}}" >
+                                    <label for="message-text">Mensaje</label>
+                                    <textarea class="materialize-textarea msg" id="message-text"></textarea>
+                                    <br/>
+                                    <input type="button" value="Send" class="btn btn-success send-msg">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            var url = location.hostname;
+            console.log(url);
+            //Connect to the url in desired port
+            var socket = io.connect(url+':9987');
+            socket.on('message', function (data) {
+                data = jQuery.parseJSON(data);
+                console.log(data.user);
+                $("#messages").append( "<strong>"+data.user+":</strong><p>"+data.message+"</p>" );
+                $("#messages").animate({
+                    scrollTop: $("#messages").prop("scrollHeight")},1000
+                );
+            });
+            $(".send-msg").click(function(e){
+                e.preventDefault();
+                var user = $("input[name='user']").val();
+                var msg = $(".msg").val();
+                if(msg !== ''){
+                    $.ajax({
+                        type: "POST",
+                        url: '/chatmessage',
+                        headers:{
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {'message':msg,'user':user},
+                        success:function(data){
+                            console.log(data);
+                            $(".msg").val('');
+
+                        },
+                        error:function(element){
+                            console.log(element);
+                        }
+                    });
+                }else{
+                    alert("Please Add Message.");
+                }
+            })
+        });
+    </script>
+
+</div>
+@endauth
 <footer class="page-footer row-full blue" style="margin-bottom: -50px">
     <div class="container">
         <div class="row">

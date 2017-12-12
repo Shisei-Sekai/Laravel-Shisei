@@ -11,7 +11,8 @@ Shisei sekai is a unofficial JoJo's Bizare Adventures fan made role-based forum.
   - Admin verification of user cards.
   - Shop, buy ~~useless~~ items.
   - Decide which ~~useless~~ items display to other users from your user panel.
-  - Email confirmation 
+  - Email confirmation
+  - Real-time chat
  
 
 ### Why do this?
@@ -25,6 +26,8 @@ Why not?
 * npm
 * Database engine (pref, PostgreSQL)
 * Composer
+* Redis
+* NodeJs >= 9.1
 
 
 ### Installation
