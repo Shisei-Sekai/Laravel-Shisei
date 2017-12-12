@@ -21,17 +21,11 @@ class chatController extends Controller
             $element->delete();
         }
         $redis = LRedis::connection();
-        /*
         $message = ChatMessage::create([
             'user'=>Auth::user()['name'],
             'message'=>$r->input('message'),
             'timestamp'=>Carbon::now(),
         ]);
-        */
-        $message = new ChatMessage();
-        $message->user = Auth::user()['name'];
-        $message->message = $r->input('message');
-        $message->timestamp = Carbon::now();
         $message->save();
         $data = ['message'=>$r->input('message'),'user'=>$r->input('user')];
         $redis->publish('message',json_encode($data));
