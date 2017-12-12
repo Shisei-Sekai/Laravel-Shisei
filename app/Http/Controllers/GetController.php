@@ -9,6 +9,7 @@ use App\Role;
 use App\Thread;
 use App\User;
 use App\UserRoles;
+use App\ChatMessage;
 
 //use Genert\BBCode\BBCode;
 use Golonka\BBCode\BBCodeParser;
@@ -258,7 +259,9 @@ class GetController extends Controller
 
     public function createMainPage(Request $r){
         $categories = Category::all();
+        $chat = ChatMessage::all();
         $data = array();
+        $chatMessages = array();
         foreach($categories as $index=>$category){
             array_push($data,array(
                 "id" => $category->id,
@@ -269,7 +272,13 @@ class GetController extends Controller
                 "color"=>$category->color,
             ));
         }
-        return view('index',["categories"=>$data]);
+        foreach ($chat as $message){
+            array_push($chatMessages,[
+                'name'=> $message->user,
+                'message'=>$message->message
+            ]);
+        }
+        return view('index',["categories"=>$data,"messages"=>$chatMessages]);
     }
 
     public function createChannelPage(Request $r,$channelId){

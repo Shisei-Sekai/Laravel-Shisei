@@ -83,7 +83,11 @@
                         <span class="card-title center white-text">Le chat</span>
                         <div class="row">
                             <div>
-                                <div id="messages" style="overflow: auto"></div>
+                                <div id="messages" style="overflow: auto">
+                                    @foreach($messages as $message)
+                                        <strong>{{$message['name']}}:</strong><p>{{$message['message']}}</p>
+                                    @endforeach
+                                </div>
                             </div>
                             <div>
                                 <form  method="POST">
