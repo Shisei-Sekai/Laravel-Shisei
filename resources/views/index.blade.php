@@ -103,9 +103,10 @@
     <script>
         $(document).ready(function(){
             var url = location.hostname;
+            var protocol = location.protocol;
             console.log(url);
             //Connect to the url in desired port
-            var socket = io.connect(url+':9987');
+            var socket = io.connect(protocol+'//'+url+':9987');
             socket.on('message', function (data) {
                 data = jQuery.parseJSON(data);
                 console.log(data.user);
