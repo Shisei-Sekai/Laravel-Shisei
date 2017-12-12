@@ -31,7 +31,7 @@ Why not?
 
 
 ### Installation
-- Clone the repository, 
+- Clone the repository and install the dependencies
 
 ```sh
 $ git clone https://github.com/Shisei-Sekai/Laravel-Shisei
@@ -40,10 +40,15 @@ $ npm install
 $ composer install
 ```
 
-Configure email settings in .env file.
+- Start socket.io server
+```sh
+$ cd nodejs
+$ node server.js
+```
 
-You'll also need to configure the `.env` file. In this repository, there's a example.
-For user avatar upload, set up this variables.
+- Configure email settings in .env file.
+
+- Configure `POMF` settings in `.env` 
 ```
 POMF_URL
 POMF_CLIENT_TOKEN (optional)
