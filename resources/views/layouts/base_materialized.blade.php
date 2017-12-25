@@ -112,7 +112,7 @@
 <body>
 
 
-<div id="index-banner" class="header-image hide-on-med-and-down" style="background: url('https://a.pomf.cat/vpcrre.jpg');background-repeat: no-repeat;background-position: center center; background-size: cover"></div>
+<div id="index-banner" class="header-image hide-on-med-and-down" style="background: url('{{env('MAIN_BANNER')}}');background-repeat: no-repeat;background-position: center center; background-size: cover"></div>
 
 @yield('content')
 </body>
