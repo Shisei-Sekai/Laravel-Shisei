@@ -35,13 +35,12 @@ class ShopController extends Controller
     }
 
     /**
-     * Delete a shop
+     * Deletes a shop
      * @param Request $r
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function deleteShop(Request $r){
-        if(!$r->isMethod('DELETE'))
-            return response()->json(['success'=>false]);
         $shopId = $r->input('id');
         $shop = Shop::find($shopId);
         $shop->delete(); //Delete the shop
@@ -58,12 +57,11 @@ class ShopController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function editShop(Request $r){
-        if(!$r->isMethod('PUT'))
-            return response()->json(['success'=>false]);
         $shop = Shop::find($r->input('id'));
         $shop->name = $r->input('name');
         $shop->description = $r->input('description');
-        $shop->active = $r->input('active');
+        $shop->active = $r->has('active')?$r->input('active'):true;
+        $shop->save();
         return response()->json(['success'=>true]);
     }
 
@@ -87,8 +85,6 @@ class ShopController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function getShops(Request $r){
-        if(!$r->isMethod('GET'))
-            return response()->json(['success'=>false]);
         $data = [
             "quantity" => Shop::count(),
             "info" => array(),
@@ -99,6 +95,7 @@ class ShopController extends Controller
             $data['info'][$shop->id] = [
                 'id'=>$shop->id,
                 'name'=>$shop->name,
+                'description'=>$shop->description
             ];
         }
         return response()->json($data);

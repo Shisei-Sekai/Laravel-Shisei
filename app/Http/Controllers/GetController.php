@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Channel;
+use App\Item;
 use App\Post;
 use App\Role;
+use App\Shop;
 use App\Thread;
 use App\User;
 use App\UserRoles;
 use App\ChatMessage;
 
 //use Genert\BBCode\BBCode;
+use App\Vendor;
 use Golonka\BBCode\BBCodeParser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +57,19 @@ class GetController extends Controller
                 "image"=>$d->image,
             );
         }
+        return response()->json($data);
+    }
+
+    public function categoryDetails(Request $r){
+        $id = $r->input('id');
+        $category = Category::find($id);
+        $data = [
+            "id"=>$category->id,
+            "name"=>$category->name,
+            "color"=>$category->color,
+            "description"=>$category->description,
+            "image"=>$category->image,
+        ];
         return response()->json($data);
     }
 
@@ -171,12 +187,22 @@ class GetController extends Controller
         $page = $r->has('page') ? $r->input('page') : 1;
         $result = DB::table('users')->offset(($page-1)*20)->limit(20)->orderBy('id','asc')->get();
         foreach ($result as $r){
+            $roles = $this->getUserRoles($r->id);
+            $main_role = Role::find($r->main_role);
+            $messageCount = Post::where('user_id','=',$r->id)->count();
             $data["info"][$r->id] = array(
                 "id" => $r->id,
                 "name" => $r->name,
                 "avatar" => $r->avatar,
                 "signature" => $r->signature,
                 "money" => $r->money,
+                "exp"=>$r->exp,
+                "roles" => $roles,
+                "messageCount" => $messageCount,
+                "main_role"=>[
+                    "name"=>$main_role->name,
+                    "color"=>$main_role->color,
+                ]
             );
         }
         return response()->json($data);
@@ -206,10 +232,9 @@ class GetController extends Controller
         return response()->json($data);
     }
 
-    public function getUserRoles(Request $r){
+    private function getUserRoles($userId){
         $data = array();
-        $userId = $r->input('id');
-        //Get all roles of the user
+        //$userId = $r->input('id');
         $roles = UserRoles::all()->where('user_id','=',$userId);
         foreach($roles as $index=>$rol){
             $role = Role::find($rol->role_id);
@@ -318,5 +343,15 @@ class GetController extends Controller
         }
         $post = Post::find($r->input('postId'));
         return response()->json(['success'=>true,'content'=>$post->text]);
+    }
+
+    public function getAllCount(Request $r){
+        return response()->json([
+            "items" => Item::count(),
+            "roles" => Role::count(),
+            "users" => User::count(),
+            "shops" => Shop::count(),
+            "vendors" => Vendor::count(),
+        ]);
     }
 }

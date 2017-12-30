@@ -81,6 +81,10 @@ class ThreadController extends Controller{
     public function createCategory(Request $r){
         $category = new Category();
         $category->name = $r->input('name');
+        $category->description = $r->input('description');
+        if($r->has('image') and $r->input('image'))
+            $category->image = $r->input('image');
+        $category->color = $r->input('color');
         $category->timestamp = Carbon::now();
         $category->save();
         return response()->json(array('success'=>true));

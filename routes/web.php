@@ -40,6 +40,7 @@ Route::middleware('isAdmin')->prefix('admin')->group(function (){
 
     //Categories stuff
     Route::get('categories','GetController@getCategories'); //Get all categories
+    Route::get('categories/details','GetController@categoryDetails');
     Route::post('categories','ThreadController@createCategory'); //Create category
     Route::put('categories','UpdateElementController@updateCategory'); //Edit category
     Route::delete('categories','CleanController@deleteCategory'); //Delete category and it's channels, threads and posts
@@ -48,7 +49,7 @@ Route::middleware('isAdmin')->prefix('admin')->group(function (){
     //Channels stuff
     Route::get('channels','GetController@getChannels'); //Get channels of determined category
     Route::post('channels','ThreadController@createChannel'); //Create channel in determined category
-    Route::delete('channels','CleanController@deleteChannel'); //Delete category from channel
+    Route::delete('channels','CleanController@deleteChannel'); //Delete channel from category
 
 
     //Items stuff
@@ -88,6 +89,8 @@ Route::middleware('isAdmin')->prefix('admin')->group(function (){
     Route::get('affiliates',function(){
         echo "affiliates";
     });
+
+    Route::get('counts','GetController@getAllCount');
 
 });
 

@@ -15,9 +15,6 @@ class ItemController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function createItem(Request $r){
-        //POST method required
-        if(!$r->isMethod('POST'))
-            return response()->json(['success'=>false]);
         $r->validate([
             'buyValue' => 'required|integer',
             'sellValue' => 'required|integer',
@@ -49,7 +46,7 @@ class ItemController extends Controller
      */
     public function deleteItem(Request $r){
         //Delete item, DELETE request
-        if(!$r->isMethod('DELETE') || !$r->has('id'))
+        if(!$r->has('id'))
             return response()->json(['success'=>false]);
         $item = Item::find($r->input('id'));
         $item->delete();
@@ -63,8 +60,7 @@ class ItemController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function itemInfo(Request $r){
-        //Get item info, GET request
-        if(!$r->isMethod('GET') || !$r->has('id'))
+        if(!$r->has('id'))
             return response()->json(['success'=>false]);
         $item = Item::find($r->input('id'));
 
@@ -84,9 +80,6 @@ class ItemController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function itemToUser(Request $r){
-        //Assign item to user, POST request
-        if(!$r->isMethod('POST'))
-            return response()->json(['success'=>false]);
         //Required info
         $userId = $r->input('userId');
         $itemId = $r->input('itemId');
@@ -104,8 +97,6 @@ class ItemController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function takeItemFromUser(Request $r){
-        if(!$r->isMethod('DELETE'))
-            return response()->json(['success'=>false]);
         $userId = $r->input('userId');
         $itemId = $r->input('itemId');
         $userItem = UserItem::where(['user_id'=>$userId,'item_id'=>$itemId])->get()->first();
@@ -119,8 +110,6 @@ class ItemController extends Controller
      * @return array|\Illuminate\Http\JsonResponse
      */
     public function getItems(Request $r){
-        if(!$r->isMethod('GET'))
-            return response()->json(['success'=>false]);
         $data = [
             "quantity" => Item::count(),
             "info" => array(),
@@ -143,8 +132,6 @@ class ItemController extends Controller
     }
 
     public function getAllItems(Request $r){
-        if(!$r->isMethod('GET'))
-            return response()->json(['success'=>false]);
         $items = Item::all();
         foreach($items as $item){
             $data[$item->id] = [
@@ -166,8 +153,6 @@ class ItemController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function getUserItems(Request $r){
-        if(!$r->isMethod('GET'))
-            return response()->json(['success'=>false]);
         $id = $r->input('id');
         $userItems = UserItem::all()->where('user_id','=',$id); //All items of that user
         $data = array(); //Return info
@@ -183,8 +168,6 @@ class ItemController extends Controller
     }
 
     public function editItem(Request $r){
-        if(!$r->isMethod('PUT'))
-            return response()->json(['success'=>false]);
         $id = $r->input('id');
         $item = Item::find($id);
         $item->name = $r->input('name');

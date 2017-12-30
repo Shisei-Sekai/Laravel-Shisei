@@ -1,31 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin panel</title>
+    <title>Shisei Sekai admin panel</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-colorpicker.min.css') }}" rel="stylesheet">
-</head>
-<body style="background: #fff0fc">
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
-    <a class="navbar-brand" href="#">Admin panel</a>
+
+    <!-- Fancy colorpicker -->
+    <link href="{{ asset('css/bootstrap-colorpicker.min.css') }}" rel="stylesheet">
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <!-- Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark" role="navigation" style="background: transparent">
+    <a class="navbar-brand" href="#">Shisei Sekai</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="{{route('home')}}">Forum<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{route('home')}}">Foro<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a  class="nav-link" href="{{ route('logout') }}"
-                   onclick="event.preventDefault();
+                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                     Logout
                 </a>
@@ -36,897 +46,1474 @@
         </ul>
     </div>
 </nav>
-<br>
 
-<!-- lateral panel -->
-<div class="container">
+
+<!-- MODALS -->
+<div class="container element-creation-modal" id="createRoleModal">
     <div class="row">
-        <!-- Selecting type panel -->
-        <div class="col-md-2 col-6 col-sm-4">
-            <div class="card card-dark bg-dark text-white panel-card">
-                <div class="card-header text-center">
-                    Menu
-                </div>
+        <div class="col">
+            <div class="card info text-white">
                 <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item bg-dark"><button id="users" class="section-button selector">Usuarios</button></li>
-                        <li class="list-group-item bg-dark"><button id="roles" class="section-button selector">Roles</button></li>
-                        <li class="list-group-item bg-dark"><button id="categories" class="section-button selector">Categorias</button></li>
-                        <li class="list-group-item bg-dark"><button id="affiliates" class="section-button selector">Afiliados</button></li>
-                        <li class="list-group-item bg-dark"><button id="items" class="section-button selector">Items</button></li>
-                        <li class="list-group-item bg-dark"><button id="vendors" class="section-button selector">Vendedores</button></li>
-                        <li class="list-group-item bg-dark"><button id="shops" class="section-button selector">Tiendas</button></li>
-                        <li class="list-group-item bg-dark"><button id="character_cards" class="section-button selector">Fichas de personaje</button></li>
-                        <li class="list-group-item bg-dark"><button id="combat_cards" class="section-button selector">Fichas de combate</button></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Content info -->
-        <div class="col-md-10 col-6 col-sm-8">
-            <div class="card card-dark bg-dark text-white">
-                <div class="card-header text-center bg-dark">
-                    Contenido
-                    <button type="button" class="fa fa-plus float-right section-button" data-toggle="modal" id="createButton"></button>
-                </div>
-                <div class="card-body bg-dark">
-                    <ul class="list-group list-group-flush" id="dbInfo">
-
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <nav aria-label="">
-        <ul class="pagination justify-content-end" id="pages">
-            <li class="page-item bg-dark" id="prev">
-                <a class="page-link bg-dark" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item" id="next">
-                <a class="page-link bg-dark" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- CREATE ROLE MODAL -->
-    <div class="modal fade" id="modalroles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog bg-dark" role="document">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createRoleModal">Crear rol</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!--<form id="crearRolForm">-->
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="roleCreationName">
-                    </div>
-                    <div class="form-group">
-                        <label for="createRoleColorValue" class="col-form-label">Color</label>
-                        <div id="createRoleColor" class="input-group colorpicker-component .roleColor">
-                            <input type="text" id="createRoleColorValue" value="" class="form-control" />
-                            <span class="input-group-addon"><i></i></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Permisos:</label>
-                        <!--<textarea class="form-control" id="message-text"></textarea>-->
-                        <label for="desiredPermissions">Selecciona uno o muchos</label>
-                    </div>
-
-                   <!--</form>-->
-                    <select multiple class="form-control" id="desiredPermissions">
-                        <option value="1<<0">Admin</option>
-                        <option value="1<<1">Crear temas</option>
-                        <option value="1<<2">Borrar temas</option>
-                        <option value="1<<3">Mover temas</option>
-                        <option value="1<<4">Crear posts</option>
-                        <option value="1<<5">Borrar posts</option>
-                        <option value="1<<6">Editar posts</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="createRol" data-dismiss="modal">Crear</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- EDIT ROLE MODAL -->
-    <div class="modal fade" id="modalEditroles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog bg-dark" role="document">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar rol</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="roleEditName">
-                    </div>
-                    <div class="form-group">
-                        <label for="editRoleColorValue" class="col-form-label">Color</label>
-                        <div id="editRoleColor" class="input-group colorpicker-component .roleColor">
-                            <input type="text" id="editRoleColorValue" value="" class="form-control" />
-                            <span class="input-group-addon"><i></i></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-
-                        <label for="message-text" class="col-form-label">Permisos:</label>
-                        <label for="desiredPermissionsEdit">Selecciona uno o muchos</label>
-                    </div>
-
-                    <select multiple class="form-control" id="desiredPermissionsEdit">
-                        <option value="1<<0">Admin</option>
-                        <option value="1<<1">Crear temas</option>
-                        <option value="1<<2">Borrar temas</option>
-                        <option value="1<<3">Mover temas</option>
-                        <option value="1<<4">Crear posts</option>
-                        <option value="1<<5">Borrar posts</option>
-                        <option value="1<<6">Editar posts</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="editRol" data-dismiss="modal">Editar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CREATE CATEGORY MODAL -->
-    <div class="modal fade" id="modalcategories" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog bg-dark" role="document">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title">Crear categoria</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="categoryCreationName">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="createCategory" data-dismiss="modal">Crear</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- EDIT CATEGORY MODAL -->
-    <div class="modal fade" id="modalEditcategories" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog bg-dark" role="document">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editCategoryModal">Editar categoria</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-inline my-2 my-lg-0 justify-content-center">
-                        <label for="recipient-name" class="col-form-label mr-sm-1">Nombre:</label>
-                        <input type="text" class="form-control mr-sm-2" id="categoryEditName">
-                    </div>
-                    <br>
-                    <div class="form-inline my-2 my-lg-0 justify-content-center">
-                        <label for="recipient-name" class="col-form-label mr-sm-1">Descripcion</label>
-                        <input type="text" class="form-control mr-sm-2" id="categoryEditDescription">
-                    </div>
-                    <br>
-                    <div class="form-inline my-2 my-lg-0 justify-content-center">
-                        <label for="recipient-name" class="col-form-label mr-sm-1">Imagen</label>
-                        <input type="text" class="form-control mr-sm-2" id="categoryEditImage">
-                    </div>
-                    <br>
-                    <div class="form-inline my-2 my-lg-0 justify-content-center">
-                        <label for="editCategoryColorValue" class="col-form-label">Color</label>
-                        <div id="editCategoryColor" class="input-group colorpicker-component CategoryColor">
-                            <input type="text" id="editCategoryColorValue" value="red" class="form-control" />
-                            <span class="input-group-addon"><i></i></span>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-primary bg-dark float-right" id="editCategoryInfo" data-dismiss="modal">Editar</button>
-                    <br><br>
-                    <ul class="nav justify-content-center" style="background: #908c90">
-                        <li class="nav-item">
-                            <span class="nav-link active">Crear channel</span>
-                        </li>
-                    </ul>
-                    <br>
-
-                    <!-- Create a channel div -->
-                    <div>
-                        <form class="form-inline my-2 my-lg-0">
-                            <label for="recipient-name" class="col-form-label mr-sm-1">Nombre:</label>
-                            <input type="text" class="form-control mr-sm-2" id="channelCreationName"><br>
-                        </form><br>
-                        <button type="button" class="btn btn-primary float-right" id="createChannel" data-dismiss="modal">Crear</button>
-                        <form class="form-inline my-2 my-lg-0">
-                            <label for="recipient-name" class="col-form-label mr-sm-1">Descript:</label>
-                            <input type="text" class="form-control mr-sm-2" id="channelDescripionCreate">
-                        </form>
-
-                    </div><br>
-                    <ul class="nav justify-content-center" style="background: #908c90">
-                        <br>
-                        <li class="nav-item" id="editCategorySection">
-                            <a class="nav-link">Channels</a>
-                        </li>
-                    </ul><br>
-                    <!-- List all category channels -->
-                    <div>
-                        <ul class="list-group list-group-flush " id="listChannels">
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <!--<button type="button" class="btn btn-primary" id="editCategory" data-dismiss="modal">Editar</button>-->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- UPDATE USER MODAL (name and assign roles/items) -->
-    <div class="modal fade" id="modalEditusers" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog bg-dark" role="document">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar usuario</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- User name edit -->
-                    <form class="form-inline my-2 my-lg-0 justify-content-center">
-                        <label for="recipient-name" class="col-form-label mr-sm-1">Nombre:</label>
-                        <input type="text" class="form-control mr-sm-2" id="userName">
-                        <button type="button" class="fa fa-pencil float-right section-button" id="editUserName"></button>
-                    </form><br>
-                    <ul class="nav justify-content-center" style="background: #908c90">
-                        <li class="nav-item">
-                            <span class="nav-link">Añadir rol</span>
-                        </li>
-                    </ul><br>
-                    <!-- list all possible roles -->
-                    <div class="row">
-                        <!-- Here will be all possible roles loaded from db -->
-                        <div class="col">
-                            <select class="form-control mr-sm-2" id="roleToAdd">
-
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-dark float-right" data-dismiss="modal" id="addRoleToUser">Añadir</button>
-                    </div>
-                    <br>
-                    <!-- List all user roles -->
-                    <ul class="nav justify-content-center" style="background: #908c90">
-                        <li class="nav-item">
-                            <span class="nav-link" href="#">Roles</span>
-                        </li>
-                    </ul><br>
-                    <ul class="list-group list-group-flush text-white bg-dark" id="userRoles">
-
-                    </ul>
-
-                    <ul class="nav justify-content-center" style="background: #908c90">
-                        <li class="nav-item">
-                            <span class="nav-link">Añadir Item</span>
-                        </li>
-                    </ul><br>
-
-                    <!-- list all possible items -->
-                    <div class="row">
-                        <!-- Here will be all possible roles loaded from db -->
-                        <div class="col">
-                            <select class="form-control mr-sm-2" id="avaliableItems">
-
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-dark float-right" data-dismiss="modal" id="addItemToUser">Añadir</button>
-                    </div>
-                    <br>
-                    <!-- List all user Items -->
-                    <ul class="nav justify-content-center" style="background: #908c90">
-                        <li class="nav-item">
-                            <span class="nav-link" href="#">Items</span>
-                        </li>
-                    </ul><br>
-                    <ul class="list-group list-group-flush text-white bg-dark" id="userItems">
-
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CREATE ITEM MODAL -->
-    <div class="modal fade" id="modalitems" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog bg-dark" role="document">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title">Crear Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="itemCreationName">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Descripción:</label>
-                        <input type="text" class="form-control" id="itemCreationDescription">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Valor de compra:</label>
-                        <input type="number" min="1" class="form-control" id="itemCreationBuyValue">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Valor de venta:</label>
-                        <input type="number" min="1" class="form-control" id="itemCreationSellValue">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Icono:</label>
-                        <input type="text" class="form-control" id="itemCreationIcon">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="createItem" data-dismiss="modal">Crear</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- EDIT ITEM MODAL -->
-    <div class="modal fade" id="modalEdititems" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog bg-dark" role="document">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="itemEditName">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Descripción:</label>
-                        <input type="text" class="form-control" id="itemEditDescription">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Valor de compra:</label>
-                        <input type="number" min="1" class="form-control" id="itemEditBuyValue">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Valor de venta:</label>
-                        <input type="number" min="1" class="form-control" id="itemEditSellValue">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Icono:</label>
-                        <input type="text" class="form-control" id="itemEditIcon">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="editItem" data-dismiss="modal">Editar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CREATE VENDOR MODAL -->
-    <div class="modal fade" id="modalvendors" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog bg-dark" role="document">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title">Crear vendedor</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="vendorCreationName">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Descripción:</label>
-                        <input type="text" class="form-control" id="vendorCreationDescription">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Imagen:</label>
-                        <input type="text" class="form-control" id="vendorCreationImage">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="createVendor" data-dismiss="modal">Crear</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- EDIT VENDOR MODAL -->
-    <div class="modal fade" id="modalEditvendors" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog bg-dark" role="document">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar vendedor</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="vendorEditName">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Descripción:</label>
-                        <input type="text" class="form-control" id="vendorEditDescription">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Imagen:</label>
-                        <input type="text" class="form-control" id="vendorEditImage">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="editVendor" data-dismiss="modal">Editar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CREATE SHOP MODAL -->
-        <div class="modal fade" id="modalshops" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog bg-dark" role="document">
-                <div class="modal-content bg-dark text-white">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Crear tienda</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Shop Name and description-->
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Nombre:</label>
-                            <input type="text" class="form-control" id="shopCreationName">
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Descripción:</label>
-                            <input type="text" class="form-control" id="shopCreationDescription">
-                        <div class="form-check" style="margin-top: 15px">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" id="shopCreationIsActive">
-                                Activa
-                            </label>
-                        </div>
-                        <!-- Vendors -->
+                    <div class="container">
                         <div class="row">
-                            <!-- Here will be all possible roles loaded from db -->
+                            <div class="col justify-content-center">
+                                <h4 class="card-title">Crear Rol</h4>
+                                <form class="form-inline" role="form">
+                                    <div class="form-group justify-content-center align-content-center">
+                                        <select multiple class="form-control" id="createRolePermissions" style="height: 160px;border:none">
+                                            <option value="1<<0">Admin</option>
+                                            <option value="1<<1">Crear temas</option>
+                                            <option value="1<<2">Borrar temas</option>
+                                            <option value="1<<3">Mover temas</option>
+                                            <option value="1<<4">Crear posts</option>
+                                            <option value="1<<5">Borrar posts</option>
+                                            <option value="1<<6">Editar posts</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="col">
-                                <label for="shopCreationVendorSelect" class="col-form-label">Vendedor</label>
-                                <select class="form-control mr-sm-2 vendorSelect" id="shopCreationVendorSelect">
+                                <div class="form">
+                                    <div class="form-group">
+                                        <label for="createRoleName">Nombre:</label>
+                                        <input type="text" class="form-control" id="createRoleName" placeholder="Nombre">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="createRoleColorValue" class="col-form-label">Color</label>
+                                        <div id="createRoleColor" class="input-group colorpicker-component">
+                                            <input type="text" id="createRoleColorValue" class="form-control" />
+                                            <span class="input-group-addon"><i></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary float-right" id="createRole">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                </select>
+<div class="container element-creation-modal" id="createCategoryModal">
+    <div class="row">
+        <div class="col">
+            <div class="card info text-white">
+                <div class="card-body">
+                    <h4 class="card-title">Crear Categoría</h4>
+                    <div class="row">
+                        <div class="col">
+                            <form>
+                                <div class="form-group">
+                                    <label for="createCategoryName">Nombre</label>
+                                    <input type="text" class="form-control-lg" id="createCategoryName" placeholder="Título">
+                                </div>
+                                <div class="form-group">
+                                    <label for="createCategoryDescription">Descript</label>
+                                    <input type="text" class="form-control-lg" id="createCategoryDescription" placeholder="Título">
+                                </div>
+                                <div class="form-group">
+                                    <label for="createCategoryImage">Imagen</label>
+                                    <input type="text" class="form-control-lg" id="createCategoryImage" placeholder="Título">
+                                </div>
+                                <div class="form-group">
+                                    <label for="createCategoryColorValue">Color</label>
+                                    <div id="createCategoryColor" class="input-group colorpicker-component">
+                                        <input type="text" id="createCategoryColorValue" class="form-control" />
+                                        <span class="input-group-addon"><i></i></span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary float-left" id="createCategory">Crear</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container element-creation-modal" id="createItemModal">
+    <div class="row">
+        <div class="col">
+            <div class="card info text-white">
+                <div class="card-body">
+                    <h4 class="card-title">Crear Item</h4>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="createItemName">Nombre</label>
+                                <input type="text" class="form-control-lg" id="createItemName"/>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="createItemDescription">Descrip</label>
+                                <input type="text" class="form-control-lg" id="createItemDescription"/>
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="createItemBuyValue">Precio de compra</label>
+                                <input type="number" class="form-control-lg" id="createItemBuyValue"/>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="createItemSellValue">Precio de venta</label>
+                                <input type="number" class="form-control-lg" id="createItemSellValue"/>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="createItemIcon">Imagen</label>
+                                <input type="text" class="form-control-lg" id="createItemIcon"/>
                             </div>
                         </div>
 
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="createShop" data-dismiss="modal">Crear</button>
-                    </div>
+                    <button type="button" class="btn btn-primary" id="createItem">Crear</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-    <!-- UPDATE SHOP MODAL (name and assign roles/items) -->
-    <div class="modal fade" id="modalEditshops" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog bg-dark" role="document">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar tienda</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+</div>
+<div class="container element-creation-modal" id="createVendorModal">
+    <div class="row">
+        <div class="col">
+            <div class="card info text-white" >
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <h4 class="card-title">Crear vendedor</h4>
+                            <div class="col">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="createVendorName">Nombre</label>
+                                        <input type="text" class="form-control-lg" id="createVendorName" placeholder="Nombre">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="createVendorDescription">Descript</label>
+                                        <input type="text" class="form-control-lg" id="createVendorDescription" placeholder="Descripción">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="createVendorImage">Imagen</label>
+                                        <input type="text" class="form-control-lg" id="createVendorImage" placeholder="Imagen">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary float-right" id="createVendor">Crear</button>
                 </div>
-                <div class="modal-body">
-                    <!-- User name edit -->
-                    <form class="form-inline my-2 my-lg-0 justify-content-center">
-                        <label for="recipient-name" class="col-form-label mr-sm-1">Nombre:</label>
-                        <input type="text" class="form-control mr-sm-2" id="shopEditName">
-                    </form><br>
-                    <form class="form-inline my-2 my-lg-0 justify-content-center">
-                        <label for="recipient-name" class="col-form-label mr-sm-1">Descripción:</label>
-                        <input type="text" class="form-control mr-sm-2" id="shopEditDescription">
-                    </form><br>
-                    <ul class="nav justify-content-center" style="background: #908c90">
-                        <li class="nav-item">
-                            <span class="nav-link">Cambiar dueño</span>
-                        </li>
-                    </ul><br>
-                    <!-- Show current vendor and possible ones -->
-                    <span class="col-form-label mr-sm-1">Vendedor:  <span id="currentOwner"></span></span><br>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container element-creation-modal" id="createShopModal">
+    <div class="row">
+        <div class="col">
+            <div class="card info text-white">
+                <div class="card-body">
+                    <h4 class="card-title">Crear Tienda</h4>
                     <div class="row">
-
-                        <!-- Here will be all possible vendors loaded from db -->
                         <div class="col">
-                            <select class="form-control mr-sm-2 vendorSelect" id="shopEditVendorSelect">
+                            <form>
+                                <div class="form-group">
+                                    <label for="createShopName">Nombre</label>
+                                    <input type="text" class="form-control-lg" id="createShopName" placeholder="Nombre">
+                                </div>
+                                <div class="form-group">
+                                    <label for="createShopDescription">Descript</label>
+                                    <input type="text" class="form-control-lg" id="createShopDescription" placeholder="Descripción">
+                                </div>
+                                <div class="form-group" style="position:relative">
+                                    <label for="createShopVendorSelect">Vendedo</label>
+                                    <select class="form-control-lg" id="createShopVendorSelect" style="width:280px">
 
-                            </select>
+                                    </select>
+                                </div>
+                                <div class="form-check" style="margin-top: 15px">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" id="createShopIsActive">
+                                        Activa
+                                    </label>
+                                </div>
+                            </form>
                         </div>
-                        <button type="button" class="btn btn-dark float-right" data-dismiss="modal" id="changeShopVendor">cambiar</button>
+
                     </div>
-                    <br>
-                    <ul class="nav justify-content-center" style="background: #908c90">
-                        <li class="nav-item">
-                            <span class="nav-link">Añadir Item</span>
-                        </li>
-                    </ul><br>
+                    <button type="button" class="btn btn-primary float-right" id="createShop">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                    <!-- list all possible items -->
-                    <div class="row">
-                        <!-- Here will be all possible roles loaded from db -->
-                        <div class="col">
-                            <select class="form-control mr-sm-2" id="shopPossibleItems">
-
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-dark float-right" data-dismiss="modal" id="addItemToShop">Añadir</button>
-                    </div>
-                    <br>
-                    <!-- List all shop Items -->
-                    <ul class="nav justify-content-center" style="background: #908c90">
-                        <li class="nav-item">
-                            <span class="nav-link" href="#">Items</span>
-                        </li>
-                    </ul><br>
-                    <ul class="list-group list-group-flush text-white bg-dark" id="shopItems">
-
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="card" style="background: transparent;border: none">
+                <div class="card-body">
+                    <span style="color: #17c9e0">Menú</span>
+                    <ul class="list-group text-white" style="margin-top: 10px">
+                        <li class="list-group-item st active-item"><button id="main" class="section-button selector">Principal</button></li>
+                        <li class="list-group-item st"><button id="users" class="section-button selector">Usuarios</button></li>
+                        <li class="list-group-item st"><button id="roles" class="section-button selector">Roles</button></li>
+                        <li class="list-group-item st"><button id="categories" class="section-button selector">Categorias</button></li>
+                        <li class="list-group-item st"><button id="affiliates" class="section-button selector">Afiliados</button></li>
+                        <li class="list-group-item st"><button id="items" class="section-button selector">Items</button></li>
+                        <li class="list-group-item st"><button id="vendors" class="section-button selector">Vendedores</button></li>
+                        <li class="list-group-item st"><button id="shops" class="section-button selector">Tiendas</button></li>
                     </ul>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
             </div>
         </div>
-    </div>
+        <div class="col-md-10 col-10">
+            <!-- main Section -->
+            <div id="mainSection" class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 text-white" style="margin-top: 30px">
+                            <div class="card-box">
+                                <span class="card-box-title">Usuarios</span>
+                                <p class="main-quantity" id="userQuantity">{{\App\User::count()}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 text-white" style="margin-top: 30px">
+                            <div class="card-box">
+                                <span class="card-box-title">Roles</span>
+                                <p class="main-quantity" id="roleQuantity">{{\App\Role::count()}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 text-white" style="margin-top: 30px">
+                            <div class="card-box">
+                                <span class="card-box-title">Items</span>
+                                <p class="main-quantity" id="itemQuantity">{{\App\Item::count()}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 text-white" style="margin-top: 30px">
+                            <div class="card-box">
+                                <span class="card-box-title">Tiendas</span>
+                                <p class="main-quantity" id="shopQuantity">{{\App\Shop::count()}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 text-white" style="margin-top: 30px">
+                            <div class="card-box">
+                                <span class="card-box-title">Vendedores</span>
+                                <p class="main-quantity" id="vendorQuantity">{{\App\Vendor::count()}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 text-white" style="margin-top: 30px">
+                            <div class="card-box">
+                                <span class="card-box-title">Afiliados</span>
+                                <p class="main-quantity" id="affiliateQuantity">0</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 text-white" style="margin-top: 30px">
+                            <div class="card-box">
+                                <span class="card-box-title">Fichas de personaje</span>
+                                <p class="main-quantity">0</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 text-white" style="margin-top: 30px">
+                            <div class="card-box">
+                                <span class="card-box-title">Fichas de combate</span>
+                                <p class="main-quantity">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col">
+                            <div class="card" style="border: none">
+                                <div class="card-body chart-card">
+                                    <h4 class="card-title text-center text-white">Estadisticas</h4>
+                                    <canvas id="myChart" width="300" height="100"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                </div>
+            </div>
+            <!--  USERS -->
+            <div id="usersSection" class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card text-white" style="border:none;background: transparent">
+                                <!-- Every li is a user -->
+                                <ul class="list-group list-group-flush" style="border:none;margin-top: 20px" id="userList">
 
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END USERS -->
+
+            <!-- ROLES -->
+            <div id="rolesSection" class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 text-white offset-md-9 offset-sm-6" style="margin-top: 30px">
+                            <div class="card-box">
+                                <h4 class="card-box-title text-center" id="openRoleModal" style="margin-top: 5px">Crear rol</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card text-white" style="border:none;background: transparent">
+                                <!-- Every li is a role -->
+                                <ul class="list-group list-group-flush" style="border:none;margin-top: 20px" id="roleList">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END ROLES -->
+
+            <!-- ITEMS -->
+            <div id="itemsSection" class="section">
+                <div class="container" >
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 text-white offset-md-9 offset-sm-6" style="margin-top: 30px">
+                            <div class="card-box">
+                                <h4 class="card-box-title text-center" id="openItemModal"style="margin-top: 5px">Crear item</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="itemList">
+
+                    </div>
+                </div>
+
+                <br>
+            </div>
+            <!-- END ITEMS -->
+
+            <!-- AFFILIATES -->
+            <div id="affiliatesSection" class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 text-white offset-md-9 offset-sm-6" style="margin-top: 30px">
+                            <div class="card-box">
+                                <h4 class="card-box-title text-center" style="margin-top: 5px">Crear afiliado</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END AFFILIATES -->
+
+            <!-- VENDORS -->
+            <div id="vendorsSection" class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 text-white offset-md-9 offset-sm-6" style="margin-top: 30px">
+                            <div class="card-box">
+                                <h4 class="card-box-title text-center" id="openVendorModal" style="margin-top: 5px">Crear vendedor</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card text-white" style="border:none;background: transparent">
+                                <!-- Every li is a vendor -->
+                                <ul class="list-group list-group-flush" style="border:none;margin-top: 20px" id="vendorList">
+                                    <li class="list-group-item element" id="element1" style="">
+                                        <div class="info" id="vendorInfo1">Vendor name<button type="button" class="float-right delete-button"><i class="material-icons">clear</i></button></div>
+                                        <div class="card details" id="detailsvendors1">
+                                            <div class="card-body">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col justify-content-center text-center">
+                                                            <!-- Vendor name -->
+                                                            <h4 class="card-title text-center">Vendor name</h4>
+                                                            <!-- Vendor image -->
+                                                            <img src="https://u.rindou.moe/Aztic_avatar.jpg" style="width: 150px;height: 150px;object-fit: cover;border-radius: 50%">
+                                                        </div>
+                                                        <div class="col">
+                                                            <form>
+                                                                <div class="form-group">
+                                                                    <label for="editVendorName">Nombre</label>
+                                                                    <input type="text" class="form-control-lg" id="editVendorName" aria-describedby="emailHelp" placeholder="Título">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="editVendorDescription">Descript</label>
+                                                                    <input type="text" class="form-control-lg" id="editVendorDescription" aria-describedby="emailHelp" placeholder="Título">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="editVendorImage">Imagen</label>
+                                                                    <input type="text" class="form-control-lg" id="editVendorImage" aria-describedby="emailHelp" placeholder="Título">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END VENDORS -->
+
+            <!-- SHOPS -->
+            <div id="shopsSection" class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 text-white offset-md-9 offset-sm-6" style="margin-top: 30px">
+                            <div class="card-box">
+                                <h4 class="card-box-title text-center" id="openShopModal" style="margin-top: 5px">Crear tienda</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="shopList">
+
+                    </div>
+
+                    <div class="container" id="shop-details">
+
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="card info text-white">
+                                    <div class="card-body">
+                                        <h4 class="card-title" id="shop-title">Shop title</h4>
+                                        <div class="row">
+                                            <div class="col">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <label for="editShopName">Nombre</label>
+                                                        <input type="text" class="form-control-lg" id="editShopName" placeholder="Título">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editShopDescription">Descript</label>
+                                                        <input type="text" class="form-control-lg" id="editShopDescription" placeholder="Título">
+                                                    </div>
+                                                    <div class="form-group" style="position:relative">
+                                                        <span>Actual: <b id="currentVendor"></b></span><br>
+                                                        <label for="vendorSelect">Vendedo</label>
+                                                        <select class="form-control-lg vendorSelect" id="shopEditVendorSelect" style="width:280px">
+
+                                                        </select>
+                                                        <button type="button" class="btn btn-dark" id="changeShopVendor" style="position:absolute;margin-left:5px">cambiar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col">
+                                                <div style="position:relative">
+                                                    <h6 class="text-center">Items</h6>
+                                                    <button type="button" class="float-right add-button" id="addItemToShopForm" data-placement="top" data-toggle="popover" data-title="add item" data-container="body" data-html="true"><i class="material-icons">add</i></button>
+                                                </div>
+                                                <div id="allItemShop" class="invisible" style="position:absolute">
+                                                    <form class="form-inline" role="form">
+                                                        <div class="form-group">
+                                                            <select class="form-control mr-sm-2" id="shopItemToAdd">
+
+                                                            </select>
+                                                            <button type="button" class="btn btn-dark float-right add-item-to-shop-button" id="addItemToShop">Añadir</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!-- Every li is a item -->
+                                                <div class="card info-list">
+                                                    <ul class="list-group list-group-flush" id="shopItems">
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary float-right edit-shop-button" id="editShop">Editar</button>
+                                        <button type="button" class="btn btn-danger float-left" id="deleteShop">Borrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- END SHOPS -->
+
+            <!-- CATEGORIES -->
+            <div id="categoriesSection" class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 text-white offset-md-9 offset-sm-6" style="margin-top: 30px">
+                            <div class="card-box">
+                                <h4 class="card-box-title text-center" id="openCategoryModal" style="margin-top: 5px">Crear categoría</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="categoriesList">
+
+                    </div>
+                    <!-- Details Modal -->
+                    <div class="container" id="category-details">
+
+                        <div class="row">
+                            <!-- Preview -->
+                            <div class="col-md-3 col-sm-6">
+                                <div class="card info text-white">
+                                    <img class="card-img-top center" id="categoryPreviewImage" src="https://a.pomf.cat/ewfhqp.jpg" style="width:100%;height: 200px;object-fit: cover;object-position: center left">
+                                    <div class="card-body">
+                                        <h4 class="card-title" id="categoryPreviewTitle">Not anuncios</h4>
+                                        <p class="card-text" id="categoryPreviewDescription">Esto es una categoría</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Details -->
+                            <div class="col-md-9 col-sm-6">
+                                <div class="card info text-white">
+                                    <div class="card-body">
+                                        <h4 class="card-title" id="categoryEditTitle">Anuncios</h4>
+                                        <div class="row">
+                                            <div class="col">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <label for="editCategoryName">Nombre</label>
+                                                        <input type="text" class="form-control-lg" id="editCategoryName" placeholder="Título">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editCategoryDescription">Descript</label>
+                                                        <input type="text" class="form-control-lg" id="editCategoryDescription" placeholder="Título">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editCategoryImage">Imagen</label>
+                                                        <input type="text" class="form-control-lg" id="editCategoryImage" placeholder="Título">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editCategoryColor">Color</label>
+                                                        <div id="editCategoryColor" class="input-group colorpicker-component">
+                                                            <input type="text" id="editCategoryColorValue" class="form-control" />
+                                                            <span class="input-group-addon"><i></i></span>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col">
+                                                <div style="position:relative">
+                                                    <h6 class="text-center">Channels</h6>
+                                                    <button type="button" class="float-right add-button" id="addChannelForm" data-placement="top" data-toggle="popover" data-title="add channel" data-container="body" data-html="true"><i class="material-icons">add</i></button>
+                                                </div>
+                                                <div id="createChannel" class="invisible" style="position:absolute">
+                                                    <form class="form-inline" role="form">
+                                                        <div class="form-group">
+                                                            <label for="createChannelName">Nombre</label>
+                                                            <input type="text" class="form-control-lg" id="createChannelName" placeholder="Título">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="createChannelDescription">Descripció</label>
+                                                            <input type="text" class="form-control-lg" id="createChannelDescription" placeholder="Título">
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary create-channel" id="createChannelButton">Crear</button>
+                                                    </form>
+                                                </div>
+                                                <!-- Every li is a channel -->
+                                                <div class="card info-list">
+                                                    <ul class="list-group list-group-flush" id="categoryChannels">
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary float-right" id="editCategory">Editar</button>
+                                        <button type="button" class="btn btn-danger float-left" id="deleteCategory">Borrrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END CATEGORIES -->
+
+        </div>
+    </div>
 </div>
+<div id="overlay">
+</div>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>-->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-<script src="{{asset('js/bootstrap-colorpicker.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script> <!-- Fancy charts -->
+<script src="{{asset('js/bootstrap-colorpicker.min.js')}}"></script> <!-- Fancy colorpicker -->
+
 <script>
-    //Wait for DOM to load
-    $(document).ready(function () {
-        $(function() {
-            $('#createRoleColor').colorpicker();
-            $('#editRoleColor').colorpicker();
+    $(document).ready(function(){
+        let currentElementId = -1;
+        let numberPattern = /\d+/g;
+        $('.section').hide();
+        $('#mainSection').fadeIn();
+        $('.details').hide();
+        let prev = "main";
+        /** Change category **/
+        $('.selector').click(function(){
+            $('.popover').popover('hide');
+            $('.element').remove();
+            $('.item').remove();
+            $('.shop').remove();
+            $('.itemAvaliable').remove();
+            //Hide the previous menu and show the current one
+            let current = this.id;
+            $("#"+prev+"Section").fadeOut(function(){
+                //$("#"+current+"Section").fadeIn();
+            });
+
+            $("#"+prev).parent().toggleClass("active-item");
+            //Replace the prev element
+            prev = current;
+            //Make the menu element active, so it looks fancy and blue
+            $(this).parent().toggleClass("active-item");
+            //Display the menu, after everything has loaded
+            loadinfo(function(){
+                $("#"+current+"Section").fadeIn();
+            });
+            /*
+            console.log(this.id);
+            console.log($(".active-item").children().attr("id"));
+            */
         });
-        //Keep track of the last category
-        let prev = undefined;
-        //Keep track of current id (changes when you click in a element loaded from db)
-        let elementId = 0;
+        /** Show details of each element **/
+        $('.info').click(function(){
+            let infoId = this.id.match(numberPattern);
+            $('#details'+prev+infoId).toggle();
+        });
 
-        //Display elements
-        function displayElements(id,page){
-            $('.dbElement').remove();
-            $('.number').remove();
+        /** User details **/
+        $('#userList').on('click','.info',function(){
+            let infoId = this.id.match(numberPattern);
+            $('#details'+prev+infoId).toggle();
+        });
+
+        /** Roles details **/
+        $('#roleList').on('click','.info',function(){
+            let infoId = this.id.match(numberPattern);
+            $('#details'+prev+infoId).toggle();
+        });
+
+        /** Vendor details **/
+        $('#vendorList').on('click','.info',function(){
+            let infoId = this.id.match(numberPattern);
+            $('#details'+prev+infoId).toggle();
+        });
+
+        /** Show details of that shop **/
+        $('#shopList').on('click','.shop',function(){
+            $('.shop-item').remove();
+            $('#overlay').css("display","block");
+            $('#shop-details').css("top","20%");
+            currentElementId = this.id.match(numberPattern)[0];
             $.ajax({
-                url:'/admin/'+id+'?page='+page,
-                type:'get',
+                url:'/admin/shops/info?id='+currentElementId,
+                type:'GET',
                 success:function(msg){
-                    //Append elements
-                    $.each(msg.info,function(index,element){
-                        let content = "";
-                        if(prev === "items"){
-                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'" description="'+element.description+'" icon="'+element.icon+'" buy-value="'+ element.buyValue +'" sell-value="'+ element.sellValue +'" type="'+ element.type +'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
-                        }
-                        else if(prev === "categories"){
-                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'"color-info="'+element.color+'" description="'+element.description+'" image="'+element.image+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
-                        }
-                        else if(prev === "roles"){
-                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'"color-info="'+element.color+'" >'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
-                        }
-                        else if(prev === "users"){
-                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
-                        }
-                        else if(prev === "vendors"){
-                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'" description="'+element.description+'" image="'+element.image+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
-                        }
-                        else if(prev === "shops"){
-                            content = '<li class="list-group-item bg-dark dbElement"><span class="element" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>'
-                        }
-                        /*$('#dbInfo').append('<li class="list-group-item bg-dark element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'"id="'+id+element.id+'"><span>'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>');*/
-                        /*$('#dbInfo').append('<li class="list-group-item bg-dark dbElement"><span class="element" permission="'+element.permission+'" data-toggle="modal" data-target="#modalEdit'+prev+'" id="'+id+element.id+'"color-info="'+element.color+'" description="'+element.description+'" image="'+element.image+'">'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteElement" id="deleteElementButton'+element.id+'"></button></li>');*/
-                        $('#dbInfo').append(content);
-
+                    let info = msg.info;
+                    $('#shop-title').text(info.name);
+                    $('#editShopName').val(info.name);
+                    $('#editShopDescription').val(info.description);
+                    $('#currentVendor').text(info.vendor);
+                    let items = msg.items;
+                    $.each(items,function(index,element){
+                        $('#shopItems').append(`<li class="list-group-item shop-item st" style="position:relative" id="shop${info.id}Item${element.id}">${element.name} <button type="button" class="float-right delete-button delete-shop-item-button"><i class="material-icons">clear</i></button></li>`)
                     });
-                    //Generate pagination
-                    for(let i=Math.floor(msg.quantity/20)+1;i>0;i--){
-                        $('#prev').after('<li class="page-item"><a class="page-link bg-dark number" href="#">'+(i)+'</a></li>');
-                    }
+                }
+            });
+        });
+
+        /** Show details of that category **/
+        $('#categoriesList').on('click','.category',function(){
+            $('#overlay').css("display","block");
+            /*$('#category-details').css("display","block");*/
+            //Load category details
+            currentElementId = this.id.match(numberPattern)[0];
+            $('.channel').remove(); //Delete all previous channels
+            console.log(currentElementId);
+            $.ajax({
+                url:'/admin/categories/details?id='+currentElementId,
+                type:'GET',
+                success:function(msg){
+                    //Edit
+                    $('#editCategoryImage').val(msg.image);
+                    $('#editCategoryName').val(msg.name);
+                    $('#editCategoryDescription').val(msg.description);
+                    $('#editCategoryColor').colorpicker('setValue',msg.color);
+                    //Preview
+                    $('#categoryPreviewImage').attr('src',msg.image);
+                    $('#categoryPreviewDescription').text(msg.description);
+                    $('#categoryPreviewTitle').text(msg.name);
 
                 }
             });
-        }
-        //When change category
-        $('.selector').click(function () {
-            if(prev)
-                $("#"+prev).toggleClass('current');
-            prev = this.id;
-            $('#createButton').attr('data-target','#modal'+prev);
-            $(this).toggleClass('current');
-            displayElements(this.id,1);
-            if(prev === "shops"){
-                $('.possible-vendor').remove(); //Delete previous
-                loadPossibleVendors();
-            }
+            //Get channels of that category
+            $.ajax({
+                url:'/admin/channels?categoryId='+currentElementId,
+                type:'GET',
+                success:function(msg){
+                    $.each(msg,function(index,element){
+                        $('#categoryChannels').append(`<li class="list-group-item st channel" style="position:relative" id="category${currentElementId}Channel${element.id}">${element.name}<button type="button" class="float-right delete-button delete-channel-button"><i class="material-icons">clear</i></button></li>`);
+                    });
+                }
+            });
+            $('#category-details').css("top","20%");
+
+        });
+        /** Hide that modal **/
+        $('#overlay').click(function(){
+            //$('#category-details').css("display","none");
+            $('#category-details').css("top","-100%");
+            $('.element-creation-modal').css("top","-100%");
+            $('#shop-details').css("top","-100%");
+            $('#overlay').css("display","none");
+            $('.popover').popover('hide');
         });
 
-        function loadPossibleVendors() {
+        /** CREATE CATEGORY MODAL SECTION **/
+        //Open the modal
+        $('#openCategoryModal').click(function(){
+            $('#createCategoryModal').css("top","20%");
+            $('#createCategoryColor').colorpicker('setValue','#e61313');
+            $('#overlay').css("display","block");
+        });
+
+        $('#createCategory').click(function(){
+            let name = $('#createCategoryName').val();
+            let description = $('#createCategoryDescription').val();
+            let image = $('#createCategoryImage').val();
+            let color = $('#createCategoryColorValue').val();
+            //Make the ajax
+            makeAjax('/admin/categories',{name:name,description:description,image:image,color:color},'post');
+            //Hide the modal and overlay
+            $('#overlay').css("display","none");
+            $('#createCategoryModal').css("top","-100%");
+        });
+        /** END CREATE CATEGORY MODAL SECTION **/
+
+        /** CREATE ROLE MODAL SECTION **/
+        $('#openRoleModal').click(function(){
+            $('#createRoleModal').css("top","20%");
+            $('#createRoleColor').colorpicker('setValue','#e61313');
+            $('#overlay').css("display","block");
+        });
+
+        $('#createRole').click(function(){
+            let sum = 0;
+            let name = $('#createRoleName').val();
+            let color = $('#createRoleColorValue').val();
+            $("select#createRolePermissions :selected").each(function () {
+                sum += eval($(this).attr('value'));
+            });
+            let data = {name:name,permissions:sum,color:color};
+            makeAjax('/admin/roles',data,'post');
+            $('#overlay').css("display","none");
+            $('#createRoleModal').css("top","-100%");
+
+        });
+        /** END CREATE ROLE MODAL SECTION **/
+
+        /** CREATE ITEM MODAL SECTION **/
+
+        $('#openItemModal').click(function(){
+            $('#createItemModal').css("top","20%");
+            $('#overlay').css("display","block");
+        });
+
+        $('#createItem').click(function(){
+            let name = $('#createItemName').val();
+            let description = $('#createItemDescription').val();
+            let buyValue = $('#createItemBuyValue').val();
+            let sellValue = $('#createItemSellValue').val();
+            let icon = $('#createItemIcon').val();
+            makeAjax('/admin/items',{name:name,description:description,buyValue:buyValue,sellValue:sellValue,icon:icon},'POST');
+            $('#createItemModal').css("top","-100%");
+            $('#overlay').css('display','none');
+        });
+
+        /** END CREATE ITEM MODAL SECTION **/
+
+
+        /** CREATE VENDOR MODAL SECTION **/
+
+        $('#openVendorModal').click(function(){
+            $('#createVendorModal').css('top','20%');
+            $('#overlay').css('display','block');
+        });
+
+        $('#createVendor').click(function(){
+            let name = $('#createVendorName').val();
+            let description = $('#createVendorDescription').val();
+            let image = $('#createVendorImage').val();
+            makeAjax('/admin/vendors',{name:name,description:description,image:image},'POST');
+            $('#createVendorModal').css('top','-100%');
+            $('#overlay').css('display','none');
+        });
+        /** END CREATE VENDOR MODAL SECTION **/
+
+        /** CREATE SHOP MODAL SECTION **/
+
+        $('#openShopModal').click(function(){
+            $('.createShopVendor').remove();
+            //Load all possible vendors
             $.ajax({
                 url:'/admin/vendors/all',
                 type:'GET',
                 success:function(msg){
                     $.each(msg,function(index,element){
                         //console.log(element);
-                        $('.vendorSelect').append('<option id="'+element.id+'" class="possible-vendor">'+element.name+'</option>');
+                        $('#createShopVendorSelect').append(`<option id="vendor${element.id}" class="createShopVendor">${element.name}</option>`);
+                    });
+                }
+            });
+            $('#createShopModal').css('top','20%');
+            $('#overlay').css('display','block');
+        });
+
+        $('#createShop').click(function(){
+            let name = $('#createShopName').val();
+            let description = $('#createShopDescription').val();
+            let active = $('#createShopIsActive').is(':checked');
+            let vendorId = $('#createShopVendorSelect option:selected').attr('id').match(numberPattern)[0];
+            makeAjax('/admin/shops',{name:name,description:description,active:active,vendorId:vendorId},'POST');
+            $('#createShopModal').css('top','-100%');
+            $('#overlay').css('display','none');
+        });
+
+        /** END CREATE SHOP MODAL SECTION **/
+        function loadinfo(callback){
+            console.log("loading");
+            switch (prev){
+                case "main":
+                    console.log("loading main");
+                    loadMain();
+                    break;
+                case "users":
+                    console.log("loading users");
+                    loadUsers();
+                    break;
+                case "categories":
+                    console.log("loading categories");
+                    $("#addChannelForm").popover({
+                        html: true,
+                        content: function() {
+                            let html = $('#createChannel').html();
+                            $('#createChannel').detach();
+                            return html;
+                        }
+                    });
+                    loadCategories();
+                    break;
+                case "vendors":
+                    console.log("loading vendors");
+                    loadVendors();
+                    break;
+                case "roles":
+                    console.log("loading roles");
+                    loadRoles();
+                    break;
+                case "items":
+                    console.log("loading items");
+                    loadItems();
+                    break;
+                case "shops":
+                    console.log("loading shops");
+                    $("#addItemToShopForm").popover({
+                        html:true,
+                        content:function(){
+                            let html = $('#allItemShop').html();
+                            $('#allItemShop').detach();
+                            return html;
+                        }
+                    });
+                    loadShops();
+                    break;
+            }
+            if(callback)
+                callback();
+            $('.details').hide();
+        }
+
+        /** EDIT USER SECTION **/
+
+        /** ADD ITEM **/
+        $(document).on('click','.add-item-to-user',function(){
+            let id = this.id.match(numberPattern)[0];
+            let itemId = $("#itemToAdd"+id+" option:selected").attr('id').match(numberPattern)[0];
+            let itemName = $("#itemToAdd"+id+" option:selected").text();
+            makeAjax('/admin/items/user',{userId:id,itemId:itemId},'POST')
+            $('#user'+id+"Items").append(`<li class="list-group-item st" style="position:relative" id="user${id}Item${itemId}">${itemName}<button type="button" class="float-right delete-button"><i class="material-icons">clear</i></button></li>`);
+
+        });
+        /** EDIT USER NAME **/
+        $('#userList').on('click','.edit-username-button',function(){
+            let id = $(this).attr('id').match(numberPattern)[0];
+            let name = $('#user'+id+'Name').text();
+            makeAjax('/admin/users',{id:id,name:name},'PUT');
+            $('#userInfo'+id).text(name);
+        });
+
+        /** ADD ROLE **/
+        $(document).on('click','.add-role-button',function(){
+            let id = this.id.match(numberPattern)[0];
+            let roleId = $("#roleToAdd"+id+" option:selected").attr('id').match(numberPattern)[1];
+            let roleName = $("#roleToAdd"+id+" option:selected").text();
+            makeAjax('/admin/roles/user',{roleId:roleId,userId:id},'POST');
+            $('#user'+id+'Roles').append(`<li class="list-group-item st" style="position:relative" id="user${id}Role${roleId}">${roleName}<button type="button" class="float-right delete-button delete-role-button"><i class="material-icons">clear</i></button></li>`)
+        });
+
+        /** DELETE ROLE **/
+        $(document).on('click','.delete-role-button',function(){
+            let [userId,roleId] = $(this).parent().attr('id').match(numberPattern);
+            makeAjax('/admin/roles/user',{roleId:roleId,userId:userId},'DELETE');
+            $('#user'+userId+"Role"+roleId).remove();
+        });
+
+        /** DELETE ITEM **/
+        $(document).on('click','.delete-item-button',function(){
+            let [userId,itemId] = $(this).parent().attr('id').match(numberPattern);
+            makeAjax('/admin/items/user',{itemId:itemId,userId:userId},'DELETE');
+            $('#user'+userId+"Item"+itemId).remove();
+        });
+
+        /** END EDIT USER SECTION **/
+
+        /** Load all user info to the "usersSection" div
+         * First, it gets all the users and it's info
+         * Second ajax, get's all user items
+         * Then, append all user roles
+         * The other two ajax, are for loading all items and user free roles (since you can't have a role more than once
+         **/
+
+        function loadMain(){
+            $.ajax({
+                url:'/admin/counts',
+                type:'GET',
+                success:function(info){
+                    console.log(info);
+                    $('#userQuantity').text(info.users);
+                    $('#roleQuantity').text(info.roles);
+                    $('#shopQuantity').text(info.shops);
+                    $('#itemQuantity').text(info.items);
+                    $('#vendorQuantity').text(info.vendors);
+                }
+            });
+        }
+        function loadUsers(page=1){
+            $.ajax({
+                url:'/admin/users?page='+page,
+                type:'GET',
+                success:function(msg){
+                    console.log(msg);
+                    $.each(msg.info,function(index,element){
+                        $('#userList').append(
+                            `<li class="list-group-item element" id="user${element.id}" style="">
+                    <div class="info" id="userInfo${element.id}">${element.name}</div>
+                    <div class="card details" id="detailsusers${element.id}">
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col justify-content-center text-center">
+                                        <div style="position:relative">
+                                            <h4 class="user-name text-center" contenteditable id="user${element.id}Name">${element.name}</h4><button type="button" class="float-right edit-username-button edit-button" id="editName${element.id}" style="margin-top:-35px;margin-right:-33px"><i class="material-icons">edit</i></button>
+                                        </div>
+                                        <img src="${element.avatar}" style="width: 150px;height: 150px;object-fit: cover;border-radius: 50%">
+                                        <h6 class="card-subtitle mb-2" style="margin-top: 10px;color:${element.main_role.color}">${element.main_role.name}</h6>
+                                    </div>
+                                    <div class="col" style="margin-top: 80px">
+                                        <p id="user1Money">Dinero: ${element.money}</p>
+                                        <p style="margin-top: -15px" id="user${element.id}Exp">Exp: ${element.exp}</p>
+                                        <p style="margin-top: -15px" id="user${element.id}Messages">Mensajes: ${element.messageCount}</p>
+                                    </div>
+                                    <div class="col">
+                                        <div id="user${element.id}PossibleRoles" class="invisible" style="position:absolute">
+                                            <form class="form-inline" role="form">
+                                                <div class="form-group">
+                                                    <select class="form-control mr-sm-2" id="roleToAdd${element.id}">
+
+                                                    </select>
+                                                    <button type="button" class="btn btn-dark float-right add-role-button" data-dismiss="modal" id="addRoleToUser${element.id}">Añadir</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div style="position:relative">
+                                            <h6 class="text-center">Roles</h6>
+                                            <button type="button" class="float-right add-button" id="addRole${element.id}" data-placement="top" data-toggle="popover" data-title="add role" data-container="body" data-html="true"><i class="material-icons">add</i></button>
+                                        </div>
+                                        <div class="card info-list">
+                                            <ul class="list-group list-group-flush" id="user${element.id}Roles">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div id="possibleItems${element.id}" class="invisible" style="position:absolute">
+                                            <form class="form-inline" role="form">
+                                                <div class="form-group">
+                                                    <select class="form-control mr-sm-2" id="itemToAdd${element.id}">
+
+                                                    </select>
+                                                    <button type="button" class="btn btn-dark float-right add-item-to-user" id="addItemToUser${element.id}" >Añadir</button>
+                                                </div>
+                                             </form>
+                                        </div>
+                                        <div style="position:relative">
+                                            <h6 class="text-center">Items</h6>
+                                            <button type="button" class="float-right add-button" id="addItem${element.id}" data-placement="top" data-toggle="popover" data-title="add item" data-container="body" data-html="true"><i class="material-icons">add</i></button>
+                                        </div>
+                                        <div class="card info-list">
+                                            <ul class="list-group list-group-flush" id="user${element.id}Items">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               </li>`
+                        );
+                        //Get user items
+                        $.ajax({
+                            url:'/admin/items/user',
+                            type:"GET",
+                            data:{'id':element.id},
+                            success:function(content){
+                                $.each(content,function(index,item){
+                                    $("#user"+element.id+"Items").append(`<li class="list-group-item st" style="position: relative" id="user${element.id}Item${item.id}">${item.name}<button type="button" class="float-right delete-button delete-item-button"><i class="material-icons">clear</i></button></li>`)
+                                })
+                            }
+                        });
+                        //Append all user roles
+                        $.each(element.roles,function(index,role){
+                            $('#user'+element.id+"Roles").append(`<li class="list-group-item st" style="position:relative" id="user${element.id}Role${role.id}">${role.name}<button type="button" class="float-right delete-button delete-role-button"><i class="material-icons">clear</i></button></li>`)
+                        });
+                        //Free roles
+                        $.ajax({
+                            url:'/admin/roles/user/free',
+                            type:'GET',
+                            data:{id:element.id},
+                            success:function(content){
+                                $.each(content,function(index,item){
+                                    $("#roleToAdd"+element.id).append(`<option id="user${element.id}Role${+item.id}" class="userFreeRole">${item.name}</option>`);
+                                    $("#addRole"+element.id).popover({
+                                        html: true,
+                                        content: function() {
+                                            let html = $('#user'+element.id+'PossibleRoles').html();
+                                            $('#user'+element.id+'PossibleRoles').detach();
+                                            return html;
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                        //All items
+                        $.ajax({
+                            url:'/admin/items/all',
+                            type:'GET',
+                            success:function(msg){
+                                $.each(msg,function(index,item){
+                                    $('#itemToAdd'+element.id).append(`<option id="item${item.id}" class="itemAvaliable">${item.name}</option>`);
+                                });
+                                $("#addItem"+element.id).popover({
+                                    html:true,
+                                    content:function(){
+                                        let html = $('#possibleItems'+element.id).html();
+                                        $('#possibleItems'+element.id).detach();
+                                        return html;
+                                    }
+                                })
+                            }
+                        });
+                        $('.details').hide();
                     });
                 }
             });
         }
-        //Click inside element loaded from db
-        $('#dbInfo').on('click','.element',function(){
-           //alert($(this).text());
-            elementId = $(this).attr('id').split($('.current').attr('id'))[1];
-            if($('.current').attr('id') === "roles"){
-                //Give the "name" section the element name
-                $('#roleEditName').val($(this).text());
-                $('#editRoleColor').colorpicker('setValue',$(this).attr('color-info'));
-                //Get the element permission
-                let permission = $(this).attr('permission');
-                //Generate the edit
-                $("select#desiredPermissionsEdit option").each(function(index){
-                    this.selected = (permission[permission.length-index-1] === "1");
-                });
-            }
-            else if($('.current').attr('id') === "users"){
-                //Remove roles from previous users, if any
-                $('.userFreeRole').remove();
-                $('.userRole').remove();
-                $('.userItem').remove();
-                $('.itemAvaliable').remove();
-                //Set user name for edit/show
-                $('#userName').val($(this).text());
-                //Get user roles
-                updateUserInfo();
 
-            }
-            else if($('.current').attr('id') === "categories"){
-                $('#categoryEditName').val($(this).text());
-                $('#editCategoryColor').colorpicker('setValue',$(this).attr('color-info'));
-                $('#categoryEditImage').val($(this).attr('image'));
-                $('#categoryEditDescription').val($(this).attr('description'));
-                $('.categoryChannel').remove();
-                $.ajax({
-                    url:'/admin/channels',
-                    type:'GET',
-                    data:{categoryId:elementId},
-                    success:function(msg){
-                        console.log(msg);
-                        $.each(msg,function(index,element){
-                            $('#listChannels').append('<li class="list-group-item bg-dark categoryChannel"> <span>'+element.name+'</span> <button type="button" class="fa fa-trash float-right section-button deleteChannel" id="deleteChannelButton'+element.id+'" data-dismiss="modal"></button> <button type="button" class="fa fa-pencil float-right section-button" id="editChannelButton'+index+'"></button></li>')
-                        });
-                    },
-                    error:function(msg){
-                        console.log(msg);
-                    }
-                });
-            }
-            else if($('.current').attr('id') === "items"){
-                $('#itemEditName').val($(this).text());
-                $('#itemEditDescription').val($(this).attr('description'));
-                $('#itemEditBuyValue').val($(this).attr('buy-value'));
-                $('#itemEditSellValue').val($(this).attr('sell-value'));
-                $('#itemEditIcon').val($(this).attr('icon'));
-            }
-            else if($('.current').attr('id') === "vendors"){
-                $('#vendorEditName').val($(this).text());
-                $('#vendorEditImage').val($(this).attr('image'));
-                $('#vendorEditDescription').val($(this).attr('description'));
-            }
-            else if($('.current').attr('id') === "shops"){
-                $('.itemAvaliable').remove();
-                $('.shopItem').remove();
-                updateShopInfo();
-            }
-        });
-
-        $('#dbInfo').on('click','.deleteElement',function(){
-            let currentSection = $('.current').attr('id');
-            let currentId = $(this).attr('id').split('deleteElementButton')[1];
-            makeAjax('/admin/'+currentSection,{id:currentId},'DELETE');
-            console.log(currentSection);
-            console.log(currentId);
-        });
-
-        //Handle click inside page selector
-        $('#pages').on('click','.number',function(){
-           displayElements($('.current').attr('id'),$(this).text());
-        });
-
-        //Create category button
-        $('#createCategory').click(function(){
-            let name = $('#categoryCreationName').val();
-            makeAjax('/admin/categories',{name:name},'post');
-        });
-        //Edit category (change name)
-        $('#editCategoryInfo').click(function(){
-            let name = $('#categoryEditName').val();
-            let color = $('#editCategoryColorValue').val();
-            let description = $('#categoryEditDescription').val();
-            let image = $('#categoryEditImage').val();
-            console.log(color);
-            makeAjax('/admin/categories',{name:name,category_id:elementId,color:color,description:description,image:image},'put');
-        });
-
-        //Delete role from user
-        $('#userRoles').on('click','.deleteUserRole',function () {
-            let roleId = $(this).attr('id');
-            makeAjax('/admin/roles/user',{roleId:roleId,userId:elementId},'DELETE');
-        });
-
-        //Delete item from user
-        $('#userItems').on('click','.deleteUserItem',function(){
-            let itemId = $(this).attr('id');
-            makeAjax('/admin/items/user',{itemId:itemId,userId:elementId},'DELETE');
-        });
-
-        //Edit user name
-        $('#editUserName').click(function(){
-            let newName = $('#userName').val();
-            makeAjax('/admin/users',{id:elementId,name:newName},'PUT');
-
-        });
-        //Add role to user
-        $('#addRoleToUser').click(function(){
-           let roleId= $('#roleToAdd option:selected').attr('id');
-           makeAjax('/admin/roles/user',{roleId:roleId,userId:elementId},'POST')
-        });
-
-        //Add item to user
-        $('#addItemToUser').click(function(){
-           let itemId = $('#avaliableItems option:selected').attr('id');
-           makeAjax('/admin/items/user',{userId:elementId,itemId:itemId},'POST');
-        });
-
-
-        //Create role "form"
-        $('#createRol').click(function(){
-            let sum = 0;
-            $("select#desiredPermissions :selected").each(function () {
+        /** EDIT ROLE SECTION **/
+        /** EDIT ROLE **/
+        $('#roleList').on('click','.edit-role-button',function(){
+            let sum = 0; //Permission sum
+            let id = this.id.match(numberPattern)[0];
+            let name = $('#roleEditName'+id).val();
+            let color = $('#editRole'+id+'ColorValue').val();
+            $("select#role"+id+"Permissions :selected").each(function () {
                 sum += eval($(this).attr('value'));
             });
-            let name = $('#roleCreationName').val();
-            let color = $('#createRoleColorValue').val();
-            let data = {name:name,permissions:sum,color:color};
-            makeAjax('/admin/roles',data,'post');
-        });
-
-        //Edit role (name and/or permissions)
-        $('#editRol').click(function(){
-            let sum = 0;
-            $("select#desiredPermissionsEdit :selected").each(function () {
-                sum += eval($(this).attr('value'));
-            });
-            let name = $('#roleEditName').val();
-            let color = $('#editRoleColorValue').val();
-            let data = {role_id:elementId,name:name,permissions:sum,color:color};
+            let data = {role_id:id,name:name,permissions:sum,color:color};
             makeAjax('/admin/roles',data,'put');
+
+
+        });
+        /** END EDIT ROLE **/
+        function loadRoles(page=1){
+            $.ajax({
+                url:'/admin/roles?page='+page,
+                type:'GET',
+                success:function(msg){
+                    $.each(msg.info,function(index,element){
+                        $('#roleList').append(
+                            `<li class="list-group-item element" id="role${element.id}">
+                                <div class="info" id="rolesInfo${element.id}">${element.name}<button type="button" class="float-right delete-button delete-element"><i class="material-icons">clear</i></button></div>
+                                <div class="card details" id="detailsroles${element.id}">
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col justify-content-center">
+                                                    <h4 class="card-title">${element.name}</h4>
+                                                    <form class="form-inline" role="form">
+                                                        <div class="form-group justify-content-center align-content-center">
+                                                            <select multiple class="form-control" id="role${element.id}Permissions" style="height: 160px;border:none">
+                                                               <option value="1<<0">Admin</option>
+                                                               <option value="1<<1">Crear temas</option>
+                                                               <option value="1<<2">Borrar temas</option>
+                                                               <option value="1<<3">Mover temas</option>
+                                                               <option value="1<<4">Crear posts</option>
+                                                               <option value="1<<5">Borrar posts</option>
+                                                               <option value="1<<6">Editar posts</option>
+                                                            </select>
+                                                         </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form">
+                                                        <div class="form-group">
+                                                            <label for="roleEditName${element.id}" class="col-form-label">Nombre:</label>
+                                                            <input type="text" class="form-control" id="roleEditName${element.id}" value="${element.name}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="editRole${element.id}ColorValue" class="col-form-label">Color</label>
+                                                            <div id="editRole${element.id}Color" class="input-group colorpicker-component .roleColor">
+                                                                <input type="text" id="editRole${element.id}ColorValue" value="${element.color}" class="form-control" />
+                                                                <span class="input-group-addon"><i></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary float-right edit-role-button" id="editRole${element.id}Button">Editar</button>
+                                    </div>
+                                </div>
+                            </li>
+`);
+
+                        //Mark as selected current permissions
+                        $('select#role'+element.id+'Permissions option').each(function(index){
+                            this.selected = (element.permission[element.permission.length-index-1] === "1");
+                        });
+                        //Set role color
+                        $('#editRole'+element.id+'Color').colorpicker();
+                        //$('#editRole'+element.id+'Color').colorpicker('setValue',element.color);
+                    });
+                    $('.details').hide();
+                }
+            });
+        }
+        /** EDIT ITEMS SECTION **/
+        /** EDIT ITEMS **/
+        $('#itemList').on('click','.edit-item-button',function(){
+            let id = this.id.match(numberPattern)[0];
+            let name = $('#item'+id+'Name').text();
+            let description = $('#item'+id+'Description').text();
+            let buyValue = $('#item'+id+'BuyValue').val();
+            let sellValue = $('#item'+id+'SellValue').val();
+            let icon = $('#item'+id+'Icon').val();
+            makeAjax('/admin/items',{id:id,name:name,description:description,buyValue:buyValue,sellValue:sellValue,icon:icon},'PUT');
+            $('#item'+id+'IconPreview').attr('src',icon);
         });
 
-        //Create channel for a category
-        $('#createChannel').click(function(){
-            console.log(elementId);
-            let name = $('#channelCreationName').val();
-            let description = $('#channelDescripionCreate').val();
-            makeAjax('/admin/channels',{name:name,description:description,categoryId:elementId},'POST');
+
+        /** END EDIT ITEMS **/
+
+        function loadItems(page=1){
+            $.ajax({
+                url:'/admin/items?page='+page,
+                type:'GET',
+                success:function(msg){
+                    $.each(msg.info,function(index,element){
+                        $('#itemList').append(
+                            `<div class="col-md-3 col-sm-6 item" style="margin-top:5px;height:300px;overflow:auto">
+                                <div class="card card-box text-white">
+                                    <img class="card-img-top center" id="item${element.id}IconPreview" src="${element.icon}" style="width:42px;height:42px">
+                                    <div class="card-body">
+                                        <h4 class="card-title" contenteditable id="item${element.id}Name">${element.name}</h4>
+                                        <p class="card-text" contenteditable id="item${element.id}Description">${element.description}</p>
+                                        <label for="item${element.id}BuyValue"><b>Precio de compra</b></label>
+                                        <input type="number" class="card-text" id="item${element.id}BuyValue" value="${element.buyValue}" style="background:inherit;border:none;color:white"></input>
+                                        <label for="item${element.id}SellValue"><b>Precio de venta</b></label>
+                                        <input type="number" class="card-text" id="item${element.id}SellValue" value="${element.sellValue}" style="background:inherit;border:none;color:white"></input>
+                                        <label for="item${element.id}Icon"><b>Imagen</b></label>
+                                        <input type="text" class="card-text" id="item${element.id}Icon" value="${element.icon}" style="background:inherit;border:none;color:white"></input>
+                                        <button type="button" class="btn btn-primary edit-item-button" id="editItem${element.id}">Editar</button>
+                                        <button type="button" class="btn btn-danger float-left delete-item-from-db-button" id="deleteItem${element.id}">Borrar</button>
+                                    </div>
+                                </div>
+                            </div>`);
+                    });
+                }
+            });
+        }
+
+        /** EDIT VENDORS SECTION **/
+
+        $('#vendorList').on('click','.edit-vendor-button',function(){
+            let id = this.id.match(numberPattern)[0];
+            let name = $('#editVendor'+id+'Name').val();
+            let description = $('#editVendor'+id+'Description').val();
+            let image = $('#editVendor'+id+'Image').val();
+            makeAjax('/admin/vendors',{id:id,name:name,description:description,image:image},'PUT');
+            $('#vendor'+id+'ImagePreview').attr('src',image);
+            $('#vendor'+id+'NamePreview').text(name);
         });
 
-        //Delete channel from a category
-        $('#listChannels').on('click','.deleteChannel',function(){
-           let channelId = $(this).attr('id').split('deleteChannelButton')[1];
-           console.log(channelId);
-           makeAjax('/admin/channels',{id:channelId},'DELETE');
+        /** END EDIT VENDORS**/
+
+        function loadVendors(page=1){
+            $.ajax({
+                url:'/admin/vendors?page='+page,
+                type:'GET',
+                success:function(msg){
+                    $.each(msg.info,function(index,element){
+                        $('#vendorList').append(`
+                            <li class="list-group-item element" id="vendor${element.id}" style="">
+                                <div class="info" id="vendorInfo${element.id}">${element.name}<button type="button" class="float-right delete-button delete-element"><i class="material-icons">clear</i></button></div>
+                                <div class="card details" id="detailsvendors${element.id}">
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col justify-content-center text-center">
+                                                    <h4 class="card-title text-center" id="vendor${element.id}NamePreview" >${element.name}</h4>
+                                                    <img src="${element.image}" id="vendor${element.id}ImagePreview" style="width: 150px;height: 150px;object-fit: cover;border-radius: 50%">
+                                                </div>
+                                                <div class="col">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label for="editVendor${element.id}Name">Nombre</label>
+                                                            <input type="text" class="form-control-lg" id="editVendor${element.id}Name" value="${element.name}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="editVendorDescription">Descript</label>
+                                                            <input type="text" class="form-control-lg" id="editVendor${element.id}Description" value="${element.description}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="editVendor${element.id}Image">Imagen</label>
+                                                            <input type="text" class="form-control-lg" id="editVendor${element.id}Image" value="${element.image}">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary edit-vendor-button float-right" id="editVendor${element.id}">Editar</button>
+                                    </div>
+                                </div>
+                            </li>
+                        `);
+                    });
+                    $('.details').hide();
+                }
+            });
+        }
+
+        /** EDIT SHOPS SECTION **/
+
+        //Edit shop info
+        $('#shopsSection').on('click','.edit-shop-button',function(){
+            let name = $('#editShopName').val();
+            let description = $('#editShopDescription').val();
+            //let $('#currentVendor').text(info.vendor);
+            makeAjax('/admin/shops',{id:currentElementId,name:name,description:description},'PUT');
+            $('#editShopName').val(name);
+            $('#editShopDescription').val(description);
         });
 
-        //Create item
-        $('#createItem').click(function(){
-            let name = $('#itemCreationName').val();
-            let description = $('#itemCreationDescription').val();
-            let buyValue = $('#itemCreationBuyValue').val();
-            let sellValue = $('#itemCreationSellValue').val();
-            let icon = $('#itemCreationIcon').val();
-            makeAjax('/admin/items',{name:name,description:description,buyValue:buyValue,sellValue:sellValue,icon:icon},'POST');
+        //Change vendor
+        $('#shopsSection').on('click','#changeShopVendor',function(){
+            let vendor = $('#shopEditVendorSelect option:selected').attr('id');
+            let vendorName = $('#shopEditVendorSelect option:selected').val();
+            makeAjax('/admin/shops/vendor',{shopId:currentElementId,vendorId:vendor},'PUT');
+            $('#currentVendor').text(vendorName);
+
         });
 
-        $('#editItem').click(function(){
-            let name = $('#itemEditName').val();
-            let description = $('#itemEditDescription').val();
-            let buyValue = $('#itemEditBuyValue').val();
-            let sellValue = $('#itemEditSellValue').val();
-            let icon = $('#itemEditIcon').val();
-            makeAjax('/admin/items',{id:elementId,name:name,description:description,buyValue:buyValue,sellValue:sellValue,icon:icon},'PUT');
+        //Add item
+
+        $(document).on('click','#addItemToShop',function(){
+            let itemId = $('#shopItemToAdd option:selected').attr('id').match(numberPattern)[0];
+            let name = $('#shopItemToAdd option:selected').val();
+            makeAjax('/admin/shops/item',{shopId:currentElementId,itemId:itemId},'POST');
+            $('#shopItemToAdd').append(`<option id="item${itemId}" class="itemAvaliable">${name}</option>`);
+            //$("#categoryChannels").append(`<li class="list-group-item st channel" style="position:relative" id="category${currentElementId}Channel${element.id}">${element.name}<button type="button" class="float-right delete-button delete-channel-button"><i class="material-icons">clear</i></button></li>`)
         });
 
-        $('#createVendor').click(function(){
-           let name = $('#vendorCreationName').val();
-           let description = $('#vendorCreationDescription').val();
-           let image = $('#vendorCreationImage').val();
-           makeAjax('/admin/vendors',{name:name,description:description,image:image},'POST');
+        $('#shopsSection').on('click','.delete-shop-item-button',function(){
+            let [shopId,itemId] = $(this).parent().attr('id').match(numberPattern);
+            makeAjax('/admin/shops/item',{shopId:shopId,itemId:itemId},'DELETE');
+            $('#shop'+shopId+'Item'+itemId).remove();
         });
 
-        $('#editVendor').click(function(){
-            let name = $('#vendorEditName').val();
-            let description = $('#vendorEditDescription').val();
-            let image = $('#vendorEditImage').val();
-            makeAjax('/admin/vendors',{id:elementId,name:name,description:description,image:image},'PUT');
+        /** END EDIT SHOPS **/
+
+        function loadShops(page=1){
+            $('.itemAvaliable').remove();
+            $('.possible-vendor').remove();
+            $.ajax({
+                url:'/admin/shops?page='+page,
+                type:'GET',
+                success:function(msg){
+                    $.each(msg.info,function(index,element){
+                        $('#shopList').append(`
+                            <div class="col-md-3 col-sm-6 shop" style="margin-top: 5px;position:relative" id="shop${element.id}">
+                                <div class="card card-box text-white">
+                                    <div class="card-body">
+                                        <h4 class="card-title">${element.name}</h4>
+                                        <p class="card-text">${element.description}</p>
+                                        <!--<a href="#" class="btn btn-primary">Editar</a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    });
+                }
+            });
+            $.ajax({
+                url:'/admin/vendors/all',
+                type:'GET',
+                success:function(msg){
+                    $.each(msg,function(index,element){
+                        //console.log(element);
+                        $('.vendorSelect').append(`<option id="${element.id}" class="possible-vendor">${element.name}</option>`);
+                    });
+                }
+            });
+            //All items
+            $.ajax({
+                url:'/admin/items/all',
+                type:'GET',
+                success:function(msg){
+                    $.each(msg,function(index,item){
+                        $('#shopItemToAdd').append(`<option id="item${item.id}" class="itemAvaliable">${item.name}</option>`);
+                    });
+                }
+            });
+        }
+
+        /** EDIT CATEGORY SECTION **/
+        //ADD CHANNEL
+        $(document).on('click','#createChannelButton',function(){
+            let name = $('#createChannelName').val();
+            let description = $('#createChannelDescription').val();
+            let categoryId = currentElementId;
+            makeAjax('/admin/channels',{name:name,description:description,categoryId:categoryId},'POST');
+            //$("#categoryChannels").append(`<li class="list-group-item st channel" style="position:relative" id="category${currentElementId}Channel${element.id}">${element.name}<button type="button" class="float-right delete-button delete-channel-button"><i class="material-icons">clear</i></button></li>`)
         });
 
-        $('#createShop').click(function(){
-           let name = $('#shopCreationName').val();
-           let description = $('#shopCreationDescription').val();
-           let active = $('#shopCreationIsActive').is(':checked');
-           let vendorId = $('#shopCreationVendorSelect option:selected').attr('id');
-           makeAjax('/admin/shops',{name:name,description:description,active:active,vendorId:vendorId},'POST');
+        //Delete channel
+        $('#categoriesSection').on('click','.delete-channel-button',function(){
+            let id = $(this).parent().attr('id');
+            let channelId = id.match(numberPattern)[1];
+            makeAjax('/admin/channels',{id:channelId},'DELETE');
+            $("#"+id).remove();
+
         });
 
-        $('#addItemToShop').click(function(){
-            let itemId = $('#shopPossibleItems option:selected').attr('id');
-            makeAjax('/admin/shops/item',{shopId:elementId,itemId:itemId},'POST');
+        //Edit category info
+        $('#editCategory').click(function(){
+            let name = $('#editCategoryName').val();
+            let description = $('#editCategoryDescription').val();
+            let color = $('#editCategoryColorValue').val();
+            let image = $('#editCategoryImage').val();
+            makeAjax('/admin/categories',{name:name,category_id:currentElementId,color:color,description:description,image:image},'PUT');
+            $('#categoryPreviewTitle').text(name);
+            $('#categoryPreviewImage').attr('src',image);
+            $('#categoryEditDescription').text(description);
+
         });
 
-        $('#changeShopVendor').click(function(){
-            let vendorId = $('#shopeditvendorselect option:selected').attr('id');
-            makeAjax('/admin/shops/vendor',{shopId:elementId,vendorId:vendorId},'PUT');
+        function loadCategories(page=1){
+            $('.category').remove();
+            $('#editCategoryColor').colorpicker();
+            $.ajax({
+                url:'/admin/categories?page='+page,
+                type:'GET',
+                success:function(msg){
+                    $.each(msg.info,function(index,element){
+                        $('#categoriesList').append(`
+                            <div class="col-md-3 col-sm-6 category" style="margin-top:5px" id="category${element.id}">
+                                <div class="card card-box text-white category-item">
+                                    <img class="card-img-top center" src="${element.image}" style="width:100%;height: 200px;object-fit: cover;object-position: center left">
+                                    <div class="card-body">
+                                        <h4 class="card-title">${element.name}</h4>
+                                        <p class="card-text">${element.description}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    });
+
+                }
+            });
+        }
+
+        $(document).on('click','.delete-element',function(){
+            $('.details').hide();
+            $('.element').remove();
+            $('.item').remove();
+            $('.shop').remove();
+            $('.itemAvaliable').remove();
+            let id = $(this).parent().attr('id').match(numberPattern)[0];
+            makeAjax('/admin/'+prev,{id:id},'DELETE');
+            loadinfo()
         });
 
-        $('#shopItems').on('click','.deleteShopItem',function(){
-            let itemId = $(this).attr('id');
-            makeAjax('/admin/shops/item',{shopId:elementId,itemId:itemId},'DELETE');
+        $('#itemList').on('click','.delete-item-from-db-button',function(){
+            $('.element').remove();
+            $('.item').remove();
+            $('.shop').remove();
+            $('.itemAvaliable').remove();
+            let id = this.id.match(numberPattern)[0];
+            makeAjax('/admin/'+prev,{id:id},'DELETE');
+            loadinfo()
+        });
+
+        $('#deleteCategory').click(function(){
+            $('.element').remove();
+            $('.item').remove();
+            $('.shop').remove();
+            $('.itemAvaliable').remove();
+            $('#category-details').css("top","-100%");
+            $('#overlay').css("display","none");
+            $('.popover').popover('hide');
+            makeAjax('/admin/'+prev,{id:currentElementId},'DELETE');
+            loadinfo()
+        });
+
+        $('#deleteShop').click(function(){
+            $('.element').remove();
+            $('.item').remove();
+            $('.shop').remove();
+            $('.itemAvaliable').remove();
+            $('#shop-details').css("top","-100%");
+            $('#overlay').css("display","none");
+            $('.popover').popover('hide');
+            makeAjax('/admin/'+prev,{id:currentElementId},'DELETE');
+            loadinfo()
         });
 
         //Make an ajax (duh)
@@ -937,7 +1524,6 @@
                 data:data,
                 success:function(msg){
                     console.log(msg);
-                    displayElements($('.current').attr('id'),1);
                 },
                 error:function(msg){
                     console.log(msg);
@@ -945,97 +1531,128 @@
             });
         }
 
-        //This will make 4 ajax request.
-        //One for update user modal with possible assignable roles to users
-        //The other two, for items of the user
-        function updateUserInfo(){
-            $.ajax({
-                url:'/admin/roles/user',
-                type:"GET",
-                data:{'id':elementId},
-                success:function(msg){
-                    //console.log(msg);
-                    //Travel all roles
-                    $.each(msg,function(index,element){
-                        //console.log(element);
-                        $('#userRoles').append('<li class="list-group-item bg-dark userRole"><span>'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteUserRole" id="'+element.id+'"></button></li>');
-                    });
-                },
-                error:function(msg){
-                    console.log(msg);
-                }
-            });
-            //Get user possible roles
-            $.ajax({
-                url:'/admin/roles/user/free',
-                type:"GET",
-                data:{'id':elementId},
-                success:function(msg){
-                    //console.log(msg);
-                    //Travel all roles
-                    $.each(msg,function(index,element){
-                        //console.log(element);
-                        $('#roleToAdd').append('<option id="'+element.id+'" class="userFreeRole">'+element.name+'</option>');
-                    });
-                },
-                error:function(msg){
-                    console.log(msg);
-                }
-            });
-            //Get all items
-            $.ajax({
-                url:'/admin/items/all',
-                type:'GET',
-                success:function(msg){
-                    $.each(msg,function(index,element){
-                       $('#avaliableItems').append('<option id="'+ element.id +'" class="itemAvaliable">'+element.name+'</option>');
-                    });
-                }
-            });
-            //Get user items
-            $.ajax({
-                url:'/admin/items/user',
-                type:'GET',
-                data:{id:elementId},
-                success:function(msg){
-                    //Something
-                    $.each(msg,function(index,element){
-                       $('#userItems').append('<li class="list-group-item bg-dark userItem"><span>'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteUserItem" id="'+element.id+'"></button></li>') ;
-                    });
-                }
-            })
-        }
+    });
 
-        function updateShopInfo(){
-            //Get shop info
-            $.ajax({
-                url:'/admin/shops/info',
-                type:'GET',
-                data:{id:elementId},
-                success:function(msg){
-                    let info = msg.info;
-                    $('#shopEditName').val(info.name);
-                    $('#shopEditDescription').val(info.description);
-                    $('#currentOwner').text(info.vendor);
-                    let items = msg.items;
-                    console.log(items);
-                    $.each(items,function(index,element){
-                        console.log("in");
-                        $('#shopItems').append('<li class="list-group-item bg-dark shopItem"><span>'+element.name+'</span><button type="button" class="fa fa-trash float-right section-button deleteShopItem" id="'+element.id+'"></button></li>') ;
-                    });
 
-                }
-            });
-            //Get all items
-            $.ajax({
-                url:'/admin/items/all',
-                type:'GET',
-                success:function(msg){
-                    $.each(msg,function(index,element){
-                        $('#shopPossibleItems').append('<option id="'+ element.id +'" class="itemAvaliable">'+element.name+'</option>');
-                    });
-                }
-            });
+</script>
+<script>
+    /** Presentation chart **/
+    var users = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(users, {
+        type: 'line',
+        data: {
+            labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
+            datasets: [{
+                label: 'Usuarios registrados',
+                data: [12, 19, 3, 5, 2, 3,1,8,9,2,22,25],
+                backgroundColor: [
+                    'rgba(102, 178, 255, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(102,178,255,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            },
+                {
+                    label: 'Threads',
+                    data: [5, 2, 4, 7, 15, 18,6,4,3,1,17,99],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+
+                },
+                {
+                    label: 'Posts',
+                    data: [27, 56, 78, 65, 88, 9,86,81,70,65,40,37],
+                    backgroundColor: [
+                        'rgba(128, 255, 0, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(128,255,0,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+
+                }]
+
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
         }
     });
 </script>
