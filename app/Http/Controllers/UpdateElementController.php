@@ -78,7 +78,7 @@ class UpdateElementController extends Controller
         $userId = Auth::user()? Auth::user()['id'] : 0;
         $post = Post::where('id','=',$postId)->first();
         $postAuthor = $post['user_id'];
-        if(!Auth::user() || !$r->isMethod('PUT') || ($userId != $postAuthor && !Auth::user()->rolesPermissions['edit post'])){
+        if(!Auth::user() || !$r->isMethod('PUT') || ($userId != $postAuthor && !Auth::user()->rolesPermissions()['edit post'])){
             return response()->json(['success'=>false,'reason'=>'you can\'t edit that post']);
         }
         //Find the post with that id, replace the text and save it again
