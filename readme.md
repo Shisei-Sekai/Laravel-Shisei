@@ -28,7 +28,7 @@ Why not?
 * Composer
 * Redis
 * NodeJs >= 9.1
-
+* Email account to send verification email to users
 
 ### Installation
 - Clone the repository and install the dependencies
@@ -37,6 +37,7 @@ Why not?
 $ git clone https://github.com/Shisei-Sekai/Laravel-Shisei
 $ cd Laravel-Shisei
 $ npm install
+$ npm run production
 $ composer install
 ```
 
@@ -58,11 +59,12 @@ With the config of your pomf server (or not)
 
 ### TODO
 
-- Messenger
-- Events
-- Badges
-- ~~Store~~
-- ~~Vendors~~
+- [ ] Messenger
+- [ ] Events
+- [ ] Badges
+- [x] Store
+- [x] Vendors
+- [x] Real-time chat
 
 
 ### Advice
