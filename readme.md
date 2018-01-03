@@ -74,3 +74,10 @@ If you want them translated to english, feel free to ask me o do it by yourself.
 ### Final Advice
 > ORA!
 
+### Screenshots
+
+###### Admin panel
+
+![Main page](https://u.rindou.moe/SnkKZEU45g7EcSd7h9Zk.png)
+
+![Categories](https://u.rindou.moe/4PsmycfZLyHKI0Tm8hS6.png)
