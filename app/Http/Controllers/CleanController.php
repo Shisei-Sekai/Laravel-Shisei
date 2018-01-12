@@ -93,24 +93,7 @@ class CleanController extends Controller {
         Post::find($postId)->delete();
         return true;
     }
-    /**
-     * move a thread to another channel
-     * requires "move thread" permission
-     */
-    public function moveThread(Request $r){
-        $permission = Auth::user() ? Auth::user()->rolesPermissions()['move thread'] : false;
-        if(!$r->isMethod('PUT') || !$permission){
-            return false;
-        }
-        // Move the thread to another channel
-        $threadId = $r->input('threadId');
-        $newChannel = $r->input('newChannel');
-        //Find the thread with desired id, and move it to desired channel (change "channel_id" column)
-        $t = Thread::find($threadId);
-        $t->channel_id = $newChannel;
-        $t->save();
-        return true;
-    }
+
 
     public function deleteRoleFromUser(Request $r){
         $roleId = $r->input('roleId');

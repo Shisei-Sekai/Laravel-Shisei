@@ -20,6 +20,7 @@ class ThreadController extends Controller{
             return response()->json((array('success'=>false)));
         }
         $user = Auth::user();
+        $thread->last_update = Carbon::now();
         $text = $r->input('postText');
 
         //Create post object and fill the values
@@ -40,7 +41,7 @@ class ThreadController extends Controller{
         $user['exp'] += floor($total)*5;
         //$user['exp'] += round($total)*5; //Or maybe round up (?)
         $user->save();
-
+        $thread->save();
         //return response()->json(array('success'=>true));
         return redirect()->back();
     }
@@ -49,7 +50,7 @@ class ThreadController extends Controller{
     public function createThread(Request $r,$channelId){
         $permission = Auth::user() && Auth::user()->rolesPermissions()['create thread'];
         $channel = Channel::find($channelId);
-        if(!$r->isMethod('post') || !$permission || $channel->is_closed){
+        if(!$permission || $channel->is_closed){
             //BE GONE THOT
             return response()->json((array('success'=>false)));
         }

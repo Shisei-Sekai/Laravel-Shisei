@@ -102,13 +102,21 @@ Route::get('/home','GetController@createMainPage');
 Route::get('/confirm/{confirmationCode}','Auth\RegisterController@confirm');
 
 //Thread section
-Route::get('/thread','GetController@createThreadPage');
+//Route::get('/thread','GetController@createThreadPage');
 Route::post('/{channelId}',"ThreadController@createThread")->where('channelId','[0-9]+');
 
 
 //User things (get page/update avatar)
-Route::get('/user/{userName}','GetController@getUserPage');
-Route::post('/user/{userName}','UpdateElementController@updateUserAvatar');
+Route::get('/user/{userName}','UserController@getUserPage');
+Route::post('/user/{userName}','UserController@updateUserAvatar');
+//Handle the "tab" section
+Route::get('/user/{userName}/getItems','UserController@loadUserItems');
+Route::get('/user/{userName}/getLastMessages','UserController@getUserLastMessages');
+Route::get('/user/{userName}/getBadges');
+Route::get('/user/{userName}/getCharacterCards');
+Route::get('/user/{userName}/getCombatCards');
+
+
 
 //Thread management
 Route::get('/{channelId}','GetController@createChannelPage')->where('channelId','[0-9]+');
@@ -125,7 +133,7 @@ Route::post('/shop','ShopController@buyItem');
 
 
 
-/** Close/open threads and channles **/
+/** Close/open threads and channels **/
 Route::put('/thread/alter','UpdateElementController@alterThreadStatus');
 Route::put('/channel/alter','UpdateElementController@alterChannelStatus');
 

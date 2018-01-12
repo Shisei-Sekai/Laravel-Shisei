@@ -50,6 +50,7 @@ class ItemController extends Controller
             return response()->json(['success'=>false]);
         $item = Item::find($r->input('id'));
         $item->delete();
+        DB::table('user_items')->where('item_id','=',$r->input('id'))->delete();
         return response()->json(['success'=>true]);
     }
 

@@ -10,6 +10,7 @@ use App\Role;
 use App\Shop;
 use App\Thread;
 use App\User;
+use App\UserItem;
 use App\UserRoles;
 use App\ChatMessage;
 
@@ -75,7 +76,7 @@ class GetController extends Controller
 
     /**
      * Get all channels of determined category
-     * @param $categoryId
+     * @param Request $r
      * @return array
      */
     public function getChannels(Request $r){
@@ -101,7 +102,7 @@ class GetController extends Controller
      */
     private function getThreads($channelId,$page){
         $data = array();
-        $threads = Thread::where('channel_id','=',$channelId)->offset(($page-1)*15)->limit(15)->get();
+        $threads = Thread::where('channel_id','=',$channelId)->orderBy("last_update","desc")->offset(($page-1)*15)->limit(15)->get();
         foreach ($threads as $r){
             $lastUserPost = Post::where('thread_id','=',$r->id)->orderBy('timestamp','desc')->first();
             $user = User::find($lastUserPost->user_id);
@@ -316,26 +317,7 @@ class GetController extends Controller
         //return response()->json(["success"=>true]);
     }
 
-    public function getUserPage(Request $r,$userName){
-        $user = User::where('name','=',$userName)->first();
-        if($user && Auth::user()){
-            $role = Role::find($user->main_role);
-            $userInfo = array(
-                'name' => $user->name,
-                'role' => array(
-                    'name' => $role->name,
-                    'color' => $role->color,
-                ),
-                'avatar' => $user->avatar,
-                'owner' => Auth::user()['id'] == $user->id, //Check if you are requesting access to your user panel
-            );
-            return view('user_panel',['user'=>$userInfo]);
-        }
-        else{
-            return view('unauthorized');
-        }
 
-    }
 
     public function getPostText(Request $r){
         if(!$r->ajax()){

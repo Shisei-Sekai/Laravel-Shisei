@@ -87,57 +87,6 @@ class UpdateElementController extends Controller
         return response()->json(['success'=>true]);
     }
 
-    public function updateUserAvatar(Request $r,$userName){
-        $user = Auth::user();
-        $permission = $user && $user->name == $userName;
-        $r->validate([
-           'userAvatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024',
-        ]);
-        if(!$permission || !$r->isMethod('POST')){
-            return redirect('/');
-        }
-        $headers = [
-            'CLIENT-TOKEN' => env('POMF_CLIENT_TOKEN'),
-            'CLIENT-SECRET' => env('POMF_SECRET_TOKEN'),
-        ];
-        $client = new Client(['headers'=>$headers]);
-
-
-        $file = $r->file('userAvatar');
-
-        //Get "base" directory
-        $dir = getcwd();
-        $separated = explode('/',$dir);
-        unset($separated[count($separated)-1]);
-        $dir = implode('/', $separated);
-
-        $name = $file->getClientOriginalName();
-        $extension = explode('.', $name);
-        $extension = $extension[count($extension)-1];
-
-        $path = $file->storeAs(
-            'temp',$userName.'_avatar.'.$extension
-        );
-        $path = $dir.'/storage/app/'.$path;
-
-        $res = $client->request('POST',env('POMF_URL'),[
-           'multipart'=>[
-                [
-                    'name'=>'file',
-                    'contents'=>fopen($path,'r'),
-                ]
-           ]
-        ]);
-
-        $res = json_decode($res->getBody());
-
-        //Update user avatar
-        $user = User::where('name','=',$userName)->first();
-        $user->avatar = $res->files[0]->url;
-        $user->save();
-        unlink($path); //Delete user image from local server
-        return redirect('/');
-    }
 
     public function alterThreadStatus(Request $r){
         $permission = Auth::user() ? Auth::user()->rolesPermissions()['admin'] : false;
@@ -149,6 +98,11 @@ class UpdateElementController extends Controller
         return response()->json(['success'=>true]);
     }
 
+    /**
+     * Alters the status of a channel (open/closed)
+     * @param Request $r
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function alterChannelStatus(Request $r){
         $permission = Auth::user() ? Auth::user()->rolesPermissions()['admin'] : false;
         if(!$permission)
@@ -157,6 +111,21 @@ class UpdateElementController extends Controller
         $channel->is_closed = !$channel->is_closed;
         $channel->save();
         return response()->json(['success'=>true]);
+    }
+
+    /**
+     * move a thread to another channel
+     * requires "move thread" permission
+     */
+    public function moveThread(Request $r){
+        $permission = Auth::user() ? Auth::user()->rolesPermissions()['move thread'] : false;
+        $exists = Channel::where("id","=",$r->input("newId"))->count();
+        if(!$exists || !$permission){
+            return response()->json(["success"=>false]);
+        }
+        $thread = Thread::find($r->input("threadId"));
+        $thread->channel_id = $r->input("newId");
+        $thread->save();
     }
 
 
