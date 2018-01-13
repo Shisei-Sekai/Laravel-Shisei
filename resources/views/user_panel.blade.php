@@ -162,7 +162,7 @@
             }
 
             function getUserLastMessages(data){
-                $('#menu-content').append("<ul class=\"collection\" id=\"something\" style=\"background:transparent\"></ul>");
+                $('#menu-content').append("<ul class=\"collection loaded-element\" id=\"something\" style=\"background:transparent\"></ul>");
                 $.each(data,function(index,element){
                     $('#something').append(`<li class="collection-item" style="background: transparent"><a href="/${element.channel.id}/${element.thread.id}">${element.channel.name}/${element.thread.name}</a></li>`);
                 });
