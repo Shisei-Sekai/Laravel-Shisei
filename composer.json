@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~3.3",
         "genert/bbcode": "^1.0",
         "golonka/bbcodeparser": "^2.2",

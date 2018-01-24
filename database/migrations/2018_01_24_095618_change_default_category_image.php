@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
 class ChangeDefaultCategoryImage extends Migration
 {
     /**
@@ -14,8 +15,9 @@ class ChangeDefaultCategoryImage extends Migration
     public function up()
     {
         Schema::table('categories',function(Blueprint $table){
-            $table->string('image')->default("https://u.rindou.moe/RAj3WYY3FcRmxn8bOBuc.jpg");
+            $table->string('image')->default("https://u.rindou.moe/RAj3WYY3FcRmxn8bOBuc.jpg")->change();
         });
+
     }
 
     /**
