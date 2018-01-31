@@ -132,6 +132,9 @@ Route::get('/shop/{shopId}','ShopController@shopInside')->where('shopId','[0-9]+
 Route::post('/shop','ShopController@buyItem');
 
 
+Route::get('/character_card_example',function (){
+    return view("layouts.character_card_model_1");
+});
 
 /** Close/open threads and channels **/
 Route::put('/thread/alter','UpdateElementController@alterThreadStatus');
