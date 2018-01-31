@@ -19,7 +19,7 @@
 </head>
 <!-- Mobile navbar -->
 <div class="hide-on-med-and-up">
-    <nav class="blue nav-mobile" style="">
+    <nav class="main-navbar nav-mobile" style="">
         <div class="nav-wrapper">
             <span class="brand-logo">Shisei</span>
             <ul id="nav-mobile">
@@ -82,7 +82,7 @@
     @endauth
 </ul>
 <!-- desktop navbar -->
-<nav class="hide-on-small-only blue row-full" style="top:0">
+<nav class="hide-on-small-only main-navbar row-full" style="top:0">
     <div class="nav-wrapper">
         <span class="brand-logo center">Shisei Sekai</span>
         <ul id="nav" class="">

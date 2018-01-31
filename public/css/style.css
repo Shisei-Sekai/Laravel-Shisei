@@ -38,6 +38,9 @@ a:visited{
   /*background-attachment: fixed;*/
   background-repeat: repeat;
 }
+.btn-flat{
+    color: #6c9fff;
+}
 #events{
   /*background: #ffff url("../images/cool_background.jpeg");*/
   background: linear-gradient(to bottom right,white, #a4e4ff, #a4e4ff, white);
@@ -57,6 +60,13 @@ a:visited{
 }
 .transparent{
   background: rgba(255, 255, 255, 0.0);
+}
+.normal-section{
+    background: rgb(19, 102, 106);
+}
+.page-footer,
+.main-navbar{
+    background-color: rgb(16, 70, 74);
 }
 .header-image{
   /*background: url("images/header1.jpg");*/

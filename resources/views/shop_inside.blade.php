@@ -3,7 +3,7 @@
     <!-- Nunito font -->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Vollkorn+SC:700&amp;subset=cyrillic-ext" rel="stylesheet">
-    <div class="section">
+    <div class="section normal-section">
         <div class="container">
             <div class="row">
                 <img src="{{$info['image']}}" class="circle" style="width:150px;height:150px;object-fit: cover">
@@ -16,7 +16,7 @@
                 <div class="row">
                     <ul class="collection" style="border:none">
                         @foreach($items as $item)
-                            <li class="collection-item avatar hoverable" style="background: rgba(255,255,255,0.5);margin-top: 5px" id="item{{$item['id']}}">
+                            <li class="collection-item avatar hoverable" style="background: rgba(29,165,169,0.5);margin-top: 5px;border-width: 1px;border-color: rgb(24,52,68)" id="item{{$item['id']}}">
                                 <img src="{{$item['icon']}}" alt="" class="circle">
                                 <span class="title" style="color: black">{{$item['name']}}</span>
                                 <p><br>

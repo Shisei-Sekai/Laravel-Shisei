@@ -1,10 +1,10 @@
 @extends('layouts.base_materialized')
 @section('content')
-    <div class="section">
+    <div class="section normal-section">
         <div class="container">
-            <ul class="collection">
+            <ul class="collection" style="border: none">
                 @auth
-                <li class="collection-item">
+                <li class="collection-item" style="background-color: rgb(11,43,47);border: none">
                     @if(!$isClosed)
                         <a class="waves-effect waves-light btn modal-trigger" href="#createPostModal" style="color: white">Crear post</a>
                         @if($canClose)
@@ -20,7 +20,7 @@
                 @endauth
                 <!-- Every <li> is a post -->
                 @foreach($threads as $thread)
-                <li class="collection-item avatar hoverable">
+                <li class="collection-item avatar hoverable" style="background: rgba(16, 70, 74,.5);border-width: 1px;border-color: rgb(24,52,68)">
                     <!-- Post author avatar -->
                     <!--<img src="https://u.rindou.moe/Aztic_avatar.jpg" alt="" class="circle" style="object-fit: cover">-->
                     <!-- Post title -->
@@ -69,9 +69,9 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer blue">
-                <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                <a class="modal-action modal-close waves-effect waves-green btn-flat" id="createPost">Crear</a>
+            <div class="modal-footer footer text-white" style="background-color: rgb(16, 70, 74)">
+                <span class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</span>
+                <span class="modal-action modal-close waves-effect waves-green btn-flat" id="createPost">Crear</span>
             </div>
         </div>
 

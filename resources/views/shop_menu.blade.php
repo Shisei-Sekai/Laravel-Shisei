@@ -1,8 +1,8 @@
 @extends('layouts.base_materialized')
 @section('content')
-    <div class="section">
+    <div class="section normal-section">
         <div class="container">
-            <ul class="collection">
+            <ul class="collection" style="border: none">
                 <!-- Every <li> is a shop -->
                 @foreach($shops as $shop)
                     <li class="collection-item avatar hoverable blue-grey darken-1">

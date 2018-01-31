@@ -146,7 +146,7 @@
 
 </div>
 @endauth
-<footer class="page-footer row-full blue" style="margin-bottom: -50px">
+<footer class="page-footer row-full" style="margin-bottom: -50px">
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
