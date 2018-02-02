@@ -975,6 +975,7 @@
             let roleName = $("#roleToAdd"+id+" option:selected").text();
             makeAjax('/admin/roles/user',{roleId:roleId,userId:id},'POST');
             $('#user'+id+'Roles').append(`<li class="list-group-item st" style="position:relative" id="user${id}Role${roleId}">${roleName}<button type="button" class="float-right delete-button delete-role-button"><i class="material-icons">clear</i></button></li>`)
+            $('#roleToChange'+id).append(`<option id="user${id}Role${roleId}Avaliable" class="userOwnedRole">${roleName}</option>`);
         });
 
         /** DELETE ROLE **/
@@ -982,6 +983,7 @@
             let [userId,roleId] = $(this).parent().attr('id').match(numberPattern);
             makeAjax('/admin/roles/user',{roleId:roleId,userId:userId},'DELETE');
             $('#user'+userId+"Role"+roleId).remove();
+            $('#user'+userId+'Role'+roleId+'Avaliable').remove();
         });
 
         /** DELETE ITEM **/
@@ -991,6 +993,14 @@
             $('#user'+userId+"Item"+itemId).remove();
         });
 
+        /** EDIT MAIN ROLE **/
+        $(document).on('click','.change-main-role-button',function(){
+            let userId = $(this).attr('id').match(numberPattern)[0];
+            let roleId = $("#roleToChange"+userId+" option:selected").attr('id').match(numberPattern)[1];
+            let roleName = $("#roleToChange"+userId+" option:selected").text();
+            makeAjax('/admin/roles/user',{roleId:roleId,userId:userId},'PUT');
+            $('#userMainRole'+userId).text(roleName);
+        });
         /** END EDIT USER SECTION **/
 
         /** Load all user info to the "usersSection" div
@@ -1033,7 +1043,17 @@
                                             <h4 class="user-name text-center" contenteditable id="user${element.id}Name">${element.name}</h4><button type="button" class="float-right edit-username-button edit-button" id="editName${element.id}" style="margin-top:-35px;margin-right:-33px"><i class="material-icons">edit</i></button>
                                         </div>
                                         <img src="${element.avatar}" style="width: 150px;height: 150px;object-fit: cover;border-radius: 50%">
-                                        <h6 class="card-subtitle mb-2" style="margin-top: 10px;color:${element.main_role.color}">${element.main_role.name}</h6>
+                                        <h6 class="card-subtitle mb-2 user-main-role" style="margin-top: 10px;color:${element.main_role.color}" id="userMainRole${element.id}" data-placement="top" data-toggle="popover" data-container="body" data-html="true" data-title="change main role">${element.main_role.name}</h6>
+                                        <div id="user${element.id}OwnedRoles" class="invisible" style="position:absolute">
+                                            <form class="form-inline" role="form">
+                                                <div class="form-group">
+                                                    <select class="form-control mr-sm-2" id="roleToChange${element.id}">
+
+                                                    </select>
+                                                    <button type="button" class="btn btn-dark float-right change-main-role-button" data-dismiss="modal" id="changeMainRoleOf${element.id}">Cambiar</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                     <div class="col" style="margin-top: 80px">
                                         <p id="user1Money">Dinero: ${element.money}</p>
@@ -1101,7 +1121,16 @@
                         });
                         //Append all user roles
                         $.each(element.roles,function(index,role){
-                            $('#user'+element.id+"Roles").append(`<li class="list-group-item st" style="position:relative" id="user${element.id}Role${role.id}">${role.name}<button type="button" class="float-right delete-button delete-role-button"><i class="material-icons">clear</i></button></li>`)
+                            $('#user'+element.id+"Roles").append(`<li class="list-group-item st" style="position:relative" id="user${element.id}Role${role.id}">${role.name}<button type="button" class="float-right delete-button delete-role-button"><i class="material-icons">clear</i></button></li>`);
+                            $('#roleToChange'+element.id).append(`<option id="user${element.id}Role${role.id}Avaliable" class="userOwnedRole">${role.name}</option>`);
+                            $('#userMainRole'+element.id).popover({
+                                html:true,
+                                content:function(){
+                                    let html = $('#user'+element.id+'OwnedRoles').html();
+                                    $('#user'+element.id+'OwnedRoles').detach();
+                                    return html;
+                                }
+                            })
                         });
                         //Free roles
                         $.ajax({
@@ -1110,7 +1139,7 @@
                             data:{id:element.id},
                             success:function(content){
                                 $.each(content,function(index,item){
-                                    $("#roleToAdd"+element.id).append(`<option id="user${element.id}Role${+item.id}" class="userFreeRole">${item.name}</option>`);
+                                    $("#roleToAdd"+element.id).append(`<option id="user${element.id}Role${item.id}" class="userFreeRole">${item.name}</option>`);
                                     $("#addRole"+element.id).popover({
                                         html: true,
                                         content: function() {

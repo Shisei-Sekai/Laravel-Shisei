@@ -6,7 +6,7 @@
         <div class="row">
             <div class="hide-on-med-and-down">
                 <div id="info{{$index+1}}" class="col m2 center-align">
-                    <img src="{{$users[$post['userId']]['avatar']}}" class="circle" style="width:150px;height:150px;object-fit: cover">
+                    <img src="{{$users[$post['userId']]['avatar']}}" class="circle user-avatar" style="width:150px;height:150px;object-fit: cover">
                     <div class="main-info sub-section">
                         <button type="button" class="userdrop right"  id="buttonMessage{{$index+1}}"><i class="material-icons arrowdown">keyboard_arrow_down</i></button>
                         <div class="user-name center">{{$users[$post['userId']]['name']}}</div>
@@ -150,11 +150,11 @@
             //Enable tabs in textareas
             let textareas = document.getElementsByTagName('textarea');
             let count = textareas.length;
-            for(var i=0;i<count;i++){
+            for(let i=0;i<count;i++){
                 textareas[i].onkeydown = function(e){
-                    if(e.keyCode==9 || e.which==9){
+                    if(e.keyCode===9 || e.which===9){
                         e.preventDefault();
-                        var s = this.selectionStart;
+                        let s = this.selectionStart;
                         this.value = this.value.substring(0,this.selectionStart) + "    " + this.value.substring(this.selectionEnd);
                         this.selectionEnd = s+'    '.length;
                     }
@@ -229,7 +229,7 @@
 
             @if($canClose)
             $('#change-status').click(function(){
-                var href = location.href;
+                let href = location.href;
                 let threadId = href.match(/([^\/]*)\/*$/)[1];
                 $.ajax({
                     type:'PUT',
@@ -247,7 +247,6 @@
                 });
             });
             @endif
-
         });
     </script>
 @endsection

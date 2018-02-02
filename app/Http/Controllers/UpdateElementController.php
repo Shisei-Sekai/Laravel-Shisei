@@ -69,6 +69,16 @@ class UpdateElementController extends Controller
         return response()->json(["success"=>true]);
     }
 
+    public function editUserMainRole(Request $r){
+        $roleId = $r->input('roleId');
+        $userId = $r->input('userId');
+        $user = User::find($userId);
+        $user->main_role = $roleId;
+        $name = $user->name;
+        $user->save();
+        return response()->json(["success"=>true,"user"=>$name]);
+    }
+
     /**
      * Edit a post
      * requires "edit post" permission or being the post author

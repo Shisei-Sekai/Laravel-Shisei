@@ -34,6 +34,7 @@ Route::middleware('isAdmin')->prefix('admin')->group(function (){
     Route::get('roles/user',"GetController@getUserRoles"); //Get user roles (used)
     Route::delete('roles/user',"CleanController@deleteRoleFromUser"); //Delete role from user
     Route::post('roles/user',"UpdateElementController@addRoleToUser"); //Assign role to user
+    Route::put('roles/user',"UpdateElementController@editUserMainRole"); //Edit user main role
 
     Route::get('roles/user/free',"GetController@getUserNotAssignedRoles"); //Get user roles (unused)
 
